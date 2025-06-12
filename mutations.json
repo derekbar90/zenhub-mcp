@@ -1,0 +1,630 @@
+[
+  {
+    "name": "acceptZenhubOrganizationInvite",
+    "description": "Accept an invitation to ZenhubOrganization"
+  },
+  {
+    "name": "addAssigneesToIssues",
+    "description": "Add assignees to multiple Issues"
+  },
+  {
+    "name": "addAssigneesToZenhubEpics",
+    "description": "Add assignees to multiple zenhub_epics"
+  },
+  {
+    "name": "addEpicsToProject",
+    "description": "Add Epics to a Project"
+  },
+  {
+    "name": "addEpicsToRoadmap",
+    "description": "Add Epics to a Roadmap"
+  },
+  {
+    "name": "addEstimateSetValue",
+    "description": "Add a value to an EstimateSet"
+  },
+  {
+    "name": "addIssuesToEpics",
+    "description": "Adds Issues to Epics"
+  },
+  {
+    "name": "addIssuesToReleases",
+    "description": "Add Issues to Releases"
+  },
+  {
+    "name": "addIssuesToSprints",
+    "description": "Add Issues to Sprints"
+  },
+  {
+    "name": "addIssuesToZenhubEpics",
+    "description": "Adds Issues to Zenhub Epics"
+  },
+  {
+    "name": "addLabelsToIssues",
+    "description": "Add labels to multiple Issues"
+  },
+  {
+    "name": "addMilestoneToIssues",
+    "description": "Add milestone to multiple Issues"
+  },
+  {
+    "name": "addProjectsToRoadmap",
+    "description": "Add Projects to a Roadmap"
+  },
+  {
+    "name": "addRepositoriesToRelease",
+    "description": "Add repositories to a release"
+  },
+  {
+    "name": "addRepositoryToWorkspace",
+    "description": "Add a Repository to a Workspace"
+  },
+  {
+    "name": "addSubIssues",
+    "description": "Add sub-issues to an issue"
+  },
+  {
+    "name": "addWorkspaceLabelFilters",
+    "description": "Add label filters to a Workspace"
+  },
+  {
+    "name": "addZenhubAssigneesToIssues",
+    "description": "Add zenhub users to multiple issues as assignees"
+  },
+  {
+    "name": "addZenhubEpicsToProject",
+    "description": "Add Zenhub Epics to a Project"
+  },
+  {
+    "name": "addZenhubEpicsToRoadmap",
+    "description": "Add Zenhub epics to a Roadmap"
+  },
+  {
+    "name": "addZenhubLabelsToIssues",
+    "description": "Add zenhub labels to multiple issues"
+  },
+  {
+    "name": "addZenhubLabelsToZenhubEpics",
+    "description": "Add zenhub labels to multiple zenhub epics"
+  },
+  {
+    "name": "addZenhubRepositoryToWorkspace",
+    "description": "Add a ZenhubRepository to a Workspace"
+  },
+  {
+    "name": "addZenhubUsersToWorkspace",
+    "description": "Add Zenhub users to a workspace"
+  },
+  {
+    "name": "closeIssues",
+    "description": "Closes multiple issues at once"
+  },
+  {
+    "name": "convertZenhubIssueToGithubIssue",
+    "description": "Convert Zenhub issue to Github issue"
+  },
+  {
+    "name": "createComment",
+    "description": "Creates a comment"
+  },
+  {
+    "name": "createEpic",
+    "description": "Creates an Epic"
+  },
+  {
+    "name": "createEpicFromIssue",
+    "description": "Convert issue to an epic and add issues to it"
+  },
+  {
+    "name": "createEpicOnProject",
+    "description": "Create an Epic on a Project"
+  },
+  {
+    "name": "createEpicOnRoadmap",
+    "description": "Create an Epic on a Roadmap"
+  },
+  {
+    "name": "createGithubLabel",
+    "description": "Create a Github label"
+  },
+  {
+    "name": "createIssue",
+    "description": "Creates an Issue"
+  },
+  {
+    "name": "createIssueDependency",
+    "description": "Creates a Dependency between two issues"
+  },
+  {
+    "name": "createIssueKeyDate",
+    "description": "Create a new key date for an issue"
+  },
+  {
+    "name": "createIssuePrConnection",
+    "description": "Creates Issue<->PR Connection"
+  },
+  {
+    "name": "createMilestone",
+    "description": "Create a milestone"
+  },
+  {
+    "name": "createPipeline",
+    "description": "Create a new Pipeline"
+  },
+  {
+    "name": "createPipelineAutomation",
+    "description": "Create a new Pipeline Automation"
+  },
+  {
+    "name": "createPipelineToPipelineAutomation",
+    "description": "Create a new PipelineToPipelineAutomation"
+  },
+  {
+    "name": "createProjectOnRoadmap",
+    "description": "Create a Project on a Roadmap"
+  },
+  {
+    "name": "createRelease",
+    "description": "Create a release"
+  },
+  {
+    "name": "createRoadmapKeyDate",
+    "description": "Create a new key date for the roadmap"
+  },
+  {
+    "name": "createSavedView",
+    "description": "Save board filters"
+  },
+  {
+    "name": "createSprintConfig",
+    "description": "Creates a SprintConfig for a workspace"
+  },
+  {
+    "name": "createTimelineKeyDate",
+    "description": "Create a new key date for the timeline"
+  },
+  {
+    "name": "createWorkspace",
+    "description": "Create a Workspace"
+  },
+  {
+    "name": "createZenhubEpic",
+    "description": "Create a Zenhub epic"
+  },
+  {
+    "name": "createZenhubEpicKeyDate",
+    "description": "Create a new key date for a Zenhub Epic"
+  },
+  {
+    "name": "createZenhubEpicOnProject",
+    "description": "Create a Zenhub Epic on a Project"
+  },
+  {
+    "name": "createZenhubEpicOnRoadmap",
+    "description": "Create a Zenhub epic on a Roadmap"
+  },
+  {
+    "name": "createZenhubLabel",
+    "description": "Create a Zenhub label"
+  },
+  {
+    "name": "createZenhubOrganization",
+    "description": "Create a Zenhub Organization"
+  },
+  {
+    "name": "createZenhubOrganizationInvite",
+    "description": "Create ZenhubOrganization invite"
+  },
+  {
+    "name": "deleteComment",
+    "description": "Deletes comment"
+  },
+  {
+    "name": "deleteEpicByIssueInfo",
+    "description": "Destroy epic and its dependents"
+  },
+  {
+    "name": "deleteIssueDependency",
+    "description": "Delete a Dependency between two issues"
+  },
+  {
+    "name": "deleteIssueKeyDate",
+    "description": "Delete a key date from an issue"
+  },
+  {
+    "name": "deleteIssuePrConnection",
+    "description": "Deletes Issue<->PR Connection"
+  },
+  {
+    "name": "deleteMilestone",
+    "description": "Delete a milestone"
+  },
+  {
+    "name": "deleteNotionIntegrationToken",
+    "description": "Deletes a Notion Integration Token"
+  },
+  {
+    "name": "deletePipeline",
+    "description": "Delete a Pipeline"
+  },
+  {
+    "name": "deletePipelineAutomation",
+    "description": "Delete a Pipeline Automation"
+  },
+  {
+    "name": "deletePipelineToPipelineAutomation",
+    "description": "Delete a PipelineToPipelineAutomation"
+  },
+  {
+    "name": "deleteProject",
+    "description": "Delete a Project"
+  },
+  {
+    "name": "deleteRoadmapKeyDate",
+    "description": "Delete a key date from the roadmap"
+  },
+  {
+    "name": "deleteSavedView",
+    "description": "Delete saved view"
+  },
+  {
+    "name": "deleteSprintConfigAndOpenSprints",
+    "description": "Delete a SprintConfig and open Sprints for a workspace"
+  },
+  {
+    "name": "deleteTimelineKeyDate",
+    "description": "Delete a key date from the timeline"
+  },
+  {
+    "name": "deleteWorkspace",
+    "description": "Deletes a Workspace"
+  },
+  {
+    "name": "deleteWorkspaceFavorite",
+    "description": "Deletes a workspace favorite"
+  },
+  {
+    "name": "deleteZenhubEpic",
+    "description": "Delete zenhub epic"
+  },
+  {
+    "name": "deleteZenhubEpicKeyDate",
+    "description": "Delete a key date from a Zenhub Epic"
+  },
+  {
+    "name": "deleteZenhubIssue",
+    "description": "Delete Zenhub issue"
+  },
+  {
+    "name": "deleteZenhubLabels",
+    "description": "Delete Zenhub labels"
+  },
+  {
+    "name": "deleteZenhubOrganizationInviteRecipients",
+    "description": "Delete ZenhubOrganizationInvite recipients"
+  },
+  {
+    "name": "deleteZenhubOrganizationInvites",
+    "description": "Delete ZenhubOrganization invites"
+  },
+  {
+    "name": "deleteZenhubUser",
+    "description": "Delete Zenhub user"
+  },
+  {
+    "name": "disconnectGithubUser",
+    "description": "Disconnect Github from account"
+  },
+  {
+    "name": "disconnectWorkspaceRepository",
+    "description": "Disconnects a repository from a Workspace"
+  },
+  {
+    "name": "dismissConnectNotionPrompt",
+    "description": "Update the notion prompt dismissal status of a user"
+  },
+  {
+    "name": "duplicatePipelineAutomation",
+    "description": "Duplicates a Pipeline Automation"
+  },
+  {
+    "name": "generateSprintReview",
+    "description": "Generates sprint review"
+  },
+  {
+    "name": "inviteToEstimate",
+    "description": "Invite a list of users to estimate a list of issues. Errors on PR"
+  },
+  {
+    "name": "leaveZenhubOrganization",
+    "description": "Leave zenhub organization"
+  },
+  {
+    "name": "migrateGheTransferredRepository",
+    "description": "Migrate Zenhub metadata for repositories that were transferred to GitHub Enterprise"
+  },
+  {
+    "name": "moveAllPipelineIssues",
+    "description": "Move all pipeline issues from source pipelines to a destination pipeline"
+  },
+  {
+    "name": "moveIssue",
+    "description": "Move issues to a position in a pipeline"
+  },
+  {
+    "name": "moveIssueRelativeTo",
+    "description": "Move Issue after/before a PipelineIssue or to start/end"
+  },
+  {
+    "name": "movePipelineIssues",
+    "description": "Move PipelineIssues to either top or bottom"
+  },
+  {
+    "name": "moveRoadmapItemRelativeTo",
+    "description": "Move roadmap items relative to each other"
+  },
+  {
+    "name": "moveZenhubIssueToWorkspace",
+    "description": "Moves a Zenhub issue to a different workspace"
+  },
+  {
+    "name": "removeAssigneesFromIssues",
+    "description": "Remove assignees from multiple Issues"
+  },
+  {
+    "name": "removeAssigneesFromZenhubEpics",
+    "description": "Remove assignees fromto multiple zenhub_epics"
+  },
+  {
+    "name": "removeEpicFromProject",
+    "description": "Removes an Epic from a Project"
+  },
+  {
+    "name": "removeEpicFromRoadmap",
+    "description": "Removes an Epic from a Roadmap"
+  },
+  {
+    "name": "removeEstimateSetValue",
+    "description": "Remove a value from an EstimateSet"
+  },
+  {
+    "name": "removeEstimationVote",
+    "description": "Remove a vote on issue estimation"
+  },
+  {
+    "name": "removeIssueInfoPriorities",
+    "description": "Removes multiple issue priorities"
+  },
+  {
+    "name": "removeIssuesFromEpics",
+    "description": "Remove Issues from Epics"
+  },
+  {
+    "name": "removeIssuesFromReleases",
+    "description": "Remove Issues from Releases"
+  },
+  {
+    "name": "removeIssuesFromSprints",
+    "description": "Remove Issues from Sprints"
+  },
+  {
+    "name": "removeIssuesFromZenhubEpics",
+    "description": "Remove Issues from Zenhub Epics"
+  },
+  {
+    "name": "removeLabelsFromIssues",
+    "description": "Remove labels from multiple Issues"
+  },
+  {
+    "name": "removeMilestoneToIssues",
+    "description": "Remove milestone from multiple Issues"
+  },
+  {
+    "name": "removeProjectFromRoadmap",
+    "description": "Remove a Project from a Roadmap"
+  },
+  {
+    "name": "removeRepositoriesFromRelease",
+    "description": "Remove repositories from a release"
+  },
+  {
+    "name": "removeSubIssues",
+    "description": "Remove sub-issues from an issue"
+  },
+  {
+    "name": "removeUserFromZenhubOrganization",
+    "description": "Remove user from zenhub organization"
+  },
+  {
+    "name": "removeWorkspaceLabelFilters",
+    "description": "Removes label filters from a Workspace"
+  },
+  {
+    "name": "removeZenhubAssigneesFromIssues",
+    "description": "Remove zenhub users as assignees from multiple issues"
+  },
+  {
+    "name": "removeZenhubEpicFromProject",
+    "description": "Removes a Zenhub Epic from a Project"
+  },
+  {
+    "name": "removeZenhubEpicFromRoadmap",
+    "description": "Remove Zenhub epic from a Roadmap"
+  },
+  {
+    "name": "removeZenhubLabelsFromIssues",
+    "description": "Remove zenhub labels from multiple issues"
+  },
+  {
+    "name": "removeZenhubLabelsFromZenhubEpics",
+    "description": "Remove zenhub labels from multiple zenhub epics"
+  },
+  {
+    "name": "removeZenhubRepositoryFromWorkspace",
+    "description": "Remove a ZenhubRepository from a Workspace"
+  },
+  {
+    "name": "removeZenhubUsersFromWorkspace",
+    "description": "Remove Zenhub users from a workspace"
+  },
+  {
+    "name": "reopenIssues",
+    "description": "Reopen Issues into a Pipeline either at the start or end"
+  },
+  {
+    "name": "reprioritizeSubIssue",
+    "description": "Reprioritizes a sub-issue to a different position in the parent list."
+  },
+  {
+    "name": "setEstimate",
+    "description": "Set an estimate on an Issue"
+  },
+  {
+    "name": "setEstimationVote",
+    "description": "Give a vote on issue estimation"
+  },
+  {
+    "name": "setFavoriteWorkspace",
+    "description": "Sets a workspace as favorite"
+  },
+  {
+    "name": "setIssueInfoPriorities",
+    "description": "Sets multiple issue priorities"
+  },
+  {
+    "name": "setMilestoneStartDate",
+    "description": "Set the start date on a milestone"
+  },
+  {
+    "name": "setMultipleEstimates",
+    "description": "Set estimates on multiple Issues"
+  },
+  {
+    "name": "setMultipleEstimatesOnZenhubEpics",
+    "description": "Set an estimate on ZenhubEpics"
+  },
+  {
+    "name": "setPipelineStages",
+    "description": "Set stages for pipelines"
+  },
+  {
+    "name": "setPriorityOnPipelineIssues",
+    "description": "Set priority on PipelineIssues"
+  },
+  {
+    "name": "setPullRequestPipeline",
+    "description": "Sets a pull_request_pipeline_id for a workspace"
+  },
+  {
+    "name": "setWorkspaceViewedNow",
+    "description": "For a user, set Workspace's last viewed timestamp to now"
+  },
+  {
+    "name": "splitWorkspaceRepository",
+    "description": "Splits a repository from a Workspace"
+  },
+  {
+    "name": "updateComment",
+    "description": "Updates comment"
+  },
+  {
+    "name": "updateEpicDates",
+    "description": "Update epic's startOn and endOn dates"
+  },
+  {
+    "name": "updateEpicIssuesByIssueInfos",
+    "description": "Adds and Removes Issues from an Epic"
+  },
+  {
+    "name": "updateIssue",
+    "description": "Update an existing Issue"
+  },
+  {
+    "name": "updateIssueKeyDate",
+    "description": "Update a key date of an issue"
+  },
+  {
+    "name": "updateMilestone",
+    "description": "Update a milestone"
+  },
+  {
+    "name": "updatePipeline",
+    "description": "Update a Pipeline"
+  },
+  {
+    "name": "updatePipelineAutomation",
+    "description": "Updates a Pipeline Automation"
+  },
+  {
+    "name": "updatePipelineConfiguration",
+    "description": "Updates a Pipeline Configuration"
+  },
+  {
+    "name": "updateProject",
+    "description": "Update a Project"
+  },
+  {
+    "name": "updateProjectDates",
+    "description": "Update Project's startOn and endOn dates"
+  },
+  {
+    "name": "updateProjectState",
+    "description": "Update a Project State"
+  },
+  {
+    "name": "updateRelease",
+    "description": "Update a release"
+  },
+  {
+    "name": "updateRoadmapKeyDate",
+    "description": "Update a key date from the roadmap"
+  },
+  {
+    "name": "updateSavedView",
+    "description": "Update filters or name of a saved view"
+  },
+  {
+    "name": "updateSprint",
+    "description": "Update an existing Sprint"
+  },
+  {
+    "name": "updateSprintConfig",
+    "description": "Updates a SprintConfig for a workspace"
+  },
+  {
+    "name": "updateTimelineKeyDate",
+    "description": "Update a key date from the timeline"
+  },
+  {
+    "name": "updateUserPermissions",
+    "description": "Update user permissions on organization"
+  },
+  {
+    "name": "updateWorkspace",
+    "description": "Update a Workspace"
+  },
+  {
+    "name": "updateWorkspaceZenhubUserRole",
+    "description": "Update the role and add user to workspace if needed"
+  },
+  {
+    "name": "updateZenhubEpic",
+    "description": "Update Zenhub epic"
+  },
+  {
+    "name": "updateZenhubEpicDates",
+    "description": "Update Zenhub epic's startOn and endOn dates"
+  },
+  {
+    "name": "updateZenhubEpicKeyDate",
+    "description": "Update a key date from a Zenhub Epic"
+  },
+  {
+    "name": "updateZenhubEpicState",
+    "description": "Update a ZenhubEpic State"
+  },
+  {
+    "name": "updateZenhubOrganization",
+    "description": "Update ZenhubOrganization"
+  }
+]

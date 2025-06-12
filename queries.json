@@ -1,0 +1,78 @@
+[
+  {
+    "name": "issueByInfo",
+    "description": "Lookup an Issue by repository_gh_id or repository_id  and issue_number"
+  },
+  {
+    "name": "issueConnections",
+    "description": "A concatenated list of all issues connected to any\n           of the given issues in the passed workspace"
+  },
+  {
+    "name": "issues",
+    "description": null
+  },
+  {
+    "name": "milestoneByRepoGhIdAndNumber",
+    "description": null
+  },
+  {
+    "name": "node",
+    "description": "Fetches an object given its ID."
+  },
+  {
+    "name": "nodes",
+    "description": "Fetches a list of objects given a list of IDs."
+  },
+  {
+    "name": "ownerByGhId",
+    "description": "Lookup an Owner by GitHub database ID"
+  },
+  {
+    "name": "ownerByLogin",
+    "description": "Lookup an Owner by GitHub login"
+  },
+  {
+    "name": "previewSprintConfig",
+    "description": "preview sprint config schedules"
+  },
+  {
+    "name": "recentlyViewedWorkspaces",
+    "description": "User's recently viewed Workspaces"
+  },
+  {
+    "name": "repositoriesByGhId",
+    "description": "Lookup repositories by their GitHub ID"
+  },
+  {
+    "name": "searchClosedIssues",
+    "description": "Search and filter closed issues per pipeline"
+  },
+  {
+    "name": "searchIssues",
+    "description": "Search and filter issues inside repository"
+  },
+  {
+    "name": "searchIssuesByPipeline",
+    "description": "Search and filter issues per pipeline"
+  },
+  {
+    "name": "searchIssuesByZenhubEpics",
+    "description": "Search and filter issues inside zenhub epics"
+  },
+  {
+    "name": "triggeredPipelineToPipelineAutomations",
+    "description": "PipelineToPipelineAutomation records that are triggered when an issue moves into a Pipeline"
+  },
+  {
+    "name": "validateWorkspaceName",
+    "description": "Validate a workspace name within a zorg"
+  },
+  {
+    "name": "viewer",
+    "description": "Return the current zenhub user"
+  },
+  {
+    "name": "workspace",
+    "description": "Lookup Workspace by its ID"
+  }
+]

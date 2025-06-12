@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:developers.zenhub.com)",
+      "Bash(mkdir:*)",
+      "Bash(grep:*)"
+    ],
+    "deny": []
+  }
+}

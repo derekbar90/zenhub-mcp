@@ -3,7 +3,8 @@
     "allow": [
       "WebFetch(domain:developers.zenhub.com)",
       "Bash(mkdir:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(jq:*)"
     ],
     "deny": []
   }

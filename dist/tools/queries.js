@@ -141,10 +141,13 @@ class GetViewerTool extends BaseTool {
       query viewer {
         viewer {
           id
-          login
           name
           email
-          avatarUrl
+          imageUrl
+          githubUser {
+            login
+            avatarUrl
+          }
         }
       }
     `;

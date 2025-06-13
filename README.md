@@ -91,7 +91,7 @@ Or use the development server:
 
 ## Tools
 
-The server provides **53 tools** across 10 categories, implementing the most commonly used ZenHub operations:
+The server provides **54 tools** across 10 categories, implementing the most commonly used ZenHub operations:
 
 **No API key required in tool calls** - Set `ZENHUB_API_KEY` environment variable once and use all tools!
 
@@ -205,7 +205,26 @@ Create a new epic in ZenHub.
 - `repository_id` (required): Repository ID
 - `body` (optional): Epic description
 
-### Workspace Management (1 tool)
+### Workspace Management (4 tools)
+
+#### `zenhub_get_user_workspaces`
+Get all workspaces accessible to the current user.
+
+- `query` (optional): Search query to filter workspaces
+- `first` (optional): Number of workspaces to return (default: 20)
+
+#### `zenhub_get_user_organizations`
+Get all ZenHub organizations accessible to the current user.
+
+- `query` (optional): Search query to filter organizations
+- `first` (optional): Number of organizations to return (default: 10)
+
+#### `zenhub_get_organization_workspaces`
+Get all workspaces within a specific ZenHub organization.
+
+- `organization_id` (required): ZenHub organization ID
+- `query` (optional): Search query to filter workspaces
+- `first` (optional): Number of workspaces to return (default: 20)
 
 #### `zenhub_create_workspace`
 Create a new workspace in ZenHub.
@@ -265,7 +284,7 @@ All 176 available ZenHub GraphQL operations are documented in:
 - `mutations.json` - All 157 mutations 
 - `queries.json` - All 19 queries
 
-Current implementation covers **53 of 176 operations (30.1%)**
+Current implementation covers **54 of 176 operations (30.7%)**
 
 ## Development
 

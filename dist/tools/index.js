@@ -9,7 +9,6 @@ import { dependencyTools } from "./dependencies.js";
 import { labelTools } from "./labels.js";
 import { userTools } from "./users.js";
 export const toolCategories = [
-    { name: "Query Tools", tools: queryTools },
     { name: "Issue Management", tools: issueTools },
     { name: "Epic Management", tools: epicTools },
     { name: "Workspace Management", tools: workspaceTools },
@@ -19,6 +18,7 @@ export const toolCategories = [
     { name: "Dependency Management", tools: dependencyTools },
     { name: "Label Management", tools: labelTools },
     { name: "User Management", tools: userTools },
+    { name: "Query Tools", tools: queryTools },
 ];
 export const allTools = toolCategories.flatMap(category => category.tools);
 export function getToolByName(name) {

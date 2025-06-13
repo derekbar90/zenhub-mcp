@@ -11,7 +11,6 @@ import { userTools } from "./users.js";
 import { ZenHubTool, ToolCategory } from "../types.js";
 
 export const toolCategories: ToolCategory[] = [
-  { name: "Query Tools", tools: queryTools },
   { name: "Issue Management", tools: issueTools },
   { name: "Epic Management", tools: epicTools },
   { name: "Workspace Management", tools: workspaceTools },
@@ -21,6 +20,7 @@ export const toolCategories: ToolCategory[] = [
   { name: "Dependency Management", tools: dependencyTools },
   { name: "Label Management", tools: labelTools },
   { name: "User Management", tools: userTools },
+  { name: "Query Tools", tools: queryTools },
 ];
 
 export const allTools: ZenHubTool[] = toolCategories.flatMap(category => category.tools);

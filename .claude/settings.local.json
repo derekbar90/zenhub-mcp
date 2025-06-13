@@ -4,7 +4,9 @@
       "WebFetch(domain:developers.zenhub.com)",
       "Bash(mkdir:*)",
       "Bash(grep:*)",
-      "Bash(jq:*)"
+      "Bash(jq:*)",
+      "Bash(rg:*)",
+      "Bash(npm run build:*)"
     ],
     "deny": []
   }

@@ -1,7 +1,7 @@
 import { BaseTool } from "./base.js";
 class GenericQueryTool extends BaseTool {
     name = "zenhub_query";
-    description = "Execute any GraphQL query against the ZenHub API";
+    description = "FALLBACK: Execute custom GraphQL queries when specific tools don't meet your needs";
     inputSchema = {
         type: "object",
         properties: {
@@ -17,7 +17,7 @@ class GenericQueryTool extends BaseTool {
 }
 class SearchIssuesByPipelineTool extends BaseTool {
     name = "zenhub_search_issues";
-    description = "Search for issues in a pipeline";
+    description = "Search and filter issues within a specific pipeline by title, labels, or assignees";
     inputSchema = {
         type: "object",
         properties: {
@@ -56,7 +56,7 @@ class SearchIssuesByPipelineTool extends BaseTool {
 }
 class SearchIssuesTool extends BaseTool {
     name = "zenhub_search_issues_in_repository";
-    description = "Search and filter issues inside repository";
+    description = "Search and filter issues within a specific repository by title, state, or labels";
     inputSchema = {
         type: "object",
         properties: {
@@ -112,6 +112,14 @@ class GetWorkspaceIssuesTool extends BaseTool {
               type
               title
               number
+              state
+              parentZenhubEpics {
+                totalCount
+              }
+              repository {
+                name
+                ownerName
+              }
             }
             pageInfo {
               hasNextPage
@@ -130,7 +138,7 @@ class GetWorkspaceIssuesTool extends BaseTool {
 }
 class GetViewerTool extends BaseTool {
     name = "zenhub_get_viewer";
-    description = "Get current ZenHub user information";
+    description = "Get current authenticated user's ZenHub and GitHub profile information";
     inputSchema = {
         type: "object",
         properties: {},
@@ -205,11 +213,11 @@ class GetRepositoriesByGhIdTool extends BaseTool {
     async handle(args, client) {
         const { repository_gh_ids } = args;
         const query = `
-      query repositoriesByGhId($repositoryGhIds: [Int!]!) {
-        repositoriesByGhId(repositoryGhIds: $repositoryGhIds) {
+      query repositoriesByGhId($ghIds: [Int!]!) {
+        repositoriesByGhId(ghIds: $ghIds) {
           id
           name
-          nameWithOwner
+          ownerName
           ghId
           owner {
             login
@@ -218,19 +226,19 @@ class GetRepositoriesByGhIdTool extends BaseTool {
       }
     `;
         const variables = {
-            repositoryGhIds: repository_gh_ids,
+            ghIds: repository_gh_ids,
         };
         return this.executeGraphQL(client, query, variables);
     }
 }
 export const queryTools = [
-    new GenericQueryTool(),
-    new SearchIssuesByPipelineTool(),
-    new SearchIssuesTool(),
-    new GetWorkspaceIssuesTool(),
     new GetViewerTool(),
     new GetIssueByInfoTool(),
     new GetRepositoriesByGhIdTool(),
+    new SearchIssuesByPipelineTool(),
+    new SearchIssuesTool(),
+    new GetWorkspaceIssuesTool(),
+    new GenericQueryTool(),
 ].map(tool => ({
     name: tool.name,
     description: tool.description,

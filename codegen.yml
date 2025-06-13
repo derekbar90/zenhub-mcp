@@ -1,6 +1,6 @@
 schema: ./zenhub_introspection.json
 documents: 
-  - "src/**/*.ts"
+  - "src/**/*.graphql"
   - "!src/generated/**"
 generates:
   ./src/generated/graphql.ts:

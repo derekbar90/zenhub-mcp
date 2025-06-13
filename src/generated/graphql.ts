@@ -8621,20 +8621,6 @@ export type DeleteIssueDependencyMutationVariables = Exact<{
 
 export type DeleteIssueDependencyMutation = { readonly __typename?: 'Mutation', readonly deleteIssueDependency?: { readonly __typename?: 'DeleteIssueDependencyPayload', readonly issueDependency: { readonly __typename?: 'IssueDependency', readonly id: string } } | null };
 
-export type CreateEpicMutationVariables = Exact<{
-  input: CreateEpicInput;
-}>;
-
-
-export type CreateEpicMutation = { readonly __typename?: 'Mutation', readonly createEpic?: { readonly __typename?: 'CreateEpicPayload', readonly epic: { readonly __typename?: 'Epic', readonly id: string, readonly issue: { readonly __typename?: 'Issue', readonly id: string, readonly title: string, readonly number: number, readonly htmlUrl: string } } } | null };
-
-export type CreateIssueMutationVariables = Exact<{
-  input: CreateIssueInput;
-}>;
-
-
-export type CreateIssueMutation = { readonly __typename?: 'Mutation', readonly createIssue?: { readonly __typename?: 'CreateIssuePayload', readonly issue: { readonly __typename?: 'Issue', readonly id: string, readonly title: string, readonly number: number, readonly htmlUrl: string, readonly state: IssueState } } | null };
-
 export type AddIssuesToEpicsMutationVariables = Exact<{
   input: AddIssuesToEpicsInput;
 }>;
@@ -8642,12 +8628,33 @@ export type AddIssuesToEpicsMutationVariables = Exact<{
 
 export type AddIssuesToEpicsMutation = { readonly __typename?: 'Mutation', readonly addIssuesToEpics?: { readonly __typename?: 'AddIssuesToEpicsPayload', readonly epics: ReadonlyArray<{ readonly __typename?: 'Epic', readonly id: string }> } | null };
 
+export type CreateEpicMutationVariables = Exact<{
+  input: CreateEpicInput;
+}>;
+
+
+export type CreateEpicMutation = { readonly __typename?: 'Mutation', readonly createEpic?: { readonly __typename?: 'CreateEpicPayload', readonly epic: { readonly __typename?: 'Epic', readonly id: string, readonly issue: { readonly __typename?: 'Issue', readonly id: string, readonly title: string, readonly number: number, readonly htmlUrl: string } } } | null };
+
 export type CreateZenhubEpicMutationVariables = Exact<{
   input: CreateZenhubEpicInput;
 }>;
 
 
 export type CreateZenhubEpicMutation = { readonly __typename?: 'Mutation', readonly createZenhubEpic?: { readonly __typename?: 'CreateZenhubEpicPayload', readonly zenhubEpic: { readonly __typename?: 'ZenhubEpic', readonly id: string, readonly title: string } } | null };
+
+export type DeleteZenhubEpicMutationVariables = Exact<{
+  input: DeleteZenhubEpicInput;
+}>;
+
+
+export type DeleteZenhubEpicMutation = { readonly __typename?: 'Mutation', readonly deleteZenhubEpic?: { readonly __typename?: 'DeleteZenhubEpicPayload', readonly zenhubEpicId: string } | null };
+
+export type RemoveIssuesFromEpicsMutationVariables = Exact<{
+  input: RemoveIssuesFromEpicsInput;
+}>;
+
+
+export type RemoveIssuesFromEpicsMutation = { readonly __typename?: 'Mutation', readonly removeIssuesFromEpics?: { readonly __typename?: 'RemoveIssuesFromEpicsPayload', readonly epics: ReadonlyArray<{ readonly __typename?: 'Epic', readonly id: string }> } | null };
 
 export type UpdateZenhubEpicMutationVariables = Exact<{
   input: UpdateZenhubEpicInput;
@@ -8663,34 +8670,6 @@ export type UpdateZenhubEpicDatesMutationVariables = Exact<{
 
 export type UpdateZenhubEpicDatesMutation = { readonly __typename?: 'Mutation', readonly updateZenhubEpicDates?: { readonly __typename?: 'UpdateZenhubEpicDatesPayload', readonly zenhubEpic: { readonly __typename?: 'ZenhubEpic', readonly id: string, readonly startOn?: string | null, readonly endOn?: string | null } } | null };
 
-export type DeleteZenhubEpicMutationVariables = Exact<{
-  input: DeleteZenhubEpicInput;
-}>;
-
-
-export type DeleteZenhubEpicMutation = { readonly __typename?: 'Mutation', readonly deleteZenhubEpic?: { readonly __typename?: 'DeleteZenhubEpicPayload', readonly zenhubEpicId: string } | null };
-
-export type CloseIssuesMutationVariables = Exact<{
-  input: CloseIssuesInput;
-}>;
-
-
-export type CloseIssuesMutation = { readonly __typename?: 'Mutation', readonly closeIssues?: { readonly __typename?: 'CloseIssuesPayload', readonly successCount: number } | null };
-
-export type ReopenIssuesMutationVariables = Exact<{
-  input: ReopenIssuesInput;
-}>;
-
-
-export type ReopenIssuesMutation = { readonly __typename?: 'Mutation', readonly reopenIssues?: { readonly __typename?: 'ReopenIssuesPayload', readonly successCount: number } | null };
-
-export type MoveIssueMutationVariables = Exact<{
-  input: MoveIssueInput;
-}>;
-
-
-export type MoveIssueMutation = { readonly __typename?: 'Mutation', readonly moveIssue?: { readonly __typename?: 'MoveIssuePayload', readonly issue: { readonly __typename?: 'Issue', readonly id: string } } | null };
-
 export type AddAssigneesToIssuesMutationVariables = Exact<{
   input: AddAssigneesToIssuesInput;
 }>;
@@ -8705,26 +8684,12 @@ export type AddLabelsToIssuesMutationVariables = Exact<{
 
 export type AddLabelsToIssuesMutation = { readonly __typename?: 'Mutation', readonly addLabelsToIssues?: { readonly __typename?: 'AddLabelsToIssuesPayload', readonly successCount: number } | null };
 
-export type SetEstimateMutationVariables = Exact<{
-  input: SetEstimateInput;
+export type CreateIssueMutationVariables = Exact<{
+  input: CreateIssueInput;
 }>;
 
 
-export type SetEstimateMutation = { readonly __typename?: 'Mutation', readonly setEstimate?: { readonly __typename?: 'SetEstimatePayload', readonly clientMutationId?: string | null } | null };
-
-export type SetMultipleEstimatesMutationVariables = Exact<{
-  input: SetMultipleEstimatesInput;
-}>;
-
-
-export type SetMultipleEstimatesMutation = { readonly __typename?: 'Mutation', readonly setMultipleEstimates?: { readonly __typename?: 'SetMultipleEstimatesPayload', readonly issues: ReadonlyArray<{ readonly __typename?: 'Issue', readonly id: string }> } | null };
-
-export type UpdateIssueMutationVariables = Exact<{
-  input: UpdateIssueInput;
-}>;
-
-
-export type UpdateIssueMutation = { readonly __typename?: 'Mutation', readonly updateIssue?: { readonly __typename?: 'UpdateIssuePayload', readonly issue: { readonly __typename?: 'Issue', readonly id: string, readonly title: string, readonly body?: string | null } } | null };
+export type CreateIssueMutation = { readonly __typename?: 'Mutation', readonly createIssue?: { readonly __typename?: 'CreateIssuePayload', readonly issue: { readonly __typename?: 'Issue', readonly id: string, readonly title: string, readonly number: number, readonly htmlUrl: string, readonly state: IssueState } } | null };
 
 export type RemoveAssigneesFromIssuesMutationVariables = Exact<{
   input: RemoveAssigneesFromIssuesInput;
@@ -8740,20 +8705,40 @@ export type RemoveLabelsFromIssuesMutationVariables = Exact<{
 
 export type RemoveLabelsFromIssuesMutation = { readonly __typename?: 'Mutation', readonly removeLabelsFromIssues?: { readonly __typename?: 'RemoveLabelsFromIssuesPayload', readonly successCount: number } | null };
 
-export type CreateIssueWithEpicMutationVariables = Exact<{
-  createInput: CreateIssueInput;
-  addToEpicInput: AddIssuesToEpicsInput;
+export type UpdateIssueMutationVariables = Exact<{
+  input: UpdateIssueInput;
 }>;
 
 
-export type CreateIssueWithEpicMutation = { readonly __typename?: 'Mutation', readonly createIssue?: { readonly __typename?: 'CreateIssuePayload', readonly issue: { readonly __typename?: 'Issue', readonly id: string, readonly title: string, readonly number: number, readonly htmlUrl: string, readonly state: IssueState } } | null, readonly addIssuesToEpics?: { readonly __typename?: 'AddIssuesToEpicsPayload', readonly epics: ReadonlyArray<{ readonly __typename?: 'Epic', readonly id: string }> } | null };
+export type UpdateIssueMutation = { readonly __typename?: 'Mutation', readonly updateIssue?: { readonly __typename?: 'UpdateIssuePayload', readonly issue: { readonly __typename?: 'Issue', readonly id: string, readonly title: string, readonly body?: string | null } } | null };
 
-export type RemoveIssuesFromEpicsMutationVariables = Exact<{
-  input: RemoveIssuesFromEpicsInput;
+export type CloseIssuesMutationVariables = Exact<{
+  input: CloseIssuesInput;
 }>;
 
 
-export type RemoveIssuesFromEpicsMutation = { readonly __typename?: 'Mutation', readonly removeIssuesFromEpics?: { readonly __typename?: 'RemoveIssuesFromEpicsPayload', readonly epics: ReadonlyArray<{ readonly __typename?: 'Epic', readonly id: string }> } | null };
+export type CloseIssuesMutation = { readonly __typename?: 'Mutation', readonly closeIssues?: { readonly __typename?: 'CloseIssuesPayload', readonly successCount: number } | null };
+
+export type MoveIssueMutationVariables = Exact<{
+  input: MoveIssueInput;
+}>;
+
+
+export type MoveIssueMutation = { readonly __typename?: 'Mutation', readonly moveIssue?: { readonly __typename?: 'MoveIssuePayload', readonly issue: { readonly __typename?: 'Issue', readonly id: string } } | null };
+
+export type ReopenIssuesMutationVariables = Exact<{
+  input: ReopenIssuesInput;
+}>;
+
+
+export type ReopenIssuesMutation = { readonly __typename?: 'Mutation', readonly reopenIssues?: { readonly __typename?: 'ReopenIssuesPayload', readonly successCount: number } | null };
+
+export type SetEstimateMutationVariables = Exact<{
+  input: SetEstimateInput;
+}>;
+
+
+export type SetEstimateMutation = { readonly __typename?: 'Mutation', readonly setEstimate?: { readonly __typename?: 'SetEstimatePayload', readonly clientMutationId?: string | null } | null };
 
 export type CreateGithubLabelMutationVariables = Exact<{
   input: CreateGithubLabelInput;
@@ -8790,20 +8775,6 @@ export type GetWorkspaceLabelsQueryVariables = Exact<{
 
 export type GetWorkspaceLabelsQuery = { readonly __typename?: 'Query', readonly workspace?: { readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly zenhubLabels?: { readonly __typename?: 'ZenhubLabelConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'ZenhubLabel', readonly id: string, readonly name: string, readonly color?: string | null, readonly description?: string | null }> } | null } | null };
 
-export type CreateMilestoneMutationVariables = Exact<{
-  input: CreateMilestoneInput;
-}>;
-
-
-export type CreateMilestoneMutation = { readonly __typename?: 'Mutation', readonly createMilestone?: { readonly __typename?: 'CreateMilestonePayload', readonly milestone: { readonly __typename?: 'Milestone', readonly id: string, readonly title: string, readonly description?: string | null, readonly dueOn?: string | null } } | null };
-
-export type UpdateMilestoneMutationVariables = Exact<{
-  input: UpdateMilestoneInput;
-}>;
-
-
-export type UpdateMilestoneMutation = { readonly __typename?: 'Mutation', readonly updateMilestone?: { readonly __typename?: 'UpdateMilestonePayload', readonly milestone: { readonly __typename?: 'Milestone', readonly id: string, readonly title: string, readonly description?: string | null, readonly dueOn?: string | null } } | null };
-
 export type AddMilestoneToIssuesMutationVariables = Exact<{
   input: AddMilestoneForIssuesInput;
 }>;
@@ -8811,12 +8782,12 @@ export type AddMilestoneToIssuesMutationVariables = Exact<{
 
 export type AddMilestoneToIssuesMutation = { readonly __typename?: 'Mutation', readonly addMilestoneToIssues?: { readonly __typename?: 'AddMilestoneForIssuesPayload', readonly successCount: number } | null };
 
-export type RemoveMilestoneToIssuesMutationVariables = Exact<{
-  input: RemoveMilestoneForIssuesInput;
+export type CreateMilestoneMutationVariables = Exact<{
+  input: CreateMilestoneInput;
 }>;
 
 
-export type RemoveMilestoneToIssuesMutation = { readonly __typename?: 'Mutation', readonly removeMilestoneToIssues?: { readonly __typename?: 'RemoveMilestoneForIssuesPayload', readonly successCount: number } | null };
+export type CreateMilestoneMutation = { readonly __typename?: 'Mutation', readonly createMilestone?: { readonly __typename?: 'CreateMilestonePayload', readonly milestone: { readonly __typename?: 'Milestone', readonly id: string, readonly title: string, readonly description?: string | null, readonly dueOn?: string | null } } | null };
 
 export type DeleteMilestoneMutationVariables = Exact<{
   input: DeleteMilestoneInput;
@@ -8825,19 +8796,26 @@ export type DeleteMilestoneMutationVariables = Exact<{
 
 export type DeleteMilestoneMutation = { readonly __typename?: 'Mutation', readonly deleteMilestone?: { readonly __typename?: 'DeleteMilestonePayload', readonly milestone: { readonly __typename?: 'Milestone', readonly id: string } } | null };
 
+export type RemoveMilestoneToIssuesMutationVariables = Exact<{
+  input: RemoveMilestoneForIssuesInput;
+}>;
+
+
+export type RemoveMilestoneToIssuesMutation = { readonly __typename?: 'Mutation', readonly removeMilestoneToIssues?: { readonly __typename?: 'RemoveMilestoneForIssuesPayload', readonly successCount: number } | null };
+
+export type UpdateMilestoneMutationVariables = Exact<{
+  input: UpdateMilestoneInput;
+}>;
+
+
+export type UpdateMilestoneMutation = { readonly __typename?: 'Mutation', readonly updateMilestone?: { readonly __typename?: 'UpdateMilestonePayload', readonly milestone: { readonly __typename?: 'Milestone', readonly id: string, readonly title: string, readonly description?: string | null, readonly dueOn?: string | null } } | null };
+
 export type CreatePipelineMutationVariables = Exact<{
   input: CreatePipelineInput;
 }>;
 
 
 export type CreatePipelineMutation = { readonly __typename?: 'Mutation', readonly createPipeline?: { readonly __typename?: 'CreatePipelinePayload', readonly pipeline: { readonly __typename?: 'Pipeline', readonly id: string, readonly name: string, readonly description?: string | null } } | null };
-
-export type UpdatePipelineMutationVariables = Exact<{
-  input: UpdatePipelineInput;
-}>;
-
-
-export type UpdatePipelineMutation = { readonly __typename?: 'Mutation', readonly updatePipeline?: { readonly __typename?: 'UpdatePipelinePayload', readonly pipeline: { readonly __typename?: 'Pipeline', readonly id: string, readonly name: string, readonly description?: string | null } } | null };
 
 export type DeletePipelineMutationVariables = Exact<{
   input: DeletePipelineInput;
@@ -8846,6 +8824,13 @@ export type DeletePipelineMutationVariables = Exact<{
 
 export type DeletePipelineMutation = { readonly __typename?: 'Mutation', readonly deletePipeline?: { readonly __typename?: 'DeletePipelinePayload', readonly clientMutationId?: string | null } | null };
 
+export type UpdatePipelineMutationVariables = Exact<{
+  input: UpdatePipelineInput;
+}>;
+
+
+export type UpdatePipelineMutation = { readonly __typename?: 'Mutation', readonly updatePipeline?: { readonly __typename?: 'UpdatePipelinePayload', readonly pipeline: { readonly __typename?: 'Pipeline', readonly id: string, readonly name: string, readonly description?: string | null } } | null };
+
 export type GetWorkspacePipelinesQueryVariables = Exact<{
   workspaceId: Scalars['ID']['input'];
 }>;
@@ -8853,14 +8838,20 @@ export type GetWorkspacePipelinesQueryVariables = Exact<{
 
 export type GetWorkspacePipelinesQuery = { readonly __typename?: 'Query', readonly workspace?: { readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly pipelinesConnection: { readonly __typename?: 'PipelineConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Pipeline', readonly id: string, readonly name: string, readonly description?: string | null, readonly issues: { readonly __typename?: 'IssueConnection', readonly totalCount: number } }> } } | null };
 
-export type SearchIssuesByPipelineQueryVariables = Exact<{
-  pipelineId: Scalars['ID']['input'];
-  query?: InputMaybe<Scalars['String']['input']>;
-  filters: IssueSearchFiltersInput;
+export type GetRepositoriesByGhIdsQueryVariables = Exact<{
+  ghIds: ReadonlyArray<Scalars['Int']['input']> | Scalars['Int']['input'];
 }>;
 
 
-export type SearchIssuesByPipelineQuery = { readonly __typename?: 'Query', readonly searchIssuesByPipeline?: { readonly __typename?: 'IssueConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Issue', readonly id: string, readonly title: string, readonly number: number }> } | null };
+export type GetRepositoriesByGhIdsQuery = { readonly __typename?: 'Query', readonly repositoriesByGhId: ReadonlyArray<{ readonly __typename?: 'Repository', readonly id: string, readonly ghId: number, readonly name: string, readonly description?: string | null, readonly ownerName: string, readonly createdAt: string, readonly updatedAt: string, readonly workspacesConnection: { readonly __typename?: 'WorkspaceConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null }> } }> };
+
+export type IssueByInfoQueryVariables = Exact<{
+  repositoryGhId: Scalars['Int']['input'];
+  issueNumber: Scalars['Int']['input'];
+}>;
+
+
+export type IssueByInfoQuery = { readonly __typename?: 'Query', readonly issueByInfo: { readonly __typename?: 'Issue', readonly id: string, readonly title: string, readonly number: number, readonly state: IssueState, readonly htmlUrl: string, readonly labels: { readonly __typename?: 'LabelConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Label', readonly name: string }> }, readonly assignees: { readonly __typename?: 'UserConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'User', readonly login: string }> }, readonly milestone?: { readonly __typename?: 'Milestone', readonly title: string } | null } };
 
 export type SearchIssuesQueryVariables = Exact<{
   workspaceId: Scalars['ID']['input'];
@@ -8872,6 +8863,20 @@ export type SearchIssuesQueryVariables = Exact<{
 
 export type SearchIssuesQuery = { readonly __typename?: 'Query', readonly searchIssues?: { readonly __typename?: 'IssueConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Issue', readonly id: string, readonly state: IssueState, readonly body?: string | null, readonly closedAt?: string | null, readonly htmlUrl: string, readonly labels: { readonly __typename?: 'LabelConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Label', readonly id: string, readonly name: string }> }, readonly creator?: { readonly __typename?: 'ZenhubUser', readonly id: string, readonly name?: string | null, readonly githubUser?: { readonly __typename?: 'User', readonly login: string } | null } | null, readonly estimate?: { readonly __typename?: 'Estimate', readonly value: number } | null, readonly assignees: { readonly __typename?: 'UserConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'User', readonly id: string, readonly login: string }> } }> } | null };
 
+export type SearchIssuesByPipelineQueryVariables = Exact<{
+  pipelineId: Scalars['ID']['input'];
+  query?: InputMaybe<Scalars['String']['input']>;
+  filters: IssueSearchFiltersInput;
+}>;
+
+
+export type SearchIssuesByPipelineQuery = { readonly __typename?: 'Query', readonly searchIssuesByPipeline?: { readonly __typename?: 'IssueConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Issue', readonly id: string, readonly title: string, readonly number: number }> } | null };
+
+export type ViewerQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ViewerQuery = { readonly __typename?: 'Query', readonly viewer: { readonly __typename?: 'ZenhubUser', readonly id: string, readonly name?: string | null, readonly email?: string | null, readonly imageUrl?: string | null, readonly githubUser?: { readonly __typename?: 'User', readonly login: string, readonly avatarUrl: string } | null } };
+
 export type WorkspaceIssuesQueryVariables = Exact<{
   workspaceId: Scalars['ID']['input'];
   after?: InputMaybe<Scalars['String']['input']>;
@@ -8879,40 +8884,6 @@ export type WorkspaceIssuesQueryVariables = Exact<{
 
 
 export type WorkspaceIssuesQuery = { readonly __typename?: 'Query', readonly workspace?: { readonly __typename?: 'Workspace', readonly issues?: { readonly __typename?: 'IssueConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Issue', readonly id: string, readonly pullRequest: boolean, readonly type: IssueType, readonly title: string, readonly number: number, readonly state: IssueState, readonly assignees: { readonly __typename?: 'UserConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'User', readonly name?: string | null, readonly id: string, readonly ghId?: number | null, readonly login: string }> }, readonly parentZenhubEpics: { readonly __typename?: 'ZenhubEpicConnection', readonly totalCount: number }, readonly repository: { readonly __typename?: 'Repository', readonly name: string, readonly ownerName: string } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly endCursor?: string | null } } | null } | null };
-
-export type ViewerQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ViewerQuery = { readonly __typename?: 'Query', readonly viewer: { readonly __typename?: 'ZenhubUser', readonly id: string, readonly name?: string | null, readonly email?: string | null, readonly imageUrl?: string | null, readonly githubUser?: { readonly __typename?: 'User', readonly login: string, readonly avatarUrl: string } | null } };
-
-export type IssueByInfoQueryVariables = Exact<{
-  repositoryGhId: Scalars['Int']['input'];
-  issueNumber: Scalars['Int']['input'];
-}>;
-
-
-export type IssueByInfoQuery = { readonly __typename?: 'Query', readonly issueByInfo: { readonly __typename?: 'Issue', readonly id: string, readonly title: string, readonly number: number, readonly state: IssueState, readonly htmlUrl: string, readonly labels: { readonly __typename?: 'LabelConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Label', readonly name: string }> }, readonly assignees: { readonly __typename?: 'UserConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'User', readonly login: string }> }, readonly milestone?: { readonly __typename?: 'Milestone', readonly title: string } | null } };
-
-export type RepositoriesByGhIdQueryVariables = Exact<{
-  ghIds: ReadonlyArray<Scalars['Int']['input']> | Scalars['Int']['input'];
-}>;
-
-
-export type RepositoriesByGhIdQuery = { readonly __typename?: 'Query', readonly repositoriesByGhId: ReadonlyArray<{ readonly __typename?: 'Repository', readonly id: string, readonly name: string, readonly ownerName: string, readonly ghId: number, readonly owner: { readonly __typename?: 'Bot', readonly login: string } | { readonly __typename?: 'Mannequin', readonly login: string } | { readonly __typename?: 'NoOwner', readonly login: string } | { readonly __typename?: 'Organization', readonly login: string } | { readonly __typename?: 'User', readonly login: string } }> };
-
-export type GetWorkspaceRepositoriesQueryVariables = Exact<{
-  workspaceId: Scalars['ID']['input'];
-}>;
-
-
-export type GetWorkspaceRepositoriesQuery = { readonly __typename?: 'Query', readonly workspace?: { readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly description?: string | null, readonly repositoriesConnection?: { readonly __typename?: 'RepositoryConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Repository', readonly id: string, readonly ghId: number, readonly createdAt: string, readonly name: string, readonly description?: string | null }> } | null } | null };
-
-export type GetRepositoriesByGhIdsQueryVariables = Exact<{
-  ghIds: ReadonlyArray<Scalars['Int']['input']> | Scalars['Int']['input'];
-}>;
-
-
-export type GetRepositoriesByGhIdsQuery = { readonly __typename?: 'Query', readonly repositoriesByGhId: ReadonlyArray<{ readonly __typename?: 'Repository', readonly id: string, readonly ghId: number, readonly name: string, readonly description?: string | null, readonly ownerName: string, readonly createdAt: string, readonly updatedAt: string, readonly workspacesConnection: { readonly __typename?: 'WorkspaceConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null }> } }> };
 
 export type AddRepositoryToWorkspaceMutationVariables = Exact<{
   input: AddRepositoryToWorkspaceInput;
@@ -8928,13 +8899,6 @@ export type DisconnectWorkspaceRepositoryMutationVariables = Exact<{
 
 export type DisconnectWorkspaceRepositoryMutation = { readonly __typename?: 'Mutation', readonly disconnectWorkspaceRepository?: { readonly __typename?: 'DisconnectWorkspaceRepositoryPayload', readonly workspace: { readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null } } | null };
 
-export type GetRepositoryDetailsQueryVariables = Exact<{
-  repositoryId: Scalars['ID']['input'];
-}>;
-
-
-export type GetRepositoryDetailsQuery = { readonly __typename?: 'Query', readonly node?: { readonly __typename?: 'Blockage' } | { readonly __typename?: 'Comment' } | { readonly __typename?: 'Epic' } | { readonly __typename?: 'Issue' } | { readonly __typename?: 'IssueDependency' } | { readonly __typename?: 'KeyDate' } | { readonly __typename?: 'Milestone' } | { readonly __typename?: 'Pipeline' } | { readonly __typename?: 'PipelineToPipelineAutomation' } | { readonly __typename?: 'Project' } | { readonly __typename?: 'Release' } | { readonly __typename?: 'Repository', readonly id: string, readonly ghId: number, readonly name: string, readonly description?: string | null, readonly ownerName: string, readonly createdAt: string, readonly updatedAt: string, readonly workspacesConnection: { readonly __typename?: 'WorkspaceConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly description?: string | null }> }, readonly issues: { readonly __typename?: 'IssueConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'Issue', readonly id: string, readonly number: number, readonly title: string, readonly state: IssueState }> }, readonly milestones: { readonly __typename?: 'MilestoneConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'Milestone', readonly id: string, readonly title: string, readonly state: MilestoneState }> }, readonly labels: { readonly __typename?: 'LabelConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'Label', readonly id: string, readonly name: string, readonly color?: string | null }> } } | { readonly __typename?: 'Roadmap' } | { readonly __typename?: 'SavedView' } | { readonly __typename?: 'Sprint' } | { readonly __typename?: 'SprintConfig' } | { readonly __typename?: 'SprintIssue' } | { readonly __typename?: 'SprintReview' } | { readonly __typename?: 'SprintReviewFeature' } | { readonly __typename?: 'SprintReviewSchedule' } | { readonly __typename?: 'ZenhubEpic' } | { readonly __typename?: 'ZenhubLabel' } | { readonly __typename?: 'ZenhubOrganization' } | { readonly __typename?: 'ZenhubOrganizationLimited' } | { readonly __typename?: 'ZenhubUser' } | { readonly __typename?: 'ZenhubUserAtOrganization' } | null };
-
 export type GetRepositoryAssignableUsersQueryVariables = Exact<{
   repositoryId: Scalars['ID']['input'];
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -8943,19 +8907,19 @@ export type GetRepositoryAssignableUsersQueryVariables = Exact<{
 
 export type GetRepositoryAssignableUsersQuery = { readonly __typename?: 'Query', readonly node?: { readonly __typename?: 'Blockage' } | { readonly __typename?: 'Comment' } | { readonly __typename?: 'Epic' } | { readonly __typename?: 'Issue' } | { readonly __typename?: 'IssueDependency' } | { readonly __typename?: 'KeyDate' } | { readonly __typename?: 'Milestone' } | { readonly __typename?: 'Pipeline' } | { readonly __typename?: 'PipelineToPipelineAutomation' } | { readonly __typename?: 'Project' } | { readonly __typename?: 'Release' } | { readonly __typename?: 'Repository', readonly id: string, readonly name: string, readonly assignableUsers: { readonly __typename?: 'UserConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'User', readonly id: string, readonly login: string, readonly name?: string | null, readonly zenhubUser?: { readonly __typename?: 'ZenhubUser', readonly imageUrl?: string | null, readonly githubUser?: { readonly __typename?: 'User', readonly login: string, readonly avatarUrl: string } | null } | null }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly endCursor?: string | null } } } | { readonly __typename?: 'Roadmap' } | { readonly __typename?: 'SavedView' } | { readonly __typename?: 'Sprint' } | { readonly __typename?: 'SprintConfig' } | { readonly __typename?: 'SprintIssue' } | { readonly __typename?: 'SprintReview' } | { readonly __typename?: 'SprintReviewFeature' } | { readonly __typename?: 'SprintReviewSchedule' } | { readonly __typename?: 'ZenhubEpic' } | { readonly __typename?: 'ZenhubLabel' } | { readonly __typename?: 'ZenhubOrganization' } | { readonly __typename?: 'ZenhubOrganizationLimited' } | { readonly __typename?: 'ZenhubUser' } | { readonly __typename?: 'ZenhubUserAtOrganization' } | null };
 
-export type CreateSprintConfigMutationVariables = Exact<{
-  input: CreateSprintConfigInput;
+export type GetRepositoryDetailsQueryVariables = Exact<{
+  repositoryId: Scalars['ID']['input'];
 }>;
 
 
-export type CreateSprintConfigMutation = { readonly __typename?: 'Mutation', readonly createSprintConfig?: { readonly __typename?: 'CreateSprintConfigPayload', readonly sprintConfig: { readonly __typename?: 'SprintConfig', readonly id: string, readonly name: string } } | null };
+export type GetRepositoryDetailsQuery = { readonly __typename?: 'Query', readonly node?: { readonly __typename?: 'Blockage' } | { readonly __typename?: 'Comment' } | { readonly __typename?: 'Epic' } | { readonly __typename?: 'Issue' } | { readonly __typename?: 'IssueDependency' } | { readonly __typename?: 'KeyDate' } | { readonly __typename?: 'Milestone' } | { readonly __typename?: 'Pipeline' } | { readonly __typename?: 'PipelineToPipelineAutomation' } | { readonly __typename?: 'Project' } | { readonly __typename?: 'Release' } | { readonly __typename?: 'Repository', readonly id: string, readonly ghId: number, readonly name: string, readonly description?: string | null, readonly ownerName: string, readonly createdAt: string, readonly updatedAt: string, readonly workspacesConnection: { readonly __typename?: 'WorkspaceConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly description?: string | null }> }, readonly issues: { readonly __typename?: 'IssueConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'Issue', readonly id: string, readonly number: number, readonly title: string, readonly state: IssueState }> }, readonly milestones: { readonly __typename?: 'MilestoneConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'Milestone', readonly id: string, readonly title: string, readonly state: MilestoneState }> }, readonly labels: { readonly __typename?: 'LabelConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'Label', readonly id: string, readonly name: string, readonly color?: string | null }> } } | { readonly __typename?: 'Roadmap' } | { readonly __typename?: 'SavedView' } | { readonly __typename?: 'Sprint' } | { readonly __typename?: 'SprintConfig' } | { readonly __typename?: 'SprintIssue' } | { readonly __typename?: 'SprintReview' } | { readonly __typename?: 'SprintReviewFeature' } | { readonly __typename?: 'SprintReviewSchedule' } | { readonly __typename?: 'ZenhubEpic' } | { readonly __typename?: 'ZenhubLabel' } | { readonly __typename?: 'ZenhubOrganization' } | { readonly __typename?: 'ZenhubOrganizationLimited' } | { readonly __typename?: 'ZenhubUser' } | { readonly __typename?: 'ZenhubUserAtOrganization' } | null };
 
-export type UpdateSprintMutationVariables = Exact<{
-  input: UpdateSprintInput;
+export type GetWorkspaceRepositoriesQueryVariables = Exact<{
+  workspaceId: Scalars['ID']['input'];
 }>;
 
 
-export type UpdateSprintMutation = { readonly __typename?: 'Mutation', readonly updateSprint?: { readonly __typename?: 'UpdateSprintPayload', readonly sprint: { readonly __typename?: 'Sprint', readonly id: string, readonly name?: string | null, readonly startAt: string, readonly endAt: string, readonly state: SprintState } } | null };
+export type GetWorkspaceRepositoriesQuery = { readonly __typename?: 'Query', readonly workspace?: { readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly description?: string | null, readonly repositoriesConnection?: { readonly __typename?: 'RepositoryConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Repository', readonly id: string, readonly ghId: number, readonly createdAt: string, readonly name: string, readonly description?: string | null }> } | null } | null };
 
 export type AddIssuesToSprintsMutationVariables = Exact<{
   input: AddIssuesToSprintsInput;
@@ -8964,12 +8928,12 @@ export type AddIssuesToSprintsMutationVariables = Exact<{
 
 export type AddIssuesToSprintsMutation = { readonly __typename?: 'Mutation', readonly addIssuesToSprints?: { readonly __typename?: 'AddIssuesToSprintsPayload', readonly sprintIssues: ReadonlyArray<{ readonly __typename?: 'SprintIssue', readonly id: string }> } | null };
 
-export type RemoveIssuesFromSprintsMutationVariables = Exact<{
-  input: RemoveIssuesFromSprintsInput;
+export type CreateSprintConfigMutationVariables = Exact<{
+  input: CreateSprintConfigInput;
 }>;
 
 
-export type RemoveIssuesFromSprintsMutation = { readonly __typename?: 'Mutation', readonly removeIssuesFromSprints?: { readonly __typename?: 'RemoveIssuesFromSprintsPayload', readonly sprints: ReadonlyArray<{ readonly __typename?: 'Sprint', readonly id: string }> } | null };
+export type CreateSprintConfigMutation = { readonly __typename?: 'Mutation', readonly createSprintConfig?: { readonly __typename?: 'CreateSprintConfigPayload', readonly sprintConfig: { readonly __typename?: 'SprintConfig', readonly id: string, readonly name: string } } | null };
 
 export type DeleteSprintConfigAndOpenSprintsMutationVariables = Exact<{
   input: DeleteSprintConfigAndOpenSprintsInput;
@@ -8977,6 +8941,20 @@ export type DeleteSprintConfigAndOpenSprintsMutationVariables = Exact<{
 
 
 export type DeleteSprintConfigAndOpenSprintsMutation = { readonly __typename?: 'Mutation', readonly deleteSprintConfigAndOpenSprints?: { readonly __typename?: 'DeleteSprintConfigAndOpenSprintsPayload', readonly workspace: { readonly __typename?: 'Workspace', readonly id: string } } | null };
+
+export type RemoveIssuesFromSprintsMutationVariables = Exact<{
+  input: RemoveIssuesFromSprintsInput;
+}>;
+
+
+export type RemoveIssuesFromSprintsMutation = { readonly __typename?: 'Mutation', readonly removeIssuesFromSprints?: { readonly __typename?: 'RemoveIssuesFromSprintsPayload', readonly sprints: ReadonlyArray<{ readonly __typename?: 'Sprint', readonly id: string }> } | null };
+
+export type UpdateSprintMutationVariables = Exact<{
+  input: UpdateSprintInput;
+}>;
+
+
+export type UpdateSprintMutation = { readonly __typename?: 'Mutation', readonly updateSprint?: { readonly __typename?: 'UpdateSprintPayload', readonly sprint: { readonly __typename?: 'Sprint', readonly id: string, readonly name?: string | null, readonly startAt: string, readonly endAt: string, readonly state: SprintState } } | null };
 
 export type GetWorkspaceSprintsQueryVariables = Exact<{
   workspaceId: Scalars['ID']['input'];
@@ -8992,13 +8970,6 @@ export type GetWorkspaceUsersQueryVariables = Exact<{
 
 export type GetWorkspaceUsersQuery = { readonly __typename?: 'Query', readonly workspace?: { readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly description?: string | null, readonly assignees?: { readonly __typename?: 'UserConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'User', readonly id: string, readonly ghId?: number | null, readonly login: string, readonly name?: string | null, readonly zenhubUser?: { readonly __typename?: 'ZenhubUser', readonly email?: string | null } | null }> } | null } | null };
 
-export type OwnerByLoginQueryVariables = Exact<{
-  login: Scalars['String']['input'];
-}>;
-
-
-export type OwnerByLoginQuery = { readonly __typename?: 'Query', readonly ownerByLogin?: { readonly __typename?: 'Bot', readonly id: string, readonly login: string, readonly avatarUrl: string } | { readonly __typename?: 'Mannequin', readonly id: string, readonly login: string, readonly avatarUrl: string } | { readonly __typename?: 'NoOwner', readonly id: string, readonly login: string, readonly avatarUrl: string } | { readonly __typename?: 'Organization', readonly login: string, readonly id: string, readonly avatarUrl: string } | { readonly __typename?: 'User', readonly name?: string | null, readonly id: string, readonly login: string, readonly avatarUrl: string } | null };
-
 export type OwnerByGhIdQueryVariables = Exact<{
   ghId: Scalars['Int']['input'];
 }>;
@@ -9006,12 +8977,12 @@ export type OwnerByGhIdQueryVariables = Exact<{
 
 export type OwnerByGhIdQuery = { readonly __typename?: 'Query', readonly ownerByGhId?: { readonly __typename?: 'Bot', readonly id: string, readonly login: string, readonly avatarUrl: string } | { readonly __typename?: 'Mannequin', readonly id: string, readonly login: string, readonly avatarUrl: string } | { readonly __typename?: 'NoOwner', readonly id: string, readonly login: string, readonly avatarUrl: string } | { readonly __typename?: 'Organization', readonly login: string, readonly id: string, readonly avatarUrl: string } | { readonly __typename?: 'User', readonly name?: string | null, readonly id: string, readonly login: string, readonly avatarUrl: string } | null };
 
-export type SearchWorkspaceUsersQueryVariables = Exact<{
-  workspaceId: Scalars['ID']['input'];
+export type OwnerByLoginQueryVariables = Exact<{
+  login: Scalars['String']['input'];
 }>;
 
 
-export type SearchWorkspaceUsersQuery = { readonly __typename?: 'Query', readonly workspace?: { readonly __typename?: 'Workspace', readonly zenhubUsers: { readonly __typename?: 'ZenhubUserConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'ZenhubUser', readonly id: string, readonly name?: string | null, readonly email?: string | null }> } } | null };
+export type OwnerByLoginQuery = { readonly __typename?: 'Query', readonly ownerByLogin?: { readonly __typename?: 'Bot', readonly id: string, readonly login: string, readonly avatarUrl: string } | { readonly __typename?: 'Mannequin', readonly id: string, readonly login: string, readonly avatarUrl: string } | { readonly __typename?: 'NoOwner', readonly id: string, readonly login: string, readonly avatarUrl: string } | { readonly __typename?: 'Organization', readonly login: string, readonly id: string, readonly avatarUrl: string } | { readonly __typename?: 'User', readonly name?: string | null, readonly id: string, readonly login: string, readonly avatarUrl: string } | null };
 
 export type SearchOwnerByLoginQueryVariables = Exact<{
   login: Scalars['String']['input'];
@@ -9020,6 +8991,13 @@ export type SearchOwnerByLoginQueryVariables = Exact<{
 
 export type SearchOwnerByLoginQuery = { readonly __typename?: 'Query', readonly ownerByLogin?: { readonly __typename?: 'Bot', readonly id: string, readonly login: string, readonly avatarUrl: string } | { readonly __typename?: 'Mannequin', readonly id: string, readonly login: string, readonly avatarUrl: string } | { readonly __typename?: 'NoOwner', readonly id: string, readonly login: string, readonly avatarUrl: string } | { readonly __typename?: 'Organization', readonly id: string, readonly login: string, readonly avatarUrl: string } | { readonly __typename?: 'User', readonly name?: string | null, readonly id: string, readonly login: string, readonly avatarUrl: string } | null };
 
+export type SearchWorkspaceUsersQueryVariables = Exact<{
+  workspaceId: Scalars['ID']['input'];
+}>;
+
+
+export type SearchWorkspaceUsersQuery = { readonly __typename?: 'Query', readonly workspace?: { readonly __typename?: 'Workspace', readonly zenhubUsers: { readonly __typename?: 'ZenhubUserConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'ZenhubUser', readonly id: string, readonly name?: string | null, readonly email?: string | null }> } } | null };
+
 export type CreateWorkspaceMutationVariables = Exact<{
   input: CreateWorkspaceInput;
 }>;
@@ -9027,20 +9005,13 @@ export type CreateWorkspaceMutationVariables = Exact<{
 
 export type CreateWorkspaceMutation = { readonly __typename?: 'Mutation', readonly createWorkspace?: { readonly __typename?: 'CreateWorkspacePayload', readonly workspace: { readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly description?: string | null } } | null };
 
-export type GetUserWorkspacesFromOrgsQueryVariables = Exact<{
+export type GetOrganizationWorkspacesQueryVariables = Exact<{
+  query?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type GetUserWorkspacesFromOrgsQuery = { readonly __typename?: 'Query', readonly viewer: { readonly __typename?: 'ZenhubUser', readonly zenhubOrganizations: { readonly __typename?: 'ZenhubOrganizationConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'ZenhubOrganization', readonly id: string, readonly name?: string | null, readonly workspaces: { readonly __typename?: 'WorkspaceConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly description?: string | null, readonly pipelinesConnection: { readonly __typename?: 'PipelineConnection', readonly totalCount: number }, readonly repositoriesConnection?: { readonly __typename?: 'RepositoryConnection', readonly totalCount: number } | null }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly endCursor?: string | null } } }> } } };
-
-export type SearchUserWorkspacesQueryVariables = Exact<{
-  query: Scalars['String']['input'];
-  first?: InputMaybe<Scalars['Int']['input']>;
-}>;
-
-
-export type SearchUserWorkspacesQuery = { readonly __typename?: 'Query', readonly viewer: { readonly __typename?: 'ZenhubUser', readonly searchWorkspaces: { readonly __typename?: 'WorkspaceConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly description?: string | null, readonly pipelinesConnection: { readonly __typename?: 'PipelineConnection', readonly totalCount: number }, readonly repositoriesConnection?: { readonly __typename?: 'RepositoryConnection', readonly totalCount: number } | null }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly endCursor?: string | null } } } };
+export type GetOrganizationWorkspacesQuery = { readonly __typename?: 'Query', readonly viewer: { readonly __typename?: 'ZenhubUser', readonly zenhubOrganizations: { readonly __typename?: 'ZenhubOrganizationConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'ZenhubOrganization', readonly id: string, readonly name?: string | null, readonly workspaces: { readonly __typename?: 'WorkspaceConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly description?: string | null, readonly pipelinesConnection: { readonly __typename?: 'PipelineConnection', readonly totalCount: number }, readonly repositoriesConnection?: { readonly __typename?: 'RepositoryConnection', readonly totalCount: number } | null }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly endCursor?: string | null } } }> } } };
 
 export type GetUserOrganizationsQueryVariables = Exact<{
   query?: InputMaybe<Scalars['String']['input']>;
@@ -9050,6 +9021,13 @@ export type GetUserOrganizationsQueryVariables = Exact<{
 
 export type GetUserOrganizationsQuery = { readonly __typename?: 'Query', readonly viewer: { readonly __typename?: 'ZenhubUser', readonly zenhubOrganizations: { readonly __typename?: 'ZenhubOrganizationConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'ZenhubOrganization', readonly id: string, readonly name?: string | null, readonly workspaces: { readonly __typename?: 'WorkspaceConnection', readonly totalCount: number } }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly endCursor?: string | null } } } };
 
+export type GetUserWorkspacesFromOrgsQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetUserWorkspacesFromOrgsQuery = { readonly __typename?: 'Query', readonly viewer: { readonly __typename?: 'ZenhubUser', readonly zenhubOrganizations: { readonly __typename?: 'ZenhubOrganizationConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'ZenhubOrganization', readonly id: string, readonly name?: string | null, readonly workspaces: { readonly __typename?: 'WorkspaceConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly description?: string | null, readonly pipelinesConnection: { readonly __typename?: 'PipelineConnection', readonly totalCount: number }, readonly repositoriesConnection?: { readonly __typename?: 'RepositoryConnection', readonly totalCount: number } | null }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly endCursor?: string | null } } }> } } };
+
 export type GetWorkspaceOverviewQueryVariables = Exact<{
   workspaceId: Scalars['ID']['input'];
 }>;
@@ -9057,13 +9035,13 @@ export type GetWorkspaceOverviewQueryVariables = Exact<{
 
 export type GetWorkspaceOverviewQuery = { readonly __typename?: 'Query', readonly workspace?: { readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly description?: string | null, readonly pipelinesConnection: { readonly __typename?: 'PipelineConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'Pipeline', readonly id: string, readonly name: string, readonly description?: string | null, readonly issues: { readonly __typename?: 'IssueConnection', readonly totalCount: number } }> }, readonly repositoriesConnection?: { readonly __typename?: 'RepositoryConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'Repository', readonly id: string, readonly name: string, readonly ownerName: string, readonly issues: { readonly __typename?: 'IssueConnection', readonly totalCount: number } }> } | null, readonly zenhubEpics?: { readonly __typename?: 'ZenhubEpicConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'ZenhubEpic', readonly id: string, readonly title: string, readonly startOn?: string | null, readonly endOn?: string | null, readonly childIssues: { readonly __typename?: 'IssueConnection', readonly totalCount: number } }> } | null, readonly zenhubUsers: { readonly __typename?: 'ZenhubUserConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'ZenhubUser', readonly name?: string | null, readonly email?: string | null, readonly githubUser?: { readonly __typename?: 'User', readonly login: string, readonly avatarUrl: string, readonly name?: string | null } | null }> } } | null };
 
-export type GetOrganizationWorkspacesQueryVariables = Exact<{
-  query?: InputMaybe<Scalars['String']['input']>;
+export type SearchUserWorkspacesQueryVariables = Exact<{
+  query: Scalars['String']['input'];
   first?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type GetOrganizationWorkspacesQuery = { readonly __typename?: 'Query', readonly viewer: { readonly __typename?: 'ZenhubUser', readonly zenhubOrganizations: { readonly __typename?: 'ZenhubOrganizationConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'ZenhubOrganization', readonly id: string, readonly name?: string | null, readonly workspaces: { readonly __typename?: 'WorkspaceConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly description?: string | null, readonly pipelinesConnection: { readonly __typename?: 'PipelineConnection', readonly totalCount: number }, readonly repositoriesConnection?: { readonly __typename?: 'RepositoryConnection', readonly totalCount: number } | null }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly endCursor?: string | null } } }> } } };
+export type SearchUserWorkspacesQuery = { readonly __typename?: 'Query', readonly viewer: { readonly __typename?: 'ZenhubUser', readonly searchWorkspaces: { readonly __typename?: 'WorkspaceConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly description?: string | null, readonly pipelinesConnection: { readonly __typename?: 'PipelineConnection', readonly totalCount: number }, readonly repositoriesConnection?: { readonly __typename?: 'RepositoryConnection', readonly totalCount: number } | null }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly endCursor?: string | null } } } };
 
 
 export const CreateIssueDependencyDocument = gql`
@@ -9092,6 +9070,15 @@ export const DeleteIssueDependencyDocument = gql`
   }
 }
     `;
+export const AddIssuesToEpicsDocument = gql`
+    mutation addIssuesToEpics($input: AddIssuesToEpicsInput!) {
+  addIssuesToEpics(input: $input) {
+    epics {
+      id
+    }
+  }
+}
+    `;
 export const CreateEpicDocument = gql`
     mutation createEpic($input: CreateEpicInput!) {
   createEpic(input: $input) {
@@ -9107,34 +9094,28 @@ export const CreateEpicDocument = gql`
   }
 }
     `;
-export const CreateIssueDocument = gql`
-    mutation createIssue($input: CreateIssueInput!) {
-  createIssue(input: $input) {
-    issue {
-      id
-      title
-      number
-      htmlUrl
-      state
-    }
-  }
-}
-    `;
-export const AddIssuesToEpicsDocument = gql`
-    mutation addIssuesToEpics($input: AddIssuesToEpicsInput!) {
-  addIssuesToEpics(input: $input) {
-    epics {
-      id
-    }
-  }
-}
-    `;
 export const CreateZenhubEpicDocument = gql`
     mutation createZenhubEpic($input: CreateZenhubEpicInput!) {
   createZenhubEpic(input: $input) {
     zenhubEpic {
       id
       title
+    }
+  }
+}
+    `;
+export const DeleteZenhubEpicDocument = gql`
+    mutation deleteZenhubEpic($input: DeleteZenhubEpicInput!) {
+  deleteZenhubEpic(input: $input) {
+    zenhubEpicId
+  }
+}
+    `;
+export const RemoveIssuesFromEpicsDocument = gql`
+    mutation removeIssuesFromEpics($input: RemoveIssuesFromEpicsInput!) {
+  removeIssuesFromEpics(input: $input) {
+    epics {
+      id
     }
   }
 }
@@ -9160,36 +9141,6 @@ export const UpdateZenhubEpicDatesDocument = gql`
   }
 }
     `;
-export const DeleteZenhubEpicDocument = gql`
-    mutation deleteZenhubEpic($input: DeleteZenhubEpicInput!) {
-  deleteZenhubEpic(input: $input) {
-    zenhubEpicId
-  }
-}
-    `;
-export const CloseIssuesDocument = gql`
-    mutation closeIssues($input: CloseIssuesInput!) {
-  closeIssues(input: $input) {
-    successCount
-  }
-}
-    `;
-export const ReopenIssuesDocument = gql`
-    mutation reopenIssues($input: ReopenIssuesInput!) {
-  reopenIssues(input: $input) {
-    successCount
-  }
-}
-    `;
-export const MoveIssueDocument = gql`
-    mutation moveIssue($input: MoveIssueInput!) {
-  moveIssue(input: $input) {
-    issue {
-      id
-    }
-  }
-}
-    `;
 export const AddAssigneesToIssuesDocument = gql`
     mutation addAssigneesToIssues($input: AddAssigneesToIssuesInput!) {
   addAssigneesToIssues(input: $input) {
@@ -9204,29 +9155,15 @@ export const AddLabelsToIssuesDocument = gql`
   }
 }
     `;
-export const SetEstimateDocument = gql`
-    mutation setEstimate($input: SetEstimateInput!) {
-  setEstimate(input: $input) {
-    clientMutationId
-  }
-}
-    `;
-export const SetMultipleEstimatesDocument = gql`
-    mutation setMultipleEstimates($input: SetMultipleEstimatesInput!) {
-  setMultipleEstimates(input: $input) {
-    issues {
-      id
-    }
-  }
-}
-    `;
-export const UpdateIssueDocument = gql`
-    mutation updateIssue($input: UpdateIssueInput!) {
-  updateIssue(input: $input) {
+export const CreateIssueDocument = gql`
+    mutation createIssue($input: CreateIssueInput!) {
+  createIssue(input: $input) {
     issue {
       id
       title
-      body
+      number
+      htmlUrl
+      state
     }
   }
 }
@@ -9245,30 +9182,44 @@ export const RemoveLabelsFromIssuesDocument = gql`
   }
 }
     `;
-export const CreateIssueWithEpicDocument = gql`
-    mutation createIssueWithEpic($createInput: CreateIssueInput!, $addToEpicInput: AddIssuesToEpicsInput!) {
-  createIssue(input: $createInput) {
+export const UpdateIssueDocument = gql`
+    mutation updateIssue($input: UpdateIssueInput!) {
+  updateIssue(input: $input) {
     issue {
       id
       title
-      number
-      htmlUrl
-      state
+      body
     }
   }
-  addIssuesToEpics(input: $addToEpicInput) {
-    epics {
+}
+    `;
+export const CloseIssuesDocument = gql`
+    mutation closeIssues($input: CloseIssuesInput!) {
+  closeIssues(input: $input) {
+    successCount
+  }
+}
+    `;
+export const MoveIssueDocument = gql`
+    mutation moveIssue($input: MoveIssueInput!) {
+  moveIssue(input: $input) {
+    issue {
       id
     }
   }
 }
     `;
-export const RemoveIssuesFromEpicsDocument = gql`
-    mutation removeIssuesFromEpics($input: RemoveIssuesFromEpicsInput!) {
-  removeIssuesFromEpics(input: $input) {
-    epics {
-      id
-    }
+export const ReopenIssuesDocument = gql`
+    mutation reopenIssues($input: ReopenIssuesInput!) {
+  reopenIssues(input: $input) {
+    successCount
+  }
+}
+    `;
+export const SetEstimateDocument = gql`
+    mutation setEstimate($input: SetEstimateInput!) {
+  setEstimate(input: $input) {
+    clientMutationId
   }
 }
     `;
@@ -9337,6 +9288,13 @@ export const GetWorkspaceLabelsDocument = gql`
   }
 }
     `;
+export const AddMilestoneToIssuesDocument = gql`
+    mutation addMilestoneToIssues($input: AddMilestoneForIssuesInput!) {
+  addMilestoneToIssues(input: $input) {
+    successCount
+  }
+}
+    `;
 export const CreateMilestoneDocument = gql`
     mutation createMilestone($input: CreateMilestoneInput!) {
   createMilestone(input: $input) {
@@ -9346,6 +9304,22 @@ export const CreateMilestoneDocument = gql`
       description
       dueOn
     }
+  }
+}
+    `;
+export const DeleteMilestoneDocument = gql`
+    mutation deleteMilestone($input: DeleteMilestoneInput!) {
+  deleteMilestone(input: $input) {
+    milestone {
+      id
+    }
+  }
+}
+    `;
+export const RemoveMilestoneToIssuesDocument = gql`
+    mutation removeMilestoneToIssues($input: RemoveMilestoneForIssuesInput!) {
+  removeMilestoneToIssues(input: $input) {
+    successCount
   }
 }
     `;
@@ -9361,43 +9335,9 @@ export const UpdateMilestoneDocument = gql`
   }
 }
     `;
-export const AddMilestoneToIssuesDocument = gql`
-    mutation addMilestoneToIssues($input: AddMilestoneForIssuesInput!) {
-  addMilestoneToIssues(input: $input) {
-    successCount
-  }
-}
-    `;
-export const RemoveMilestoneToIssuesDocument = gql`
-    mutation removeMilestoneToIssues($input: RemoveMilestoneForIssuesInput!) {
-  removeMilestoneToIssues(input: $input) {
-    successCount
-  }
-}
-    `;
-export const DeleteMilestoneDocument = gql`
-    mutation deleteMilestone($input: DeleteMilestoneInput!) {
-  deleteMilestone(input: $input) {
-    milestone {
-      id
-    }
-  }
-}
-    `;
 export const CreatePipelineDocument = gql`
     mutation createPipeline($input: CreatePipelineInput!) {
   createPipeline(input: $input) {
-    pipeline {
-      id
-      name
-      description
-    }
-  }
-}
-    `;
-export const UpdatePipelineDocument = gql`
-    mutation updatePipeline($input: UpdatePipelineInput!) {
-  updatePipeline(input: $input) {
     pipeline {
       id
       name
@@ -9410,6 +9350,17 @@ export const DeletePipelineDocument = gql`
     mutation deletePipeline($input: DeletePipelineInput!) {
   deletePipeline(input: $input) {
     clientMutationId
+  }
+}
+    `;
+export const UpdatePipelineDocument = gql`
+    mutation updatePipeline($input: UpdatePipelineInput!) {
+  updatePipeline(input: $input) {
+    pipeline {
+      id
+      name
+      description
+    }
   }
 }
     `;
@@ -9431,17 +9382,45 @@ export const GetWorkspacePipelinesDocument = gql`
   }
 }
     `;
-export const SearchIssuesByPipelineDocument = gql`
-    query searchIssuesByPipeline($pipelineId: ID!, $query: String, $filters: IssueSearchFiltersInput!) {
-  searchIssuesByPipeline(
-    pipelineId: $pipelineId
-    query: $query
-    filters: $filters
-  ) {
-    nodes {
-      id
+export const GetRepositoriesByGhIdsDocument = gql`
+    query getRepositoriesByGhIds($ghIds: [Int!]!) {
+  repositoriesByGhId(ghIds: $ghIds) {
+    id
+    ghId
+    name
+    description
+    ownerName
+    createdAt
+    updatedAt
+    workspacesConnection {
+      nodes {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+export const IssueByInfoDocument = gql`
+    query issueByInfo($repositoryGhId: Int!, $issueNumber: Int!) {
+  issueByInfo(repositoryGhId: $repositoryGhId, issueNumber: $issueNumber) {
+    id
+    title
+    number
+    state
+    htmlUrl
+    labels {
+      nodes {
+        name
+      }
+    }
+    assignees {
+      nodes {
+        login
+      }
+    }
+    milestone {
       title
-      number
     }
   }
 }
@@ -9486,6 +9465,35 @@ export const SearchIssuesDocument = gql`
   }
 }
     `;
+export const SearchIssuesByPipelineDocument = gql`
+    query searchIssuesByPipeline($pipelineId: ID!, $query: String, $filters: IssueSearchFiltersInput!) {
+  searchIssuesByPipeline(
+    pipelineId: $pipelineId
+    query: $query
+    filters: $filters
+  ) {
+    nodes {
+      id
+      title
+      number
+    }
+  }
+}
+    `;
+export const ViewerDocument = gql`
+    query viewer {
+  viewer {
+    id
+    name
+    email
+    imageUrl
+    githubUser {
+      login
+      avatarUrl
+    }
+  }
+}
+    `;
 export const WorkspaceIssuesDocument = gql`
     query workspaceIssues($workspaceId: ID!, $after: String) {
   workspace(id: $workspaceId) {
@@ -9521,94 +9529,6 @@ export const WorkspaceIssuesDocument = gql`
   }
 }
     `;
-export const ViewerDocument = gql`
-    query viewer {
-  viewer {
-    id
-    name
-    email
-    imageUrl
-    githubUser {
-      login
-      avatarUrl
-    }
-  }
-}
-    `;
-export const IssueByInfoDocument = gql`
-    query issueByInfo($repositoryGhId: Int!, $issueNumber: Int!) {
-  issueByInfo(repositoryGhId: $repositoryGhId, issueNumber: $issueNumber) {
-    id
-    title
-    number
-    state
-    htmlUrl
-    labels {
-      nodes {
-        name
-      }
-    }
-    assignees {
-      nodes {
-        login
-      }
-    }
-    milestone {
-      title
-    }
-  }
-}
-    `;
-export const RepositoriesByGhIdDocument = gql`
-    query repositoriesByGhId($ghIds: [Int!]!) {
-  repositoriesByGhId(ghIds: $ghIds) {
-    id
-    name
-    ownerName
-    ghId
-    owner {
-      login
-    }
-  }
-}
-    `;
-export const GetWorkspaceRepositoriesDocument = gql`
-    query getWorkspaceRepositories($workspaceId: ID!) {
-  workspace(id: $workspaceId) {
-    id
-    name
-    description
-    repositoriesConnection {
-      nodes {
-        id
-        ghId
-        createdAt
-        name
-        description
-      }
-    }
-  }
-}
-    `;
-export const GetRepositoriesByGhIdsDocument = gql`
-    query getRepositoriesByGhIds($ghIds: [Int!]!) {
-  repositoriesByGhId(ghIds: $ghIds) {
-    id
-    ghId
-    name
-    description
-    ownerName
-    createdAt
-    updatedAt
-    workspacesConnection {
-      nodes {
-        id
-        name
-      }
-    }
-  }
-}
-    `;
 export const AddRepositoryToWorkspaceDocument = gql`
     mutation addRepositoryToWorkspace($input: AddRepositoryToWorkspaceInput!) {
   addRepositoryToWorkspace(input: $input) {
@@ -9634,6 +9554,35 @@ export const DisconnectWorkspaceRepositoryDocument = gql`
     workspace {
       id
       name
+    }
+  }
+}
+    `;
+export const GetRepositoryAssignableUsersDocument = gql`
+    query getRepositoryAssignableUsers($repositoryId: ID!, $first: Int) {
+  node(id: $repositoryId) {
+    ... on Repository {
+      id
+      name
+      assignableUsers(first: $first) {
+        totalCount
+        nodes {
+          id
+          login
+          name
+          zenhubUser {
+            imageUrl
+            githubUser {
+              login
+              avatarUrl
+            }
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
     }
   }
 }
@@ -9685,31 +9634,29 @@ export const GetRepositoryDetailsDocument = gql`
   }
 }
     `;
-export const GetRepositoryAssignableUsersDocument = gql`
-    query getRepositoryAssignableUsers($repositoryId: ID!, $first: Int) {
-  node(id: $repositoryId) {
-    ... on Repository {
-      id
-      name
-      assignableUsers(first: $first) {
-        totalCount
-        nodes {
-          id
-          login
-          name
-          zenhubUser {
-            imageUrl
-            githubUser {
-              login
-              avatarUrl
-            }
-          }
-        }
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
+export const GetWorkspaceRepositoriesDocument = gql`
+    query getWorkspaceRepositories($workspaceId: ID!) {
+  workspace(id: $workspaceId) {
+    id
+    name
+    description
+    repositoriesConnection {
+      nodes {
+        id
+        ghId
+        createdAt
+        name
+        description
       }
+    }
+  }
+}
+    `;
+export const AddIssuesToSprintsDocument = gql`
+    mutation addIssuesToSprints($input: AddIssuesToSprintsInput!) {
+  addIssuesToSprints(input: $input) {
+    sprintIssues {
+      id
     }
   }
 }
@@ -9724,23 +9671,10 @@ export const CreateSprintConfigDocument = gql`
   }
 }
     `;
-export const UpdateSprintDocument = gql`
-    mutation updateSprint($input: UpdateSprintInput!) {
-  updateSprint(input: $input) {
-    sprint {
-      id
-      name
-      startAt
-      endAt
-      state
-    }
-  }
-}
-    `;
-export const AddIssuesToSprintsDocument = gql`
-    mutation addIssuesToSprints($input: AddIssuesToSprintsInput!) {
-  addIssuesToSprints(input: $input) {
-    sprintIssues {
+export const DeleteSprintConfigAndOpenSprintsDocument = gql`
+    mutation deleteSprintConfigAndOpenSprints($input: DeleteSprintConfigAndOpenSprintsInput!) {
+  deleteSprintConfigAndOpenSprints(input: $input) {
+    workspace {
       id
     }
   }
@@ -9755,11 +9689,15 @@ export const RemoveIssuesFromSprintsDocument = gql`
   }
 }
     `;
-export const DeleteSprintConfigAndOpenSprintsDocument = gql`
-    mutation deleteSprintConfigAndOpenSprints($input: DeleteSprintConfigAndOpenSprintsInput!) {
-  deleteSprintConfigAndOpenSprints(input: $input) {
-    workspace {
+export const UpdateSprintDocument = gql`
+    mutation updateSprint($input: UpdateSprintInput!) {
+  updateSprint(input: $input) {
+    sprint {
       id
+      name
+      startAt
+      endAt
+      state
     }
   }
 }
@@ -9805,6 +9743,21 @@ export const GetWorkspaceUsersDocument = gql`
   }
 }
     `;
+export const OwnerByGhIdDocument = gql`
+    query ownerByGhId($ghId: Int!) {
+  ownerByGhId(ghId: $ghId) {
+    id
+    login
+    avatarUrl
+    ... on User {
+      name
+    }
+    ... on Organization {
+      login
+    }
+  }
+}
+    `;
 export const OwnerByLoginDocument = gql`
     query ownerByLogin($login: String!) {
   ownerByLogin(login: $login) {
@@ -9820,17 +9773,14 @@ export const OwnerByLoginDocument = gql`
   }
 }
     `;
-export const OwnerByGhIdDocument = gql`
-    query ownerByGhId($ghId: Int!) {
-  ownerByGhId(ghId: $ghId) {
+export const SearchOwnerByLoginDocument = gql`
+    query searchOwnerByLogin($login: String!) {
+  ownerByLogin(login: $login) {
     id
     login
     avatarUrl
     ... on User {
       name
-    }
-    ... on Organization {
-      login
     }
   }
 }
@@ -9848,18 +9798,6 @@ export const SearchWorkspaceUsersDocument = gql`
   }
 }
     `;
-export const SearchOwnerByLoginDocument = gql`
-    query searchOwnerByLogin($login: String!) {
-  ownerByLogin(login: $login) {
-    id
-    login
-    avatarUrl
-    ... on User {
-      name
-    }
-  }
-}
-    `;
 export const CreateWorkspaceDocument = gql`
     mutation createWorkspace($input: CreateWorkspaceInput!) {
   createWorkspace(input: $input) {
@@ -9867,6 +9805,54 @@ export const CreateWorkspaceDocument = gql`
       id
       name
       description
+    }
+  }
+}
+    `;
+export const GetOrganizationWorkspacesDocument = gql`
+    query getOrganizationWorkspaces($query: String, $first: Int) {
+  viewer {
+    zenhubOrganizations(query: $query, first: $first) {
+      nodes {
+        id
+        name
+        workspaces(first: $first) {
+          nodes {
+            id
+            name
+            description
+            pipelinesConnection {
+              totalCount
+            }
+            repositoriesConnection {
+              totalCount
+            }
+          }
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const GetUserOrganizationsDocument = gql`
+    query getUserOrganizations($query: String, $first: Int) {
+  viewer {
+    zenhubOrganizations(query: $query, first: $first) {
+      nodes {
+        id
+        name
+        workspaces {
+          totalCount
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
   }
 }
@@ -9895,48 +9881,6 @@ export const GetUserWorkspacesFromOrgsDocument = gql`
             endCursor
           }
         }
-      }
-    }
-  }
-}
-    `;
-export const SearchUserWorkspacesDocument = gql`
-    query searchUserWorkspaces($query: String!, $first: Int) {
-  viewer {
-    searchWorkspaces(query: $query, first: $first) {
-      nodes {
-        id
-        name
-        description
-        pipelinesConnection {
-          totalCount
-        }
-        repositoriesConnection {
-          totalCount
-        }
-      }
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-    }
-  }
-}
-    `;
-export const GetUserOrganizationsDocument = gql`
-    query getUserOrganizations($query: String, $first: Int) {
-  viewer {
-    zenhubOrganizations(query: $query, first: $first) {
-      nodes {
-        id
-        name
-        workspaces {
-          totalCount
-        }
-      }
-      pageInfo {
-        hasNextPage
-        endCursor
       }
     }
   }
@@ -9997,30 +9941,24 @@ export const GetWorkspaceOverviewDocument = gql`
   }
 }
     `;
-export const GetOrganizationWorkspacesDocument = gql`
-    query getOrganizationWorkspaces($query: String, $first: Int) {
+export const SearchUserWorkspacesDocument = gql`
+    query searchUserWorkspaces($query: String!, $first: Int) {
   viewer {
-    zenhubOrganizations(query: $query, first: $first) {
+    searchWorkspaces(query: $query, first: $first) {
       nodes {
         id
         name
-        workspaces(first: $first) {
-          nodes {
-            id
-            name
-            description
-            pipelinesConnection {
-              totalCount
-            }
-            repositoriesConnection {
-              totalCount
-            }
-          }
-          pageInfo {
-            hasNextPage
-            endCursor
-          }
+        description
+        pipelinesConnection {
+          totalCount
         }
+        repositoriesConnection {
+          totalCount
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }
@@ -10040,17 +9978,20 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     deleteIssueDependency(variables: DeleteIssueDependencyMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<DeleteIssueDependencyMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<DeleteIssueDependencyMutation>({ document: DeleteIssueDependencyDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'deleteIssueDependency', 'mutation', variables);
     },
-    createEpic(variables: CreateEpicMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateEpicMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<CreateEpicMutation>({ document: CreateEpicDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'createEpic', 'mutation', variables);
-    },
-    createIssue(variables: CreateIssueMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateIssueMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<CreateIssueMutation>({ document: CreateIssueDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'createIssue', 'mutation', variables);
-    },
     addIssuesToEpics(variables: AddIssuesToEpicsMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<AddIssuesToEpicsMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddIssuesToEpicsMutation>({ document: AddIssuesToEpicsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'addIssuesToEpics', 'mutation', variables);
     },
+    createEpic(variables: CreateEpicMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateEpicMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateEpicMutation>({ document: CreateEpicDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'createEpic', 'mutation', variables);
+    },
     createZenhubEpic(variables: CreateZenhubEpicMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateZenhubEpicMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateZenhubEpicMutation>({ document: CreateZenhubEpicDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'createZenhubEpic', 'mutation', variables);
+    },
+    deleteZenhubEpic(variables: DeleteZenhubEpicMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<DeleteZenhubEpicMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteZenhubEpicMutation>({ document: DeleteZenhubEpicDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'deleteZenhubEpic', 'mutation', variables);
+    },
+    removeIssuesFromEpics(variables: RemoveIssuesFromEpicsMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<RemoveIssuesFromEpicsMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<RemoveIssuesFromEpicsMutation>({ document: RemoveIssuesFromEpicsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'removeIssuesFromEpics', 'mutation', variables);
     },
     updateZenhubEpic(variables: UpdateZenhubEpicMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateZenhubEpicMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateZenhubEpicMutation>({ document: UpdateZenhubEpicDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'updateZenhubEpic', 'mutation', variables);
@@ -10058,32 +9999,14 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     updateZenhubEpicDates(variables: UpdateZenhubEpicDatesMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateZenhubEpicDatesMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateZenhubEpicDatesMutation>({ document: UpdateZenhubEpicDatesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'updateZenhubEpicDates', 'mutation', variables);
     },
-    deleteZenhubEpic(variables: DeleteZenhubEpicMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<DeleteZenhubEpicMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<DeleteZenhubEpicMutation>({ document: DeleteZenhubEpicDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'deleteZenhubEpic', 'mutation', variables);
-    },
-    closeIssues(variables: CloseIssuesMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CloseIssuesMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<CloseIssuesMutation>({ document: CloseIssuesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'closeIssues', 'mutation', variables);
-    },
-    reopenIssues(variables: ReopenIssuesMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ReopenIssuesMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<ReopenIssuesMutation>({ document: ReopenIssuesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'reopenIssues', 'mutation', variables);
-    },
-    moveIssue(variables: MoveIssueMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<MoveIssueMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<MoveIssueMutation>({ document: MoveIssueDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'moveIssue', 'mutation', variables);
-    },
     addAssigneesToIssues(variables: AddAssigneesToIssuesMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<AddAssigneesToIssuesMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddAssigneesToIssuesMutation>({ document: AddAssigneesToIssuesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'addAssigneesToIssues', 'mutation', variables);
     },
     addLabelsToIssues(variables: AddLabelsToIssuesMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<AddLabelsToIssuesMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddLabelsToIssuesMutation>({ document: AddLabelsToIssuesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'addLabelsToIssues', 'mutation', variables);
     },
-    setEstimate(variables: SetEstimateMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<SetEstimateMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<SetEstimateMutation>({ document: SetEstimateDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'setEstimate', 'mutation', variables);
-    },
-    setMultipleEstimates(variables: SetMultipleEstimatesMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<SetMultipleEstimatesMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<SetMultipleEstimatesMutation>({ document: SetMultipleEstimatesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'setMultipleEstimates', 'mutation', variables);
-    },
-    updateIssue(variables: UpdateIssueMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateIssueMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<UpdateIssueMutation>({ document: UpdateIssueDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'updateIssue', 'mutation', variables);
+    createIssue(variables: CreateIssueMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateIssueMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateIssueMutation>({ document: CreateIssueDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'createIssue', 'mutation', variables);
     },
     removeAssigneesFromIssues(variables: RemoveAssigneesFromIssuesMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<RemoveAssigneesFromIssuesMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<RemoveAssigneesFromIssuesMutation>({ document: RemoveAssigneesFromIssuesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'removeAssigneesFromIssues', 'mutation', variables);
@@ -10091,11 +10014,20 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     removeLabelsFromIssues(variables: RemoveLabelsFromIssuesMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<RemoveLabelsFromIssuesMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<RemoveLabelsFromIssuesMutation>({ document: RemoveLabelsFromIssuesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'removeLabelsFromIssues', 'mutation', variables);
     },
-    createIssueWithEpic(variables: CreateIssueWithEpicMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateIssueWithEpicMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<CreateIssueWithEpicMutation>({ document: CreateIssueWithEpicDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'createIssueWithEpic', 'mutation', variables);
+    updateIssue(variables: UpdateIssueMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateIssueMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateIssueMutation>({ document: UpdateIssueDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'updateIssue', 'mutation', variables);
     },
-    removeIssuesFromEpics(variables: RemoveIssuesFromEpicsMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<RemoveIssuesFromEpicsMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<RemoveIssuesFromEpicsMutation>({ document: RemoveIssuesFromEpicsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'removeIssuesFromEpics', 'mutation', variables);
+    closeIssues(variables: CloseIssuesMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CloseIssuesMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CloseIssuesMutation>({ document: CloseIssuesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'closeIssues', 'mutation', variables);
+    },
+    moveIssue(variables: MoveIssueMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<MoveIssueMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<MoveIssueMutation>({ document: MoveIssueDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'moveIssue', 'mutation', variables);
+    },
+    reopenIssues(variables: ReopenIssuesMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ReopenIssuesMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ReopenIssuesMutation>({ document: ReopenIssuesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'reopenIssues', 'mutation', variables);
+    },
+    setEstimate(variables: SetEstimateMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<SetEstimateMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<SetEstimateMutation>({ document: SetEstimateDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'setEstimate', 'mutation', variables);
     },
     createGithubLabel(variables: CreateGithubLabelMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateGithubLabelMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateGithubLabelMutation>({ document: CreateGithubLabelDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'createGithubLabel', 'mutation', variables);
@@ -10112,56 +10044,50 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     getWorkspaceLabels(variables: GetWorkspaceLabelsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetWorkspaceLabelsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetWorkspaceLabelsQuery>({ document: GetWorkspaceLabelsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'getWorkspaceLabels', 'query', variables);
     },
-    createMilestone(variables: CreateMilestoneMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateMilestoneMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<CreateMilestoneMutation>({ document: CreateMilestoneDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'createMilestone', 'mutation', variables);
-    },
-    updateMilestone(variables: UpdateMilestoneMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateMilestoneMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<UpdateMilestoneMutation>({ document: UpdateMilestoneDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'updateMilestone', 'mutation', variables);
-    },
     addMilestoneToIssues(variables: AddMilestoneToIssuesMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<AddMilestoneToIssuesMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddMilestoneToIssuesMutation>({ document: AddMilestoneToIssuesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'addMilestoneToIssues', 'mutation', variables);
     },
-    removeMilestoneToIssues(variables: RemoveMilestoneToIssuesMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<RemoveMilestoneToIssuesMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<RemoveMilestoneToIssuesMutation>({ document: RemoveMilestoneToIssuesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'removeMilestoneToIssues', 'mutation', variables);
+    createMilestone(variables: CreateMilestoneMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateMilestoneMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateMilestoneMutation>({ document: CreateMilestoneDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'createMilestone', 'mutation', variables);
     },
     deleteMilestone(variables: DeleteMilestoneMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<DeleteMilestoneMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<DeleteMilestoneMutation>({ document: DeleteMilestoneDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'deleteMilestone', 'mutation', variables);
     },
+    removeMilestoneToIssues(variables: RemoveMilestoneToIssuesMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<RemoveMilestoneToIssuesMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<RemoveMilestoneToIssuesMutation>({ document: RemoveMilestoneToIssuesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'removeMilestoneToIssues', 'mutation', variables);
+    },
+    updateMilestone(variables: UpdateMilestoneMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateMilestoneMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateMilestoneMutation>({ document: UpdateMilestoneDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'updateMilestone', 'mutation', variables);
+    },
     createPipeline(variables: CreatePipelineMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreatePipelineMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreatePipelineMutation>({ document: CreatePipelineDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'createPipeline', 'mutation', variables);
-    },
-    updatePipeline(variables: UpdatePipelineMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdatePipelineMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<UpdatePipelineMutation>({ document: UpdatePipelineDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'updatePipeline', 'mutation', variables);
     },
     deletePipeline(variables: DeletePipelineMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<DeletePipelineMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<DeletePipelineMutation>({ document: DeletePipelineDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'deletePipeline', 'mutation', variables);
     },
+    updatePipeline(variables: UpdatePipelineMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdatePipelineMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdatePipelineMutation>({ document: UpdatePipelineDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'updatePipeline', 'mutation', variables);
+    },
     getWorkspacePipelines(variables: GetWorkspacePipelinesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetWorkspacePipelinesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetWorkspacePipelinesQuery>({ document: GetWorkspacePipelinesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'getWorkspacePipelines', 'query', variables);
     },
-    searchIssuesByPipeline(variables: SearchIssuesByPipelineQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<SearchIssuesByPipelineQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<SearchIssuesByPipelineQuery>({ document: SearchIssuesByPipelineDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'searchIssuesByPipeline', 'query', variables);
-    },
-    searchIssues(variables: SearchIssuesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<SearchIssuesQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<SearchIssuesQuery>({ document: SearchIssuesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'searchIssues', 'query', variables);
-    },
-    workspaceIssues(variables: WorkspaceIssuesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<WorkspaceIssuesQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<WorkspaceIssuesQuery>({ document: WorkspaceIssuesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'workspaceIssues', 'query', variables);
-    },
-    viewer(variables?: ViewerQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ViewerQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<ViewerQuery>({ document: ViewerDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'viewer', 'query', variables);
+    getRepositoriesByGhIds(variables: GetRepositoriesByGhIdsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetRepositoriesByGhIdsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetRepositoriesByGhIdsQuery>({ document: GetRepositoriesByGhIdsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'getRepositoriesByGhIds', 'query', variables);
     },
     issueByInfo(variables: IssueByInfoQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<IssueByInfoQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<IssueByInfoQuery>({ document: IssueByInfoDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'issueByInfo', 'query', variables);
     },
-    repositoriesByGhId(variables: RepositoriesByGhIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<RepositoriesByGhIdQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<RepositoriesByGhIdQuery>({ document: RepositoriesByGhIdDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'repositoriesByGhId', 'query', variables);
+    searchIssues(variables: SearchIssuesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<SearchIssuesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<SearchIssuesQuery>({ document: SearchIssuesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'searchIssues', 'query', variables);
     },
-    getWorkspaceRepositories(variables: GetWorkspaceRepositoriesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetWorkspaceRepositoriesQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetWorkspaceRepositoriesQuery>({ document: GetWorkspaceRepositoriesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'getWorkspaceRepositories', 'query', variables);
+    searchIssuesByPipeline(variables: SearchIssuesByPipelineQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<SearchIssuesByPipelineQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<SearchIssuesByPipelineQuery>({ document: SearchIssuesByPipelineDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'searchIssuesByPipeline', 'query', variables);
     },
-    getRepositoriesByGhIds(variables: GetRepositoriesByGhIdsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetRepositoriesByGhIdsQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetRepositoriesByGhIdsQuery>({ document: GetRepositoriesByGhIdsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'getRepositoriesByGhIds', 'query', variables);
+    viewer(variables?: ViewerQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<ViewerQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ViewerQuery>({ document: ViewerDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'viewer', 'query', variables);
+    },
+    workspaceIssues(variables: WorkspaceIssuesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<WorkspaceIssuesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<WorkspaceIssuesQuery>({ document: WorkspaceIssuesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'workspaceIssues', 'query', variables);
     },
     addRepositoryToWorkspace(variables: AddRepositoryToWorkspaceMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<AddRepositoryToWorkspaceMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddRepositoryToWorkspaceMutation>({ document: AddRepositoryToWorkspaceDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'addRepositoryToWorkspace', 'mutation', variables);
@@ -10169,26 +10095,29 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     disconnectWorkspaceRepository(variables: DisconnectWorkspaceRepositoryMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<DisconnectWorkspaceRepositoryMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<DisconnectWorkspaceRepositoryMutation>({ document: DisconnectWorkspaceRepositoryDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'disconnectWorkspaceRepository', 'mutation', variables);
     },
-    getRepositoryDetails(variables: GetRepositoryDetailsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetRepositoryDetailsQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetRepositoryDetailsQuery>({ document: GetRepositoryDetailsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'getRepositoryDetails', 'query', variables);
-    },
     getRepositoryAssignableUsers(variables: GetRepositoryAssignableUsersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetRepositoryAssignableUsersQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetRepositoryAssignableUsersQuery>({ document: GetRepositoryAssignableUsersDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'getRepositoryAssignableUsers', 'query', variables);
     },
-    createSprintConfig(variables: CreateSprintConfigMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateSprintConfigMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<CreateSprintConfigMutation>({ document: CreateSprintConfigDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'createSprintConfig', 'mutation', variables);
+    getRepositoryDetails(variables: GetRepositoryDetailsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetRepositoryDetailsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetRepositoryDetailsQuery>({ document: GetRepositoryDetailsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'getRepositoryDetails', 'query', variables);
     },
-    updateSprint(variables: UpdateSprintMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateSprintMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<UpdateSprintMutation>({ document: UpdateSprintDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'updateSprint', 'mutation', variables);
+    getWorkspaceRepositories(variables: GetWorkspaceRepositoriesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetWorkspaceRepositoriesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetWorkspaceRepositoriesQuery>({ document: GetWorkspaceRepositoriesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'getWorkspaceRepositories', 'query', variables);
     },
     addIssuesToSprints(variables: AddIssuesToSprintsMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<AddIssuesToSprintsMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddIssuesToSprintsMutation>({ document: AddIssuesToSprintsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'addIssuesToSprints', 'mutation', variables);
     },
-    removeIssuesFromSprints(variables: RemoveIssuesFromSprintsMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<RemoveIssuesFromSprintsMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<RemoveIssuesFromSprintsMutation>({ document: RemoveIssuesFromSprintsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'removeIssuesFromSprints', 'mutation', variables);
+    createSprintConfig(variables: CreateSprintConfigMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateSprintConfigMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateSprintConfigMutation>({ document: CreateSprintConfigDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'createSprintConfig', 'mutation', variables);
     },
     deleteSprintConfigAndOpenSprints(variables: DeleteSprintConfigAndOpenSprintsMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<DeleteSprintConfigAndOpenSprintsMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<DeleteSprintConfigAndOpenSprintsMutation>({ document: DeleteSprintConfigAndOpenSprintsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'deleteSprintConfigAndOpenSprints', 'mutation', variables);
+    },
+    removeIssuesFromSprints(variables: RemoveIssuesFromSprintsMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<RemoveIssuesFromSprintsMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<RemoveIssuesFromSprintsMutation>({ document: RemoveIssuesFromSprintsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'removeIssuesFromSprints', 'mutation', variables);
+    },
+    updateSprint(variables: UpdateSprintMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateSprintMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateSprintMutation>({ document: UpdateSprintDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'updateSprint', 'mutation', variables);
     },
     getWorkspaceSprints(variables: GetWorkspaceSprintsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetWorkspaceSprintsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetWorkspaceSprintsQuery>({ document: GetWorkspaceSprintsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'getWorkspaceSprints', 'query', variables);
@@ -10196,35 +10125,35 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     getWorkspaceUsers(variables: GetWorkspaceUsersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetWorkspaceUsersQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetWorkspaceUsersQuery>({ document: GetWorkspaceUsersDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'getWorkspaceUsers', 'query', variables);
     },
-    ownerByLogin(variables: OwnerByLoginQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<OwnerByLoginQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<OwnerByLoginQuery>({ document: OwnerByLoginDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'ownerByLogin', 'query', variables);
-    },
     ownerByGhId(variables: OwnerByGhIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<OwnerByGhIdQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<OwnerByGhIdQuery>({ document: OwnerByGhIdDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'ownerByGhId', 'query', variables);
     },
-    searchWorkspaceUsers(variables: SearchWorkspaceUsersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<SearchWorkspaceUsersQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<SearchWorkspaceUsersQuery>({ document: SearchWorkspaceUsersDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'searchWorkspaceUsers', 'query', variables);
+    ownerByLogin(variables: OwnerByLoginQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<OwnerByLoginQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<OwnerByLoginQuery>({ document: OwnerByLoginDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'ownerByLogin', 'query', variables);
     },
     searchOwnerByLogin(variables: SearchOwnerByLoginQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<SearchOwnerByLoginQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<SearchOwnerByLoginQuery>({ document: SearchOwnerByLoginDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'searchOwnerByLogin', 'query', variables);
     },
+    searchWorkspaceUsers(variables: SearchWorkspaceUsersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<SearchWorkspaceUsersQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<SearchWorkspaceUsersQuery>({ document: SearchWorkspaceUsersDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'searchWorkspaceUsers', 'query', variables);
+    },
     createWorkspace(variables: CreateWorkspaceMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateWorkspaceMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateWorkspaceMutation>({ document: CreateWorkspaceDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'createWorkspace', 'mutation', variables);
     },
-    getUserWorkspacesFromOrgs(variables?: GetUserWorkspacesFromOrgsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetUserWorkspacesFromOrgsQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetUserWorkspacesFromOrgsQuery>({ document: GetUserWorkspacesFromOrgsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'getUserWorkspacesFromOrgs', 'query', variables);
-    },
-    searchUserWorkspaces(variables: SearchUserWorkspacesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<SearchUserWorkspacesQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<SearchUserWorkspacesQuery>({ document: SearchUserWorkspacesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'searchUserWorkspaces', 'query', variables);
+    getOrganizationWorkspaces(variables?: GetOrganizationWorkspacesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetOrganizationWorkspacesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetOrganizationWorkspacesQuery>({ document: GetOrganizationWorkspacesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'getOrganizationWorkspaces', 'query', variables);
     },
     getUserOrganizations(variables?: GetUserOrganizationsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetUserOrganizationsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUserOrganizationsQuery>({ document: GetUserOrganizationsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'getUserOrganizations', 'query', variables);
     },
+    getUserWorkspacesFromOrgs(variables?: GetUserWorkspacesFromOrgsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetUserWorkspacesFromOrgsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetUserWorkspacesFromOrgsQuery>({ document: GetUserWorkspacesFromOrgsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'getUserWorkspacesFromOrgs', 'query', variables);
+    },
     getWorkspaceOverview(variables: GetWorkspaceOverviewQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetWorkspaceOverviewQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetWorkspaceOverviewQuery>({ document: GetWorkspaceOverviewDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'getWorkspaceOverview', 'query', variables);
     },
-    getOrganizationWorkspaces(variables?: GetOrganizationWorkspacesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetOrganizationWorkspacesQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetOrganizationWorkspacesQuery>({ document: GetOrganizationWorkspacesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'getOrganizationWorkspaces', 'query', variables);
+    searchUserWorkspaces(variables: SearchUserWorkspacesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<SearchUserWorkspacesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<SearchUserWorkspacesQuery>({ document: SearchUserWorkspacesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'searchUserWorkspaces', 'query', variables);
     }
   };
 }

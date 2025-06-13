@@ -8891,6 +8891,49 @@ export type RepositoriesByGhIdQueryVariables = Exact<{
 
 export type RepositoriesByGhIdQuery = { readonly __typename?: 'Query', readonly repositoriesByGhId: ReadonlyArray<{ readonly __typename?: 'Repository', readonly id: string, readonly name: string, readonly ownerName: string, readonly ghId: number, readonly owner: { readonly __typename?: 'Bot', readonly login: string } | { readonly __typename?: 'Mannequin', readonly login: string } | { readonly __typename?: 'NoOwner', readonly login: string } | { readonly __typename?: 'Organization', readonly login: string } | { readonly __typename?: 'User', readonly login: string } }> };
 
+export type GetWorkspaceRepositoriesQueryVariables = Exact<{
+  workspaceId: Scalars['ID']['input'];
+}>;
+
+
+export type GetWorkspaceRepositoriesQuery = { readonly __typename?: 'Query', readonly workspace?: { readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly description?: string | null, readonly repositoriesConnection?: { readonly __typename?: 'RepositoryConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Repository', readonly id: string, readonly ghId: number, readonly createdAt: string, readonly name: string, readonly description?: string | null }> } | null } | null };
+
+export type GetRepositoriesByGhIdsQueryVariables = Exact<{
+  ghIds: ReadonlyArray<Scalars['Int']['input']> | Scalars['Int']['input'];
+}>;
+
+
+export type GetRepositoriesByGhIdsQuery = { readonly __typename?: 'Query', readonly repositoriesByGhId: ReadonlyArray<{ readonly __typename?: 'Repository', readonly id: string, readonly ghId: number, readonly name: string, readonly description?: string | null, readonly ownerName: string, readonly createdAt: string, readonly updatedAt: string, readonly workspacesConnection: { readonly __typename?: 'WorkspaceConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null }> } }> };
+
+export type AddRepositoryToWorkspaceMutationVariables = Exact<{
+  input: AddRepositoryToWorkspaceInput;
+}>;
+
+
+export type AddRepositoryToWorkspaceMutation = { readonly __typename?: 'Mutation', readonly addRepositoryToWorkspace?: { readonly __typename?: 'AddRepositoryToWorkspacePayload', readonly workspaceRepository: { readonly __typename?: 'WorkspaceRepository', readonly id: string, readonly repository: { readonly __typename?: 'Repository', readonly id: string, readonly ghId: number, readonly name: string, readonly description?: string | null }, readonly workspace: { readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null } } } | null };
+
+export type DisconnectWorkspaceRepositoryMutationVariables = Exact<{
+  input: DisconnectWorkspaceRepositoryInput;
+}>;
+
+
+export type DisconnectWorkspaceRepositoryMutation = { readonly __typename?: 'Mutation', readonly disconnectWorkspaceRepository?: { readonly __typename?: 'DisconnectWorkspaceRepositoryPayload', readonly workspace: { readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null } } | null };
+
+export type GetRepositoryDetailsQueryVariables = Exact<{
+  repositoryId: Scalars['ID']['input'];
+}>;
+
+
+export type GetRepositoryDetailsQuery = { readonly __typename?: 'Query', readonly node?: { readonly __typename?: 'Blockage' } | { readonly __typename?: 'Comment' } | { readonly __typename?: 'Epic' } | { readonly __typename?: 'Issue' } | { readonly __typename?: 'IssueDependency' } | { readonly __typename?: 'KeyDate' } | { readonly __typename?: 'Milestone' } | { readonly __typename?: 'Pipeline' } | { readonly __typename?: 'PipelineToPipelineAutomation' } | { readonly __typename?: 'Project' } | { readonly __typename?: 'Release' } | { readonly __typename?: 'Repository', readonly id: string, readonly ghId: number, readonly name: string, readonly description?: string | null, readonly ownerName: string, readonly createdAt: string, readonly updatedAt: string, readonly workspacesConnection: { readonly __typename?: 'WorkspaceConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly description?: string | null }> }, readonly issues: { readonly __typename?: 'IssueConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'Issue', readonly id: string, readonly number: number, readonly title: string, readonly state: IssueState }> }, readonly milestones: { readonly __typename?: 'MilestoneConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'Milestone', readonly id: string, readonly title: string, readonly state: MilestoneState }> }, readonly labels: { readonly __typename?: 'LabelConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'Label', readonly id: string, readonly name: string, readonly color?: string | null }> } } | { readonly __typename?: 'Roadmap' } | { readonly __typename?: 'SavedView' } | { readonly __typename?: 'Sprint' } | { readonly __typename?: 'SprintConfig' } | { readonly __typename?: 'SprintIssue' } | { readonly __typename?: 'SprintReview' } | { readonly __typename?: 'SprintReviewFeature' } | { readonly __typename?: 'SprintReviewSchedule' } | { readonly __typename?: 'ZenhubEpic' } | { readonly __typename?: 'ZenhubLabel' } | { readonly __typename?: 'ZenhubOrganization' } | { readonly __typename?: 'ZenhubOrganizationLimited' } | { readonly __typename?: 'ZenhubUser' } | { readonly __typename?: 'ZenhubUserAtOrganization' } | null };
+
+export type GetRepositoryAssignableUsersQueryVariables = Exact<{
+  repositoryId: Scalars['ID']['input'];
+  first?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetRepositoryAssignableUsersQuery = { readonly __typename?: 'Query', readonly node?: { readonly __typename?: 'Blockage' } | { readonly __typename?: 'Comment' } | { readonly __typename?: 'Epic' } | { readonly __typename?: 'Issue' } | { readonly __typename?: 'IssueDependency' } | { readonly __typename?: 'KeyDate' } | { readonly __typename?: 'Milestone' } | { readonly __typename?: 'Pipeline' } | { readonly __typename?: 'PipelineToPipelineAutomation' } | { readonly __typename?: 'Project' } | { readonly __typename?: 'Release' } | { readonly __typename?: 'Repository', readonly id: string, readonly name: string, readonly assignableUsers: { readonly __typename?: 'UserConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'User', readonly id: string, readonly login: string, readonly name?: string | null, readonly zenhubUser?: { readonly __typename?: 'ZenhubUser', readonly imageUrl?: string | null, readonly githubUser?: { readonly __typename?: 'User', readonly login: string, readonly avatarUrl: string } | null } | null }>, readonly pageInfo: { readonly __typename?: 'PageInfo', readonly hasNextPage: boolean, readonly endCursor?: string | null } } } | { readonly __typename?: 'Roadmap' } | { readonly __typename?: 'SavedView' } | { readonly __typename?: 'Sprint' } | { readonly __typename?: 'SprintConfig' } | { readonly __typename?: 'SprintIssue' } | { readonly __typename?: 'SprintReview' } | { readonly __typename?: 'SprintReviewFeature' } | { readonly __typename?: 'SprintReviewSchedule' } | { readonly __typename?: 'ZenhubEpic' } | { readonly __typename?: 'ZenhubLabel' } | { readonly __typename?: 'ZenhubOrganization' } | { readonly __typename?: 'ZenhubOrganizationLimited' } | { readonly __typename?: 'ZenhubUser' } | { readonly __typename?: 'ZenhubUserAtOrganization' } | null };
+
 export type CreateSprintConfigMutationVariables = Exact<{
   input: CreateSprintConfigInput;
 }>;
@@ -8938,7 +8981,7 @@ export type GetWorkspaceUsersQueryVariables = Exact<{
 }>;
 
 
-export type GetWorkspaceUsersQuery = { readonly __typename?: 'Query', readonly workspace?: { readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly zenhubUsers: { readonly __typename?: 'ZenhubUserConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'ZenhubUser', readonly id: string, readonly name?: string | null, readonly email?: string | null }> } } | null };
+export type GetWorkspaceUsersQuery = { readonly __typename?: 'Query', readonly workspace?: { readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly description?: string | null, readonly assignees?: { readonly __typename?: 'UserConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'User', readonly id: string, readonly ghId?: number | null, readonly login: string, readonly name?: string | null, readonly zenhubUser?: { readonly __typename?: 'ZenhubUser', readonly email?: string | null } | null }> } | null } | null };
 
 export type OwnerByLoginQueryVariables = Exact<{
   login: Scalars['String']['input'];
@@ -9495,6 +9538,148 @@ export const RepositoriesByGhIdDocument = gql`
   }
 }
     `;
+export const GetWorkspaceRepositoriesDocument = gql`
+    query getWorkspaceRepositories($workspaceId: ID!) {
+  workspace(id: $workspaceId) {
+    id
+    name
+    description
+    repositoriesConnection {
+      nodes {
+        id
+        ghId
+        createdAt
+        name
+        description
+      }
+    }
+  }
+}
+    `;
+export const GetRepositoriesByGhIdsDocument = gql`
+    query getRepositoriesByGhIds($ghIds: [Int!]!) {
+  repositoriesByGhId(ghIds: $ghIds) {
+    id
+    ghId
+    name
+    description
+    ownerName
+    createdAt
+    updatedAt
+    workspacesConnection {
+      nodes {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+export const AddRepositoryToWorkspaceDocument = gql`
+    mutation addRepositoryToWorkspace($input: AddRepositoryToWorkspaceInput!) {
+  addRepositoryToWorkspace(input: $input) {
+    workspaceRepository {
+      id
+      repository {
+        id
+        ghId
+        name
+        description
+      }
+      workspace {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+export const DisconnectWorkspaceRepositoryDocument = gql`
+    mutation disconnectWorkspaceRepository($input: DisconnectWorkspaceRepositoryInput!) {
+  disconnectWorkspaceRepository(input: $input) {
+    workspace {
+      id
+      name
+    }
+  }
+}
+    `;
+export const GetRepositoryDetailsDocument = gql`
+    query getRepositoryDetails($repositoryId: ID!) {
+  node(id: $repositoryId) {
+    ... on Repository {
+      id
+      ghId
+      name
+      description
+      ownerName
+      createdAt
+      updatedAt
+      workspacesConnection {
+        nodes {
+          id
+          name
+          description
+        }
+      }
+      issues(first: 5) {
+        totalCount
+        nodes {
+          id
+          number
+          title
+          state
+        }
+      }
+      milestones(first: 5) {
+        totalCount
+        nodes {
+          id
+          title
+          state
+        }
+      }
+      labels(first: 10) {
+        totalCount
+        nodes {
+          id
+          name
+          color
+        }
+      }
+    }
+  }
+}
+    `;
+export const GetRepositoryAssignableUsersDocument = gql`
+    query getRepositoryAssignableUsers($repositoryId: ID!, $first: Int) {
+  node(id: $repositoryId) {
+    ... on Repository {
+      id
+      name
+      assignableUsers(first: $first) {
+        totalCount
+        nodes {
+          id
+          login
+          name
+          zenhubUser {
+            imageUrl
+            githubUser {
+              login
+              avatarUrl
+            }
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  }
+}
+    `;
 export const CreateSprintConfigDocument = gql`
     mutation createSprintConfig($input: CreateSprintConfigInput!) {
   createSprintConfig(input: $input) {
@@ -9570,11 +9755,17 @@ export const GetWorkspaceUsersDocument = gql`
   workspace(id: $workspaceId) {
     id
     name
-    zenhubUsers {
+    description
+    assignees {
+      totalCount
       nodes {
         id
+        ghId
+        login
         name
-        email
+        zenhubUser {
+          email
+        }
       }
     }
   }

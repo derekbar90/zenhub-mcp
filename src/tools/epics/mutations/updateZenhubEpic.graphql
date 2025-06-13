@@ -1,0 +1,8 @@
+mutation updateZenhubEpic($input: UpdateZenhubEpicInput!) {
+  updateZenhubEpic(input: $input) {
+    zenhubEpic {
+      id
+      title
+    }
+  }
+}

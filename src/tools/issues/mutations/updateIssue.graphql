@@ -1,0 +1,9 @@
+mutation updateIssue($input: UpdateIssueInput!) {
+  updateIssue(input: $input) {
+    issue {
+      id
+      title
+      body
+    }
+  }
+}

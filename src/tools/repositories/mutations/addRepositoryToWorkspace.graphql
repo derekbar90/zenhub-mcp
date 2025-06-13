@@ -1,0 +1,17 @@
+mutation addRepositoryToWorkspace($input: AddRepositoryToWorkspaceInput!) {
+  addRepositoryToWorkspace(input: $input) {
+    workspaceRepository {
+      id
+      repository {
+        id
+        ghId
+        name
+        description
+      }
+      workspace {
+        id
+        name
+      }
+    }
+  }
+}

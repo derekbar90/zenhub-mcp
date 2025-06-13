@@ -1,0 +1,8 @@
+mutation disconnectWorkspaceRepository($input: DisconnectWorkspaceRepositoryInput!) {
+  disconnectWorkspaceRepository(input: $input) {
+    workspace {
+      id
+      name
+    }
+  }
+}

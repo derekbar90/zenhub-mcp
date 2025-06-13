@@ -1,0 +1,5 @@
+mutation removeMilestoneToIssues($input: RemoveMilestoneForIssuesInput!) {
+  removeMilestoneToIssues(input: $input) {
+    successCount
+  }
+}

@@ -1,0 +1,9 @@
+mutation updatePipeline($input: UpdatePipelineInput!) {
+  updatePipeline(input: $input) {
+    pipeline {
+      id
+      name
+      description
+    }
+  }
+}

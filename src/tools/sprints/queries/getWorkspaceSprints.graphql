@@ -1,0 +1,18 @@
+query getWorkspaceSprints($workspaceId: ID!) {
+  workspace(id: $workspaceId) {
+    id
+    name
+    sprints {
+      nodes {
+        id
+        name
+        startAt
+        endAt
+        state
+        issues {
+          totalCount
+        }
+      }
+    }
+  }
+}

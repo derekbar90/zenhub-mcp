@@ -1,0 +1,27 @@
+query getOrganizationWorkspaces($query: String, $first: Int) {
+  viewer {
+    zenhubOrganizations(query: $query, first: $first) {
+      nodes {
+        id
+        name
+        workspaces(first: $first) {
+          nodes {
+            id
+            name
+            description
+            pipelinesConnection {
+              totalCount
+            }
+            repositoriesConnection {
+              totalCount
+            }
+          }
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
+        }
+      }
+    }
+  }
+}

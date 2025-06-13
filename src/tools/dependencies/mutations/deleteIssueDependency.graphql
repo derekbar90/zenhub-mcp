@@ -1,0 +1,7 @@
+mutation deleteIssueDependency($input: DeleteIssueDependencyInput!) {
+  deleteIssueDependency(input: $input) {
+    issueDependency {
+      id
+    }
+  }
+}

@@ -1,0 +1,13 @@
+query searchIssuesByPipeline($pipelineId: ID!, $query: String, $filters: IssueSearchFiltersInput!) {
+  searchIssuesByPipeline(
+    pipelineId: $pipelineId
+    query: $query
+    filters: $filters
+  ) {
+    nodes {
+      id
+      title
+      number
+    }
+  }
+}

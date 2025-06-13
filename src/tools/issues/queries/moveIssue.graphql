@@ -1,0 +1,7 @@
+mutation moveIssue($input: MoveIssueInput!) {
+  moveIssue(input: $input) {
+    issue {
+      id
+    }
+  }
+}

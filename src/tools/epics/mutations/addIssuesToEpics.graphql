@@ -1,0 +1,7 @@
+mutation addIssuesToEpics($input: AddIssuesToEpicsInput!) {
+  addIssuesToEpics(input: $input) {
+    epics {
+      id
+    }
+  }
+}

@@ -1,0 +1,5 @@
+mutation reopenIssues($input: ReopenIssuesInput!) {
+  reopenIssues(input: $input) {
+    successCount
+  }
+}

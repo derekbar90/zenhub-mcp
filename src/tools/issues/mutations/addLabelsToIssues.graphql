@@ -1,0 +1,5 @@
+mutation addLabelsToIssues($input: AddLabelsToIssuesInput!) {
+  addLabelsToIssues(input: $input) {
+    successCount
+  }
+}

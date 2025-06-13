@@ -1,0 +1,12 @@
+query viewer {
+  viewer {
+    id
+    name
+    email
+    imageUrl
+    githubUser {
+      login
+      avatarUrl
+    }
+  }
+}

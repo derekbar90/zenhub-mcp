@@ -8,13 +8,14 @@ if (typeof globalThis.AbortController === "undefined") {
 
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 import { GraphQLClient } from "graphql-request";
 import { allTools, getToolByName } from "./tools/index.js";
-import { ToolArgs } from "./types.js";
+import { ToolArgs, ZenHubTool } from "./types.js";
 import { getSdk } from "./generated/graphql.js";
 
 class ZenHubMCPServer {
@@ -29,6 +30,10 @@ class ZenHubMCPServer {
         version: "1.0.0",
       },
       {
+        instructions: `You are a helpful assistant that can help with ZenHub tasks. 
+        Start with zenhub_get_workspace_overview to get an overview of the workspace. 
+        If assigning issues, use zenhub_get_workspace_users to find the users by listing all users in the workspace.
+        Use zenhub_get_viewer to get the current user information.`,
         capabilities: {
           tools: {},
         },
@@ -68,7 +73,7 @@ class ZenHubMCPServer {
   private setupToolHandlers(): void {
     this.server.setRequestHandler(ListToolsRequestSchema, async () => {
       const result = {
-        tools: allTools.map((tool) => ({
+        tools: allTools.map((tool: ZenHubTool) => ({
           name: tool.name,
           description: tool.description,
           inputSchema: tool.inputSchema,

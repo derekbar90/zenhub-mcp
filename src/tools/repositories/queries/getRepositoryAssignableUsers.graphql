@@ -1,0 +1,27 @@
+query getRepositoryAssignableUsers($repositoryId: ID!, $first: Int) {
+  node(id: $repositoryId) {
+    ... on Repository {
+      id
+      name
+      assignableUsers(first: $first) {
+        totalCount
+        nodes {
+          id
+          login
+          name
+          zenhubUser {
+            imageUrl
+            githubUser {
+              login
+              avatarUrl
+            }
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  }
+}

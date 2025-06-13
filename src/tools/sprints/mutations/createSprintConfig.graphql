@@ -1,0 +1,8 @@
+mutation createSprintConfig($input: CreateSprintConfigInput!) {
+  createSprintConfig(input: $input) {
+    sprintConfig {
+      id
+      name
+    }
+  }
+}

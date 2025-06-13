@@ -1,0 +1,10 @@
+mutation updateMilestone($input: UpdateMilestoneInput!) {
+  updateMilestone(input: $input) {
+    milestone {
+      id
+      title
+      description
+      dueOn
+    }
+  }
+}

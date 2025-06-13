@@ -1,0 +1,14 @@
+query getRepositoryLabels($repositoryGhId: Int!) {
+  repositoriesByGhId(ghIds: [$repositoryGhId]) {
+    id
+    name
+    labels {
+      nodes {
+        id
+        name
+        color
+        description
+      }
+    }
+  }
+}

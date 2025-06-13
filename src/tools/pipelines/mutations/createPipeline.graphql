@@ -1,0 +1,9 @@
+mutation createPipeline($input: CreatePipelineInput!) {
+  createPipeline(input: $input) {
+    pipeline {
+      id
+      name
+      description
+    }
+  }
+}

@@ -1,0 +1,53 @@
+query getWorkspaceOverview($workspaceId: ID!) {
+  workspace(id: $workspaceId) {
+    id
+    name
+    description
+    pipelinesConnection {
+      totalCount
+      nodes {
+        id
+        name
+        description
+        issues {
+          totalCount
+        }
+      }
+    }
+    repositoriesConnection {
+      totalCount
+      nodes {
+        id
+        name
+        ownerName
+        issues {
+          totalCount
+        }
+      }
+    }
+    zenhubEpics(first: 20) {
+      totalCount
+      nodes {
+        id
+        title
+        childIssues(workspaceId: $workspaceId) {
+          totalCount
+        }
+        startOn
+        endOn
+      }
+    }
+    zenhubUsers {
+      totalCount
+      nodes {
+        githubUser {
+          login
+          avatarUrl
+          name
+        }
+        name
+        email
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+query searchUserWorkspaces($query: String!, $first: Int) {
+  viewer {
+    searchWorkspaces(query: $query, first: $first) {
+      nodes {
+        id
+        name
+        description
+        pipelinesConnection {
+          totalCount
+        }
+        repositoriesConnection {
+          totalCount
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}

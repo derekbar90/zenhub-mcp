@@ -1,0 +1,5 @@
+mutation addMilestoneToIssues($input: AddMilestoneForIssuesInput!) {
+  addMilestoneToIssues(input: $input) {
+    successCount
+  }
+}

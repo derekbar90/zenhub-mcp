@@ -1,0 +1,5 @@
+mutation deletePipeline($input: DeletePipelineInput!) {
+  deletePipeline(input: $input) {
+    clientMutationId
+  }
+}

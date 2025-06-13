@@ -1,0 +1,16 @@
+query getWorkspaceRepositories($workspaceId: ID!) {
+  workspace(id: $workspaceId) {
+    id
+    name
+    description
+    repositoriesConnection {
+      nodes {
+        id
+        ghId
+        createdAt
+        name
+        description
+      }
+    }
+  }
+}

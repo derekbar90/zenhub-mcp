@@ -1,0 +1,33 @@
+query workspaceIssues($workspaceId: ID!, $after: String) {
+  workspace(id: $workspaceId) {
+    issues(after: $after) {
+      nodes {
+        id
+        pullRequest
+        type
+        title
+        number
+        state
+        assignees {
+          nodes {
+            name
+            id
+            ghId
+            login
+          }
+        }
+        parentZenhubEpics {
+          totalCount
+        }
+        repository {
+          name
+          ownerName
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}

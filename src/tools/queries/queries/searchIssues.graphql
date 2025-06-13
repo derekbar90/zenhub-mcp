@@ -1,0 +1,38 @@
+query searchIssues($workspaceId: ID!, $user: String!, $repoIds: [ID!]!, $pipelineIds: [ID!]!) {
+  searchIssues(
+    workspaceId: $workspaceId
+    query: $user
+    filters: {pipelineIds: $pipelineIds, repositoryIds: $repoIds}
+  ) {
+    nodes {
+      id
+      state
+      body
+      state
+      labels {
+        nodes {
+          id
+          name
+        }
+      }
+      closedAt
+      creator {
+        id
+        githubUser {
+          login
+        }
+        name
+      }
+      estimate {
+        value
+      }
+      htmlUrl
+      assignees {
+        nodes {
+          id
+          login
+        }
+      }
+    }
+  }
+}

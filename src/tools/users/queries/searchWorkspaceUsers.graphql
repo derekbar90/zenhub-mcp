@@ -1,0 +1,11 @@
+query searchWorkspaceUsers($workspaceId: ID!) {
+  workspace(id: $workspaceId) {
+    zenhubUsers {
+      nodes {
+        id
+        name
+        email
+      }
+    }
+  }
+}

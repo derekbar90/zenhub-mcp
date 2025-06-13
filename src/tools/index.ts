@@ -1,14 +1,14 @@
-import { issueTools } from "./issues.js";
-import { queryTools } from "./queries.js";
-import { epicTools } from "./epics.js";
-import { workspaceTools } from "./workspaces.js";
-import { sprintTools } from "./sprints.js";
-import { pipelineTools } from "./pipelines.js";
-import { milestoneTools } from "./milestones.js";
-import { dependencyTools } from "./dependencies.js";
-import { labelTools } from "./labels.js";
-import { userTools } from "./users.js";
-import { repositoryTools } from "./repositories.js";
+import { issueTools } from "./issues/index.js";
+import { queryTools } from "./queries/index.js";
+import { epicTools } from "./epics/index.js";
+import { workspaceTools } from "./workspaces/index.js";
+import { sprintTools } from "./sprints/index.js";
+import { pipelineTools } from "./pipelines/index.js";
+import { milestoneTools } from "./milestones/index.js";
+import { dependencyTools } from "./dependencies/index.js";
+import { labelTools } from "./labels/index.js";
+import { userTools } from "./users/index.js";
+import { repositoryTools } from "./repositories/index.js";
 import { ZenHubTool, ToolCategory } from "../types.js";
 
 export const toolCategories: ToolCategory[] = [

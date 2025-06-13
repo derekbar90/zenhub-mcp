@@ -1,0 +1,11 @@
+mutation updateSprint($input: UpdateSprintInput!) {
+  updateSprint(input: $input) {
+    sprint {
+      id
+      name
+      startAt
+      endAt
+      state
+    }
+  }
+}

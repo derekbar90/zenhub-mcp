@@ -1,0 +1,5 @@
+mutation deleteZenhubEpic($input: DeleteZenhubEpicInput!) {
+  deleteZenhubEpic(input: $input) {
+    zenhubEpicId
+  }
+}

@@ -1,0 +1,22 @@
+query issueByInfo($repositoryGhId: Int!, $issueNumber: Int!) {
+  issueByInfo(repositoryGhId: $repositoryGhId, issueNumber: $issueNumber) {
+    id
+    title
+    number
+    state
+    htmlUrl
+    labels {
+      nodes {
+        name
+      }
+    }
+    assignees {
+      nodes {
+        login
+      }
+    }
+    milestone {
+      title
+    }
+  }
+}

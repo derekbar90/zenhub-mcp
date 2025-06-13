@@ -1,0 +1,17 @@
+query getUserOrganizations($query: String, $first: Int) {
+  viewer {
+    zenhubOrganizations(query: $query, first: $first) {
+      nodes {
+        id
+        name
+        workspaces {
+          totalCount
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}

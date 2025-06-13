@@ -1,0 +1,8 @@
+mutation createZenhubEpic($input: CreateZenhubEpicInput!) {
+  createZenhubEpic(input: $input) {
+    zenhubEpic {
+      id
+      title
+    }
+  }
+}

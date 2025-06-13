@@ -1,0 +1,5 @@
+mutation closeIssues($input: CloseIssuesInput!) {
+  closeIssues(input: $input) {
+    successCount
+  }
+}

@@ -1,0 +1,7 @@
+mutation deleteSprintConfigAndOpenSprints($input: DeleteSprintConfigAndOpenSprintsInput!) {
+  deleteSprintConfigAndOpenSprints(input: $input) {
+    workspace {
+      id
+    }
+  }
+}

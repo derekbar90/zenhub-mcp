@@ -1,0 +1,17 @@
+query getRepositoriesByGhIds($ghIds: [Int!]!) {
+  repositoriesByGhId(ghIds: $ghIds) {
+    id
+    ghId
+    name
+    description
+    ownerName
+    createdAt
+    updatedAt
+    workspacesConnection {
+      nodes {
+        id
+        name
+      }
+    }
+  }
+}

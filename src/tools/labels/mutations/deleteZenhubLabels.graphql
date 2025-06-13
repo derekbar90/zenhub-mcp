@@ -1,0 +1,7 @@
+mutation deleteZenhubLabels($input: DeleteZenhubLabelsInput!) {
+  deleteZenhubLabels(input: $input) {
+    zenhubLabels {
+      id
+    }
+  }
+}

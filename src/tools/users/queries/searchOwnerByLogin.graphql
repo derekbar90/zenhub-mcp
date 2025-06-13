@@ -1,0 +1,10 @@
+query searchOwnerByLogin($login: String!) {
+  ownerByLogin(login: $login) {
+    id
+    login
+    avatarUrl
+    ... on User {
+      name
+    }
+  }
+}

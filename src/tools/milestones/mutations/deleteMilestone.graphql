@@ -1,0 +1,7 @@
+mutation deleteMilestone($input: DeleteMilestoneInput!) {
+  deleteMilestone(input: $input) {
+    milestone {
+      id
+    }
+  }
+}

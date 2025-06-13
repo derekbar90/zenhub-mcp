@@ -1,0 +1,14 @@
+query getWorkspaceLabels($workspaceId: ID!) {
+  workspace(id: $workspaceId) {
+    id
+    name
+    zenhubLabels {
+      nodes {
+        id
+        name
+        color
+        description
+      }
+    }
+  }
+}

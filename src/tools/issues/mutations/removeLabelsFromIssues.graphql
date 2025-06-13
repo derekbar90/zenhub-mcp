@@ -1,0 +1,5 @@
+mutation removeLabelsFromIssues($input: RemoveLabelsFromIssuesInput!) {
+  removeLabelsFromIssues(input: $input) {
+    successCount
+  }
+}

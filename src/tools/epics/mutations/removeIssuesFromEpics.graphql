@@ -1,0 +1,7 @@
+mutation removeIssuesFromEpics($input: RemoveIssuesFromEpicsInput!) {
+  removeIssuesFromEpics(input: $input) {
+    epics {
+      id
+    }
+  }
+}

@@ -1,0 +1,19 @@
+query getWorkspaceUsers($workspaceId: ID!) {
+  workspace(id: $workspaceId) {
+    id
+    name
+    description
+    assignees {
+      totalCount
+      nodes {
+        id
+        ghId
+        login
+        name
+        zenhubUser {
+          email
+        }
+      }
+    }
+  }
+}

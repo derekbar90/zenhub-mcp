@@ -1,0 +1,10 @@
+mutation createMilestone($input: CreateMilestoneInput!) {
+  createMilestone(input: $input) {
+    milestone {
+      id
+      title
+      description
+      dueOn
+    }
+  }
+}

@@ -1,0 +1,15 @@
+mutation createIssueDependency($input: CreateIssueDependencyInput!) {
+  createIssueDependency(input: $input) {
+    issueDependency {
+      id
+      blockingIssue {
+        id
+        title
+      }
+      blockedIssue {
+        id
+        title
+      }
+    }
+  }
+}

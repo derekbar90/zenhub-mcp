@@ -1,0 +1,5 @@
+mutation removeAssigneesFromIssues($input: RemoveAssigneesFromIssuesInput!) {
+  removeAssigneesFromIssues(input: $input) {
+    successCount
+  }
+}

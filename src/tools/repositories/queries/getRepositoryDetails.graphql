@@ -1,0 +1,45 @@
+query getRepositoryDetails($repositoryId: ID!) {
+  node(id: $repositoryId) {
+    ... on Repository {
+      id
+      ghId
+      name
+      description
+      ownerName
+      createdAt
+      updatedAt
+      workspacesConnection {
+        nodes {
+          id
+          name
+          description
+        }
+      }
+      issues(first: 5) {
+        totalCount
+        nodes {
+          id
+          number
+          title
+          state
+        }
+      }
+      milestones(first: 5) {
+        totalCount
+        nodes {
+          id
+          title
+          state
+        }
+      }
+      labels(first: 10) {
+        totalCount
+        nodes {
+          id
+          name
+          color
+        }
+      }
+    }
+  }
+}

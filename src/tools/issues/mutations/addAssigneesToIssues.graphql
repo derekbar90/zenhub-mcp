@@ -1,0 +1,5 @@
+mutation addAssigneesToIssues($input: AddAssigneesToIssuesInput!) {
+  addAssigneesToIssues(input: $input) {
+    successCount
+  }
+}

@@ -1,0 +1,10 @@
+mutation createGithubLabel($input: CreateGithubLabelInput!) {
+  createGithubLabel(input: $input) {
+    label {
+      id
+      name
+      color
+      description
+    }
+  }
+}

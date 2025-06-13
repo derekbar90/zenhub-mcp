@@ -1,0 +1,9 @@
+mutation updateZenhubEpicDates($input: UpdateZenhubEpicDatesInput!) {
+  updateZenhubEpicDates(input: $input) {
+    zenhubEpic {
+      id
+      startOn
+      endOn
+    }
+  }
+}

@@ -1,0 +1,10 @@
+mutation createZenhubLabel($input: CreateZenhubLabelInput!) {
+  createZenhubLabel(input: $input) {
+    zenhubLabel {
+      id
+      name
+      color
+      description
+    }
+  }
+}

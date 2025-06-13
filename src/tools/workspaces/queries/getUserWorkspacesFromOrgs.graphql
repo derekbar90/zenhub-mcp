@@ -1,0 +1,27 @@
+query getUserWorkspacesFromOrgs($first: Int) {
+  viewer {
+    zenhubOrganizations(first: 10) {
+      nodes {
+        id
+        name
+        workspaces(first: $first) {
+          nodes {
+            id
+            name
+            description
+            pipelinesConnection {
+              totalCount
+            }
+            repositoriesConnection {
+              totalCount
+            }
+          }
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
+        }
+      }
+    }
+  }
+}

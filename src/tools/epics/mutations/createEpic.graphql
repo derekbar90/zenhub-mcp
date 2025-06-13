@@ -1,0 +1,13 @@
+mutation createEpic($input: CreateEpicInput!) {
+  createEpic(input: $input) {
+    epic {
+      id
+      issue {
+        id
+        title
+        number
+        htmlUrl
+      }
+    }
+  }
+}

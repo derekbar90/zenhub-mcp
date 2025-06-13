@@ -1,0 +1,16 @@
+query getWorkspacePipelines($workspaceId: ID!) {
+  workspace(id: $workspaceId) {
+    id
+    name
+    pipelinesConnection {
+      nodes {
+        id
+        name
+        description
+        issues {
+          totalCount
+        }
+      }
+    }
+  }
+}

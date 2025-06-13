@@ -1,4 +1,5 @@
 import { GraphQLClient } from "graphql-request";
+import { getSdk } from "./generated/graphql.js";
 
 export interface ToolArgs {
   [key: string]: any;
@@ -15,7 +16,7 @@ export interface ZenHubTool {
   name: string;
   description: string;
   inputSchema: any;
-  handler: (args: ToolArgs, client: GraphQLClient) => Promise<ToolResponse>;
+  handler: (args: ToolArgs, sdk: ReturnType<typeof getSdk>) => Promise<ToolResponse>;
 }
 
 export interface ToolCategory {

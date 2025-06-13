@@ -1,5 +1,4 @@
-import { GraphQLClient } from "graphql-request";
-import { gql } from "graphql-request";
+import { getSdk } from "../generated/graphql.js";
 import { BaseTool } from "./base.js";
 import { ToolArgs, ZenHubTool } from "../types.js";
 
@@ -9,7 +8,6 @@ class CreatePipelineTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       name: { type: "string", description: "Pipeline name" },
       workspace_id: { type: "string", description: "Workspace ID" },
       description: { type: "string", description: "Pipeline description" },
@@ -17,30 +15,25 @@ class CreatePipelineTool extends BaseTool {
     required: ["name", "workspace_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { name, workspace_id, description = "" } = args;
 
-    const mutation = gql`
-      mutation createPipeline($input: CreatePipelineInput!) {
-        createPipeline(input: $input) {
-          pipeline {
-            id
-            name
-            description
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.createPipeline({
       input: {
         name,
         workspaceId: workspace_id,
         description,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -50,7 +43,6 @@ class UpdatePipelineTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       pipeline_id: { type: "string", description: "Pipeline ID" },
       name: { type: "string", description: "Pipeline name" },
       description: { type: "string", description: "Pipeline description" },
@@ -58,30 +50,25 @@ class UpdatePipelineTool extends BaseTool {
     required: ["pipeline_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { pipeline_id, name, description } = args;
 
-    const mutation = gql`
-      mutation updatePipeline($input: UpdatePipelineInput!) {
-        updatePipeline(input: $input) {
-          pipeline {
-            id
-            name
-            description
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.updatePipeline({
       input: {
-        id: pipeline_id,
+        pipelineId: pipeline_id,
         ...(name && { name }),
         ...(description && { description }),
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -91,30 +78,33 @@ class DeletePipelineTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       pipeline_id: { type: "string", description: "Pipeline ID" },
+      destination_pipeline_id: {
+        type: "string",
+        description: "Pipeline ID to move issues to",
+      },
     },
-    required: ["pipeline_id"],
+    required: ["pipeline_id", "destination_pipeline_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
-    const { pipeline_id } = args;
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
+    const { pipeline_id, destination_pipeline_id } = args;
 
-    const mutation = gql`
-      mutation deletePipeline($input: DeletePipelineInput!) {
-        deletePipeline(input: $input) {
-          clientMutationId
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.deletePipeline({
       input: {
-        id: pipeline_id,
+        pipelineId: pipeline_id,
+        destinationPipelineId: destination_pipeline_id,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -124,39 +114,26 @@ class GetWorkspacePipelinesTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       workspace_id: { type: "string", description: "Workspace ID" },
     },
     required: ["workspace_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { workspace_id } = args;
 
-    const query = gql`
-      query getWorkspacePipelines($workspaceId: ID!) {
-        workspace(id: $workspaceId) {
-          id
-          name
-          pipelinesConnection {
-            nodes {
-              id
-              name
-              description
-              issues {
-                totalCount
-              }
-            }
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.getWorkspacePipelines({
       workspaceId: workspace_id,
-    };
+    });
 
-    return this.executeGraphQL(client, query, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -165,7 +142,7 @@ export const pipelineTools: ZenHubTool[] = [
   new UpdatePipelineTool(),
   new DeletePipelineTool(),
   new GetWorkspacePipelinesTool(),
-].map(tool => ({
+].map((tool) => ({
   name: tool.name,
   description: tool.description,
   inputSchema: tool.inputSchema,

@@ -5,10 +5,11 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "graphql-codegen && tsc",
     "dev": "tsx src/index.ts",
     "start": "node dist/index.js",
-    "test-server": "node test-server.js"
+    "test-server": "node test-server.js",
+    "codegen": "graphql-codegen"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
@@ -19,8 +20,11 @@
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.7",
     "@graphql-codegen/fragment-matcher": "^5.1.0",
+    "@graphql-codegen/named-operations-object": "^3.1.1",
+    "@graphql-codegen/near-operation-file-preset": "^3.0.1",
     "@graphql-codegen/typed-document-node": "^5.1.1",
     "@graphql-codegen/typescript": "^4.1.6",
+    "@graphql-codegen/typescript-graphql-request": "^6.3.0",
     "@graphql-codegen/typescript-operations": "^4.6.1",
     "@types/node": "^20.10.0",
     "tsx": "^4.6.0",

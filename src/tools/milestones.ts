@@ -1,5 +1,4 @@
-import { GraphQLClient } from "graphql-request";
-import { gql } from "graphql-request";
+import { getSdk } from "../generated/graphql.js";
 import { BaseTool } from "./base.js";
 import { ToolArgs, ZenHubTool } from "../types.js";
 
@@ -9,7 +8,6 @@ class CreateMilestoneTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       title: { type: "string", description: "Milestone title" },
       repository_id: { type: "string", description: "Repository ID" },
       description: { type: "string", description: "Milestone description" },
@@ -19,32 +17,27 @@ class CreateMilestoneTool extends BaseTool {
     required: ["title", "repository_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { title, repository_id, description, due_date, start_date } = args;
 
-    const mutation = gql`
-      mutation createMilestone($input: CreateMilestoneInput!) {
-        createMilestone(input: $input) {
-          milestone {
-            id
-            title
-            description
-            dueOn
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.createMilestone({
       input: {
         title,
         repositoryId: repository_id,
         ...(description && { description }),
         ...(due_date && { dueOn: due_date }),
+        ...(start_date && { startOn: start_date }),
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -54,7 +47,6 @@ class UpdateMilestoneTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       milestone_id: { type: "string", description: "Milestone ID" },
       title: { type: "string", description: "Milestone title" },
       description: { type: "string", description: "Milestone description" },
@@ -64,32 +56,27 @@ class UpdateMilestoneTool extends BaseTool {
     required: ["milestone_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { milestone_id, title, description, due_date, start_date } = args;
 
-    const mutation = gql`
-      mutation updateMilestone($input: UpdateMilestoneInput!) {
-        updateMilestone(input: $input) {
-          milestone {
-            id
-            title
-            description
-            dueOn
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.updateMilestone({
       input: {
-        id: milestone_id,
+        milestoneId: milestone_id,
         ...(title && { title }),
         ...(description && { description }),
         ...(due_date && { dueOn: due_date }),
+        ...(start_date && { startOn: start_date }),
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -99,32 +86,34 @@ class AddMilestoneToIssuesTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
-      issue_ids: { type: "array", items: { type: "string" }, description: "Array of issue IDs" },
+      issue_ids: {
+        type: "array",
+        items: { type: "string" },
+        description: "Array of issue IDs",
+      },
       milestone_id: { type: "string", description: "Milestone ID" },
     },
     required: ["issue_ids", "milestone_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { issue_ids, milestone_id } = args;
 
-    const mutation = gql`
-      mutation addMilestoneToIssues($input: AddMilestoneForIssuesInput!) {
-        addMilestoneToIssues(input: $input) {
-          successCount
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.addMilestoneToIssues({
       input: {
         issueIds: issue_ids,
         milestoneId: milestone_id,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -134,30 +123,32 @@ class RemoveMilestoneFromIssuesTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
-      issue_ids: { type: "array", items: { type: "string" }, description: "Array of issue IDs" },
+      issue_ids: {
+        type: "array",
+        items: { type: "string" },
+        description: "Array of issue IDs",
+      },
     },
     required: ["issue_ids"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { issue_ids } = args;
 
-    const mutation = gql`
-      mutation removeMilestoneToIssues($input: RemoveMilestoneForIssuesInput!) {
-        removeMilestoneToIssues(input: $input) {
-          successCount
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.removeMilestoneToIssues({
       input: {
         issueIds: issue_ids,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -167,32 +158,28 @@ class DeleteMilestoneTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       milestone_id: { type: "string", description: "Milestone ID" },
     },
     required: ["milestone_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { milestone_id } = args;
 
-    const mutation = gql`
-      mutation deleteMilestone($input: DeleteMilestoneInput!) {
-        deleteMilestone(input: $input) {
-          milestone {
-            id
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.deleteMilestone({
       input: {
-        id: milestone_id,
+        milestoneId: milestone_id,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -202,7 +189,7 @@ export const milestoneTools: ZenHubTool[] = [
   new AddMilestoneToIssuesTool(),
   new RemoveMilestoneFromIssuesTool(),
   new DeleteMilestoneTool(),
-].map(tool => ({
+].map((tool) => ({
   name: tool.name,
   description: tool.description,
   inputSchema: tool.inputSchema,

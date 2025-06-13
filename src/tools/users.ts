@@ -1,5 +1,4 @@
-import { GraphQLClient } from "graphql-request";
-import { gql } from "graphql-request";
+import { getSdk } from "../generated/graphql.js";
 import { BaseTool } from "./base.js";
 import { ToolArgs, ToolResponse, ZenHubTool } from "../types.js";
 
@@ -9,68 +8,61 @@ class GetWorkspaceUsersTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       workspace_id: { type: "string", description: "Workspace ID" },
     },
     required: ["workspace_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { workspace_id } = args;
 
-    const query = gql`
-      query getWorkspaceUsers($workspaceId: ID!) {
-        workspace(id: $workspaceId) {
-          id
-          name
-    			description
-          assignees {
-            totalCount
-            nodes {
-              id
-              ghId
-              login
-              name
-              zenhubUser {
-                email
-              }
-            }
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.getWorkspaceUsers({
       workspaceId: workspace_id,
-    };
+    });
 
-    return this.executeGraphQL(client, query, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
 class GetRepositoryCollaboratorsTool extends BaseTool {
   name = "zenhub_get_repository_collaborators";
-  description = "Get all collaborators for a repository who can be assigned to issues (Note: Repository collaborators not available in ZenHub API - use workspace users instead)";
+  description =
+    "Get all collaborators for a repository who can be assigned to issues (Note: Repository collaborators not available in ZenHub API - use workspace users instead)";
   inputSchema = {
     type: "object",
     properties: {
-      
-      repository_id: { type: "string", description: "Repository ID (Note: Not supported in ZenHub API)" },
+      repository_id: {
+        type: "string",
+        description: "Repository ID (Note: Not supported in ZenHub API)",
+      },
     },
     required: ["repository_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     // Repository collaborators not available in ZenHub API
     // Return error message suggesting to use workspace users instead
     return {
       content: [
         {
           type: "text" as const,
-          text: JSON.stringify({
-            error: "Repository collaborators not available in ZenHub GraphQL API. Use zenhub_get_workspace_users instead.",
-            suggestion: "Use zenhub_get_workspace_users to get users who can be assigned to issues in a workspace."
-          }, null, 2),
+          text: JSON.stringify(
+            {
+              error:
+                "Repository collaborators not available in ZenHub GraphQL API. Use zenhub_get_workspace_users instead.",
+              suggestion:
+                "Use zenhub_get_workspace_users to get users who can be assigned to issues in a workspace.",
+            },
+            null,
+            2
+          ),
         },
       ],
     };
@@ -83,36 +75,29 @@ class GetOwnerByLoginTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
-      login: { type: "string", description: "GitHub username or organization name" },
+      login: {
+        type: "string",
+        description: "GitHub username or organization name",
+      },
     },
     required: ["login"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { login } = args;
 
-    const query = gql`
-      query ownerByLogin($login: String!) {
-        ownerByLogin(login: $login) {
-          id
-          login
-          avatarUrl
-          ... on User {
-            name
-          }
-          ... on Organization {
-            login
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.ownerByLogin({
       login,
-    };
+    });
 
-    return this.executeGraphQL(client, query, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -122,36 +107,26 @@ class GetOwnerByGhIdTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       github_id: { type: "number", description: "GitHub user/organization ID" },
     },
     required: ["github_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { github_id } = args;
 
-    const query = gql`
-      query ownerByGhId($ghId: Int!) {
-        ownerByGhId(ghId: $ghId) {
-          id
-          login
-          avatarUrl
-          ... on User {
-            name
-          }
-          ... on Organization {
-            login
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.ownerByGhId({
       ghId: github_id,
-    };
+    });
 
-    return this.executeGraphQL(client, query, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -161,47 +136,36 @@ class SearchUsersTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
-      query: { type: "string", description: "Search query (username, name, or email)" },
-      workspace_id: { type: "string", description: "Workspace ID to limit search to workspace users" },
+      query: {
+        type: "string",
+        description: "Search query (username, name, or email)",
+      },
+      workspace_id: {
+        type: "string",
+        description: "Workspace ID to limit search to workspace users",
+      },
     },
     required: ["query"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient): Promise<ToolResponse> {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>): Promise<ToolResponse> {
     const { query: searchQuery, workspace_id } = args;
 
     if (workspace_id) {
       // Search within workspace users
-      const query = gql`
-        query searchWorkspaceUsers($workspaceId: ID!) {
-          workspace(id: $workspaceId) {
-            zenhubUsers {
-              nodes {
-                id
-                name
-                email
-              }
-            }
-          }
-        }
-      `;
-
-      const variables = {
+      const result = await sdk.searchWorkspaceUsers({
         workspaceId: workspace_id,
-      };
+      });
 
-      const result = await this.executeGraphQL(client, query, variables);
-      
       // Filter results client-side based on search query
-      if (result.content[0].text) {
-        const data = JSON.parse(result.content[0].text);
-        const users = data.workspace?.zenhubUsers?.nodes || [];
-        const filteredUsers = users.filter((user: any) =>
-          user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          user.email?.toLowerCase().includes(searchQuery.toLowerCase())
+      if (result.workspace?.zenhubUsers.nodes) {
+        const users = result.workspace.zenhubUsers.nodes;
+        const filteredUsers = users.filter(
+          (user: any) =>
+            user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            user.email?.toLowerCase().includes(searchQuery.toLowerCase())
         );
-        
+
         return {
           content: [
             {
@@ -211,22 +175,26 @@ class SearchUsersTool extends BaseTool {
           ],
         };
       }
-      
-      return result;
+
+      return {
+        content: [
+          {
+            type: "text" as const,
+            text: JSON.stringify(result, null, 2),
+          },
+        ],
+      };
     } else {
       // Search by login globally
-      return this.executeGraphQL(client, gql`
-        query searchOwnerByLogin($login: String!) {
-          ownerByLogin(login: $login) {
-            id
-            login
-            avatarUrl
-            ... on User {
-              name
-            }
-          }
-        }
-      `, { login: searchQuery });
+      const result = await sdk.searchOwnerByLogin({ login: searchQuery });
+      return {
+        content: [
+          {
+            type: "text" as const,
+            text: JSON.stringify(result, null, 2),
+          },
+        ],
+      };
     }
   }
 }
@@ -237,7 +205,7 @@ export const userTools: ZenHubTool[] = [
   new GetOwnerByLoginTool(),
   new GetOwnerByGhIdTool(),
   new SearchUsersTool(),
-].map(tool => ({
+].map((tool) => ({
   name: tool.name,
   description: tool.description,
   inputSchema: tool.inputSchema,

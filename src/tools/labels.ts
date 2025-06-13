@@ -1,5 +1,4 @@
-import { GraphQLClient } from "graphql-request";
-import { gql } from "graphql-request";
+import { getSdk } from "../generated/graphql.js";
 import { BaseTool } from "./base.js";
 import { ToolArgs, ZenHubTool } from "../types.js";
 
@@ -9,7 +8,6 @@ class CreateGithubLabelTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       repository_id: { type: "string", description: "Repository ID" },
       name: { type: "string", description: "Label name" },
       color: { type: "string", description: "Label color (hex without #)" },
@@ -18,32 +16,26 @@ class CreateGithubLabelTool extends BaseTool {
     required: ["repository_id", "name", "color"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { repository_id, name, color, description } = args;
 
-    const mutation = gql`
-      mutation createGithubLabel($input: CreateGithubLabelInput!) {
-        createGithubLabel(input: $input) {
-          label {
-            id
-            name
-            color
-            description
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.createGithubLabel({
       input: {
         repositoryId: repository_id,
         name,
         color,
         ...(description && { description }),
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -53,7 +45,6 @@ class CreateZenhubLabelTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       workspace_id: { type: "string", description: "Workspace ID" },
       name: { type: "string", description: "Label name" },
       color: { type: "string", description: "Label color (hex without #)" },
@@ -62,69 +53,65 @@ class CreateZenhubLabelTool extends BaseTool {
     required: ["workspace_id", "name", "color"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { workspace_id, name, color, description } = args;
 
-    const mutation = gql`
-      mutation createZenhubLabel($input: CreateZenhubLabelInput!) {
-        createZenhubLabel(input: $input) {
-          zenhubLabel {
-            id
-            name
-            color
-            description
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.createZenhubLabel({
       input: {
         workspaceId: workspace_id,
         name,
         color,
         ...(description && { description }),
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
-
 class DeleteZenhubLabelsTool extends BaseTool {
   name = "zenhub_delete_zenhub_labels";
   description = "Delete ZenHub labels";
   inputSchema = {
     type: "object",
     properties: {
-      
-      label_ids: { type: "array", items: { type: "string" }, description: "Array of ZenHub label IDs" },
+      workspace_id: { type: "string", description: "Workspace ID" },
+      label_ids: {
+        type: "array",
+        items: { type: "string" },
+        description: "Array of ZenHub label IDs",
+      },
     },
     required: ["label_ids"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
-    const { label_ids } = args;
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
+    const { workspace_id, label_ids } = args;
 
-    const mutation = gql`
-      mutation deleteZenhubLabels($input: DeleteZenhubLabelsInput!) {
-        deleteZenhubLabels(input: $input) {
-          zenhubLabels {
-            id
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.deleteZenhubLabels({
       input: {
-        labelIds: label_ids,
+        names: label_ids,
+        zenhubOrganizationId: workspace_id,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
+
 
 class GetRepositoryLabelsTool extends BaseTool {
   name = "zenhub_get_repository_labels";
@@ -132,37 +119,26 @@ class GetRepositoryLabelsTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       repository_id: { type: "string", description: "GitHub Repository ID" },
     },
     required: ["repository_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { repository_id } = args;
 
-    const query = gql`
-      query getRepositoryLabels($repositoryGhId: Int!) {
-        repositoriesByGhId(ghIds: [$repositoryGhId]) {
-          id
-          name
-          labels {
-            nodes {
-              id
-              name
-              color
-              description
-            }
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.getRepositoryLabels({
       repositoryGhId: parseInt(repository_id),
-    };
+    });
 
-    return this.executeGraphQL(client, query, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -172,37 +148,26 @@ class GetWorkspaceLabelsTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       workspace_id: { type: "string", description: "Workspace ID" },
     },
     required: ["workspace_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { workspace_id } = args;
 
-    const query = gql`
-      query getWorkspaceLabels($workspaceId: ID!) {
-        workspace(id: $workspaceId) {
-          id
-          name
-          zenhubLabels {
-            nodes {
-              id
-              name
-              color
-              description
-            }
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.getWorkspaceLabels({
       workspaceId: workspace_id,
-    };
+    });
 
-    return this.executeGraphQL(client, query, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -212,7 +177,7 @@ export const labelTools: ZenHubTool[] = [
   new DeleteZenhubLabelsTool(),
   new GetRepositoryLabelsTool(),
   new GetWorkspaceLabelsTool(),
-].map(tool => ({
+].map((tool) => ({
   name: tool.name,
   description: tool.description,
   inputSchema: tool.inputSchema,

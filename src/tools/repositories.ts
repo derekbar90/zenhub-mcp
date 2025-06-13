@@ -1,5 +1,4 @@
-import { GraphQLClient } from "graphql-request";
-import { gql } from "graphql-request";
+import { getSdk } from "../generated/graphql.js";
 import { BaseTool } from "./base.js";
 import { ToolArgs, ZenHubTool } from "../types.js";
 
@@ -14,33 +13,21 @@ class GetWorkspaceRepositoriesTool extends BaseTool {
     required: ["workspace_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { workspace_id } = args;
 
-    const query = gql`
-      query getWorkspaceRepositories($workspaceId: ID!) {
-        workspace(id: $workspaceId) {
-          id
-          name
-          description
-          repositoriesConnection {
-            nodes {
-              id
-              ghId
-              createdAt
-              name
-              description 
-            }
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.getWorkspaceRepositories({
       workspaceId: workspace_id,
-    };
+    });
 
-    return this.executeGraphQL(client, query, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -50,43 +37,30 @@ class GetRepositoriesByGitHubIdsTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      github_ids: { 
-        type: "array", 
+      github_ids: {
+        type: "array",
         items: { type: "number" },
-        description: "Array of GitHub repository IDs" 
+        description: "Array of GitHub repository IDs",
       },
     },
     required: ["github_ids"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { github_ids } = args;
 
-    const query = gql`
-      query getRepositoriesByGhIds($ghIds: [Int!]!) {
-        repositoriesByGhId(ghIds: $ghIds) {
-          id
-          ghId
-          name
-          description
-          ownerName
-          createdAt
-          updatedAt
-          workspacesConnection {
-            nodes {
-              id
-              name
-            }
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.getRepositoriesByGhIds({
       ghIds: github_ids,
-    };
+    });
 
-    return this.executeGraphQL(client, query, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -97,42 +71,32 @@ class AddRepositoryToWorkspaceTool extends BaseTool {
     type: "object",
     properties: {
       workspace_id: { type: "string", description: "Workspace ID" },
-      repository_github_id: { type: "number", description: "GitHub repository ID" },
+      repository_github_id: {
+        type: "number",
+        description: "GitHub repository ID",
+      },
     },
     required: ["workspace_id", "repository_github_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { workspace_id, repository_github_id } = args;
 
-    const mutation = gql`
-      mutation addRepositoryToWorkspace($input: AddRepositoryToWorkspaceInput!) {
-        addRepositoryToWorkspace(input: $input) {
-          workspaceRepository {
-            id
-            repository {
-              id
-              ghId
-              name
-              description
-            }
-            workspace {
-              id
-              name
-            }
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.addRepositoryToWorkspace({
       input: {
         workspaceId: workspace_id,
         repositoryGhId: repository_github_id,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -148,28 +112,24 @@ class RemoveRepositoryFromWorkspaceTool extends BaseTool {
     required: ["workspace_id", "repository_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { workspace_id, repository_id } = args;
 
-    const mutation = gql`
-      mutation disconnectWorkspaceRepository($input: DisconnectWorkspaceRepositoryInput!) {
-        disconnectWorkspaceRepository(input: $input) {
-          workspace {
-            id
-            name
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.disconnectWorkspaceRepository({
       input: {
         workspaceId: workspace_id,
-        repositoryId: repository_id,
+        repositoryGhId: repository_id,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -184,62 +144,21 @@ class GetRepositoryDetailsTool extends BaseTool {
     required: ["repository_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { repository_id } = args;
 
-    const query = gql`
-      query getRepositoryDetails($repositoryId: ID!) {
-        node(id: $repositoryId) {
-          ... on Repository {
-            id
-            ghId
-            name
-            description
-            ownerName
-            createdAt
-            updatedAt
-            workspacesConnection {
-              nodes {
-                id
-                name
-                description
-              }
-            }
-            issues(first: 5) {
-              totalCount
-              nodes {
-                id
-                number
-                title
-                state
-              }
-            }
-            milestones(first: 5) {
-              totalCount
-              nodes {
-                id
-                title
-                state
-              }
-            }
-            labels(first: 10) {
-              totalCount
-              nodes {
-                id
-                name
-                color
-              }
-            }
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.getRepositoryDetails({
       repositoryId: repository_id,
-    };
+    });
 
-    return this.executeGraphQL(client, query, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -250,50 +169,25 @@ class GetRepositoryAssignableUsersTool extends BaseTool {
     type: "object",
     properties: {
       repository_id: { type: "string", description: "Repository ID" },
-      first: { type: "number", description: "Number of users to return (default: 20)" },
     },
     required: ["repository_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
-    const { repository_id, first = 20 } = args;
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
+    const { repository_id } = args;
 
-    const query = gql`
-      query getRepositoryAssignableUsers($repositoryId: ID!, $first: Int) {
-        node(id: $repositoryId) {
-          ... on Repository {
-            id
-            name
-            assignableUsers(first: $first) {
-              totalCount
-              nodes {
-                id
-                login
-                name
-                zenhubUser {
-                  imageUrl
-                  githubUser {
-                    login
-                    avatarUrl
-                  }
-                }
-              }
-              pageInfo {
-                hasNextPage
-                endCursor
-              }
-            }
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.getRepositoryAssignableUsers({
       repositoryId: repository_id,
-      first,
-    };
+    });
 
-    return this.executeGraphQL(client, query, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -304,7 +198,7 @@ export const repositoryTools: ZenHubTool[] = [
   new RemoveRepositoryFromWorkspaceTool(),
   new GetRepositoryDetailsTool(),
   new GetRepositoryAssignableUsersTool(),
-].map(tool => ({
+].map((tool) => ({
   name: tool.name,
   description: tool.description,
   inputSchema: tool.inputSchema,

@@ -1,5 +1,4 @@
-import { GraphQLClient } from "graphql-request";
-import { gql } from "graphql-request";
+import { getSdk } from "../generated/graphql.js";
 import { BaseTool } from "./base.js";
 import { ToolArgs, ZenHubTool } from "../types.js";
 
@@ -19,24 +18,10 @@ class CreateIssueTool extends BaseTool {
     required: ["title", "repository_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { title, repository_id, body, labels = [], assignees = [] } = args;
 
-    const mutation = gql`
-      mutation createIssue($input: CreateIssueInput!) {
-        createIssue(input: $input) {
-          issue {
-            id
-            title
-            number
-            htmlUrl
-            state
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.createIssue({
       input: {
         title,
         repositoryId: repository_id,
@@ -44,9 +29,16 @@ class CreateIssueTool extends BaseTool {
         labels,
         assignees,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -62,24 +54,23 @@ class CloseIssuesTool extends BaseTool {
     required: ["issue_ids"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { issue_ids } = args;
 
-    const mutation = gql`
-      mutation closeIssues($input: CloseIssuesInput!) {
-        closeIssues(input: $input) {
-          successCount
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.closeIssues({
       input: {
         issueIds: issue_ids,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -97,26 +88,25 @@ class ReopenIssuesTool extends BaseTool {
     required: ["issue_ids", "pipeline_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { issue_ids, pipeline_id, position = "START" } = args;
 
-    const mutation = gql`
-      mutation reopenIssues($input: ReopenIssuesInput!) {
-        reopenIssues(input: $input) {
-          successCount
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.reopenIssues({
       input: {
         issueIds: issue_ids,
         pipelineId: pipeline_id,
         position,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -134,26 +124,25 @@ class MoveIssueTool extends BaseTool {
     required: ["issue_ids", "pipeline_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { issue_ids, pipeline_id, position } = args;
 
-    const mutation = gql`
-      mutation moveIssue($input: MoveIssueInput!) {
-        moveIssue(input: $input) {
-          issue { id }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.moveIssue({
       input: {
-        issueIds: issue_ids,
+        issueId: issue_ids,
         pipelineId: pipeline_id,
         position,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -170,25 +159,24 @@ class AddAssigneesToIssuesTool extends BaseTool {
     required: ["issue_ids", "assignees"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { issue_ids, assignees } = args;
 
-    const mutation = gql`
-      mutation addAssigneesToIssues($input: AddAssigneesToIssuesInput!) {
-        addAssigneesToIssues(input: $input) {
-          successCount
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.addAssigneesToIssues({
       input: {
         issueIds: issue_ids,
-        assignees,
+        assigneeIds: assignees,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -205,25 +193,24 @@ class AddLabelsToIssuesTool extends BaseTool {
     required: ["issue_ids", "labels"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { issue_ids, labels } = args;
 
-    const mutation = gql`
-      mutation addLabelsToIssues($input: AddLabelsToIssuesInput!) {
-        addLabelsToIssues(input: $input) {
-          successCount
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.addLabelsToIssues({
       input: {
         issueIds: issue_ids,
-        labels,
+        labelIds: labels,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -240,25 +227,24 @@ class SetEstimateTool extends BaseTool {
     required: ["issue_id", "value"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { issue_id, value } = args;
 
-    const mutation = gql`
-      mutation setEstimate($input: SetEstimateInput!) {
-        setEstimate(input: $input) {
-          clientMutationId
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.setEstimate({
       input: {
         issueId: issue_id,
         value,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -268,44 +254,44 @@ class SetMultipleEstimatesTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
-      estimates: { 
-        type: "array", 
+      estimates: {
+        type: "array",
         items: {
           type: "object",
           properties: {
-            issue_id: { type: "string" },
-            value: { type: "number" }
+            issue_id: { type: "string", description: "Issue ID" },
+            value: { type: "number", description: "Estimate value" },
           },
-          required: ["issue_id", "value"]
+          required: ["issue_id", "value"],
         },
-        description: "Array of issue ID and estimate value pairs" 
+        description: "Array of estimates to set",
       },
     },
     required: ["estimates"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { estimates } = args;
 
-    const mutation = gql`
-      mutation setMultipleEstimates($input: SetMultipleEstimatesInput!) {
-        setMultipleEstimates(input: $input) {
-          issues { id }
-        }
-      }
-    `;
+    const results = await Promise.all(
+      estimates.map((est: any) =>
+        sdk.setEstimate({
+          input: {
+            issueId: est.issue_id,
+            value: est.value,
+          },
+        })
+      )
+    );
 
-    const variables = {
-      input: {
-        estimates: estimates.map((est: any) => ({
-          issueId: est.issue_id,
-          value: est.value,
-        })),
-      },
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(results, null, 2),
+        },
+      ],
     };
-
-    return this.executeGraphQL(client, mutation, variables);
   }
 }
 
@@ -323,30 +309,25 @@ class UpdateIssueTool extends BaseTool {
     required: ["issue_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { issue_id, title, body } = args;
 
-    const mutation = gql`
-      mutation updateIssue($input: UpdateIssueInput!) {
-        updateIssue(input: $input) {
-          issue {
-            id
-            title
-            body
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.updateIssue({
       input: {
-        id: issue_id,
-        ...(title && { title }),
-        ...(body && { body }),
+        issueId: issue_id,
+        title,
+        body,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -363,25 +344,24 @@ class RemoveAssigneesFromIssuesTool extends BaseTool {
     required: ["issue_ids", "assignees"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { issue_ids, assignees } = args;
 
-    const mutation = gql`
-      mutation removeAssigneesFromIssues($input: RemoveAssigneesFromIssuesInput!) {
-        removeAssigneesFromIssues(input: $input) {
-          successCount
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.removeAssigneesFromIssues({
       input: {
         issueIds: issue_ids,
-        assignees,
+        assigneeIds: assignees,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -398,25 +378,84 @@ class RemoveLabelsFromIssuesTool extends BaseTool {
     required: ["issue_ids", "labels"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { issue_ids, labels } = args;
 
-    const mutation = gql`
-      mutation removeLabelsFromIssues($input: RemoveLabelsFromIssuesInput!) {
-        removeLabelsFromIssues(input: $input) {
-          successCount
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.removeLabelsFromIssues({
       input: {
         issueIds: issue_ids,
-        labels,
+        labelIds: labels,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
+  }
+}
+
+class CreateIssueWithEpicTool extends BaseTool {
+  name = "zenhub_create_issue_with_epic";
+  description = "Create a new issue and add it to an existing epic";
+  inputSchema = {
+    type: "object",
+    properties: {
+      title: { type: "string", description: "Issue title" },
+      repository_id: { type: "string", description: "Repository ID" },
+      body: { type: "string", description: "Issue body/description" },
+      labels: { type: "array", items: { type: "string" }, description: "Issue labels" },
+      assignees: { type: "array", items: { type: "string" }, description: "GitHub usernames to assign" },
+      epic_id: { type: "string", description: "Epic ID to add the issue to" },
+    },
+    required: ["title", "repository_id", "epic_id"],
+  };
+
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
+    const { title, repository_id, body, labels = [], assignees = [], epic_id } = args;
+
+    try {
+      const createResult = await sdk.createIssue({
+        input: {
+          title,
+          repositoryId: repository_id,
+          body: body || "",
+          labels,
+          assignees,
+        },
+      });
+
+      const issueId = createResult?.createIssue?.issue?.id;
+
+      if (!issueId) {
+        throw new Error("Failed to create issue");
+      }
+
+      const addToEpicResult = await sdk.addIssuesToEpics({
+        input: {
+          issueIds: [issueId],
+          epicIds: [epic_id],
+        },
+      });
+
+      return {
+        content: [
+          {
+            type: "text" as const,
+            text: JSON.stringify({
+              createdIssue: createResult.createIssue?.issue,
+              addedToEpic: addToEpicResult.addIssuesToEpics?.epics,
+            }, null, 2),
+          },
+        ],
+      };
+    } catch (error) {
+      throw new Error(`Error creating issue with epic: ${error instanceof Error ? error.message : String(error)}`);
+    }
   }
 }
 
@@ -433,25 +472,24 @@ class AddIssuesToEpicsTool extends BaseTool {
     required: ["issue_ids", "epic_ids"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { issue_ids, epic_ids } = args;
 
-    const mutation = gql`
-      mutation addIssuesToEpics($input: AddIssuesToEpicsInput!) {
-        addIssuesToEpics(input: $input) {
-          epics { id }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.addIssuesToEpics({
       input: {
         issueIds: issue_ids,
         epicIds: epic_ids,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -468,30 +506,30 @@ class RemoveIssuesFromEpicsTool extends BaseTool {
     required: ["issue_ids", "epic_ids"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { issue_ids, epic_ids } = args;
 
-    const mutation = gql`
-      mutation removeIssuesFromEpics($input: RemoveIssuesFromEpicsInput!) {
-        removeIssuesFromEpics(input: $input) {
-          epics { id }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.removeIssuesFromEpics({
       input: {
         issueIds: issue_ids,
         epicIds: epic_ids,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
 export const issueTools: ZenHubTool[] = [
   new CreateIssueTool(),
+  new CreateIssueWithEpicTool(),
   new UpdateIssueTool(),
   new CloseIssuesTool(),
   new ReopenIssuesTool(),

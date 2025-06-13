@@ -1,5 +1,5 @@
 import { GraphQLClient } from "graphql-request";
-import { gql } from "graphql-request";
+import { getSdk } from "../generated/graphql.js";
 import { BaseTool } from "./base.js";
 import { ToolArgs, ZenHubTool } from "../types.js";
 
@@ -16,9 +16,34 @@ class GenericQueryTool extends BaseTool {
     required: ["query"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { query, variables = {} } = args;
-    return this.executeGraphQL(client, query, variables);
+    // This tool is a fallback and uses raw queries, so we can't use the SDK here.
+    // We'll need to create a new GraphQLClient to execute the query.
+    const client = new GraphQLClient("https://api.zenhub.com/public/graphql", {
+      headers: {
+        Authorization: `Bearer ${process.env.ZENHUB_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    try {
+      const result = await client.request(query, variables);
+      return {
+        content: [
+          {
+            type: "text" as const,
+            text: JSON.stringify(result, null, 2),
+          },
+        ],
+      };
+    } catch (error) {
+      throw new Error(
+        `GraphQL Error: ${
+          error instanceof Error ? error.message : String(error)
+        }`
+      );
+    }
   }
 }
 
@@ -42,28 +67,23 @@ class SearchIssuesByPipelineTool extends BaseTool {
     required: ["pipeline_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { pipeline_id, query = "", filters = {} } = args;
 
-    const searchQuery = gql`
-      query searchIssuesByPipeline($pipelineId: ID!, $query: String, $filters: IssueSearchFiltersInput!) {
-        searchIssuesByPipeline(pipelineId: $pipelineId, query: $query, filters: $filters) {
-          nodes {
-            id
-            title
-            number
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.searchIssuesByPipeline({
       pipelineId: pipeline_id,
       query,
       filters,
-    };
+    });
 
-    return this.executeGraphQL(client, searchQuery, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -81,57 +101,24 @@ class SearchIssuesTool extends BaseTool {
     required: ["workspace_id", "user", "repo_ids", "pipeline_ids"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { workspace_id, user, repo_ids, pipeline_ids } = args;
 
-    const searchQuery = gql`
-      query searchIssues($workspaceId: ID!, $user: String!, $repoIds: [ID!]!, $pipelineIds: [ID!]!) {
-        searchIssues(workspaceId: $workspaceId, query: $user, filters: {
-          pipelineIds: $pipelineIds
-          repositoryIds: $repoIds
-        }){
-          nodes {
-              id
-              state
-              body
-              state
-              labels {
-                nodes {
-                  id
-                  name
-                }
-              }
-              closedAt
-              creator {
-                id
-                githubUser {
-                  login
-                }
-                name
-              }
-              estimate {
-                value
-              }
-              htmlUrl
-              assignees {
-                nodes {
-                  id
-                  login
-                }
-              }
-            }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.searchIssues({
       workspaceId: workspace_id,
-      user,
+      user: user,
       repoIds: repo_ids,
       pipelineIds: pipeline_ids,
-    };
+    });
 
-    return this.executeGraphQL(client, searchQuery, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -148,51 +135,22 @@ class GetWorkspaceIssuesTool extends BaseTool {
     required: ["workspace_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { workspace_id, after } = args;
 
-    const query = gql`
-      query workspaceIssues($workspaceId: ID!, $after: String) {
-        workspace(id: $workspaceId) {
-          issues(after: $after) {
-            nodes {
-              id
-              pullRequest
-              type
-              title
-              number
-              state
-              assignees {
-                nodes {
-                  name
-                  id
-                  ghId
-                  login
-                }
-              }
-              parentZenhubEpics {
-                totalCount
-              }
-              repository {
-                name
-                ownerName
-              }
-            }
-            pageInfo {
-              hasNextPage
-              endCursor
-            }
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.workspaceIssues({
       workspaceId: workspace_id,
       ...(after && { after }),
-    };
+    });
 
-    return this.executeGraphQL(client, query, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -207,23 +165,17 @@ class GetViewerTool extends BaseTool {
     required: [],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
-    const query = gql`
-      query viewer {
-        viewer {
-          id
-          name
-          email
-          imageUrl
-          githubUser {
-            login
-            avatarUrl
-          }
-        }
-      }
-    `;
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
+    const result = await sdk.viewer();
 
-    return this.executeGraphQL(client, query);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -240,40 +192,22 @@ class GetIssueByInfoTool extends BaseTool {
     required: ["repository_gh_id", "issue_number"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { repository_gh_id, issue_number } = args;
 
-    const query = gql`
-      query issueByInfo($repositoryGhId: Int!, $issueNumber: Int!) {
-        issueByInfo(repositoryGhId: $repositoryGhId, issueNumber: $issueNumber) {
-          id
-          title
-          number
-          state
-          htmlUrl
-          labels {
-            nodes {
-              name
-            }
-          }
-          assignees {
-            nodes {
-              login
-            }
-          }
-          milestone {
-            title
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.issueByInfo({
       repositoryGhId: repository_gh_id,
       issueNumber: issue_number,
-    };
+    });
 
-    return this.executeGraphQL(client, query, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -289,40 +223,33 @@ class GetRepositoriesByGhIdTool extends BaseTool {
     required: ["repository_gh_ids"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { repository_gh_ids } = args;
 
-    const query = gql`
-      query repositoriesByGhId($ghIds: [Int!]!) {
-        repositoriesByGhId(ghIds: $ghIds) {
-          id
-          name
-          ownerName
-          ghId
-          owner {
-            login
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.getRepositoriesByGhIds({
       ghIds: repository_gh_ids,
-    };
+    });
 
-    return this.executeGraphQL(client, query, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
 export const queryTools: ZenHubTool[] = [
-  new GetViewerTool(),
-  new GetIssueByInfoTool(),
-  new GetRepositoriesByGhIdTool(),
+  new GenericQueryTool(),
   new SearchIssuesByPipelineTool(),
   new SearchIssuesTool(),
   new GetWorkspaceIssuesTool(),
-  new GenericQueryTool(),
-].map(tool => ({
+  new GetViewerTool(),
+  new GetIssueByInfoTool(),
+  new GetRepositoriesByGhIdTool(),
+].map((tool) => ({
   name: tool.name,
   description: tool.description,
   inputSchema: tool.inputSchema,

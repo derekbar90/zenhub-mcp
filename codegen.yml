@@ -7,7 +7,7 @@ generates:
     plugins:
       - typescript
       - typescript-operations
-      - typed-document-node
+      - typescript-graphql-request
     config:
       strictScalars: true
       scalars:
@@ -23,7 +23,6 @@ generates:
       enumsAsTypes: true
       constAssertions: true
       immutableTypes: true
-      documentMode: documentNodeMap
   ./src/generated/fragments.ts:
     plugins:
       - typescript

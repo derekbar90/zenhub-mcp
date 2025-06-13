@@ -1,5 +1,4 @@
-import { GraphQLClient } from "graphql-request";
-import { gql } from "graphql-request";
+import { getSdk } from "../generated/graphql.js";
 import { BaseTool } from "./base.js";
 import { ToolArgs, ZenHubTool } from "../types.js";
 
@@ -9,7 +8,6 @@ class CreateEpicTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       title: { type: "string", description: "Epic title" },
       repository_id: { type: "string", description: "Repository ID" },
       body: { type: "string", description: "Epic description" },
@@ -17,26 +15,10 @@ class CreateEpicTool extends BaseTool {
     required: ["title", "repository_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { title, repository_id, body } = args;
 
-    const mutation = gql`
-      mutation createEpic($input: CreateEpicInput!) {
-        createEpic(input: $input) {
-          epic {
-            id
-            issue {
-              id
-              title
-              number
-              htmlUrl
-            }
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.createEpic({
       input: {
         issue: {
           title,
@@ -44,9 +26,136 @@ class CreateEpicTool extends BaseTool {
           body: body || "",
         },
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
+  }
+}
+
+class CreateEpicWithNewIssuesTool extends BaseTool {
+  name = "zenhub_create_epic_with_new_issues";
+  description =
+    "Create a new epic and multiple new issues, then add them to the epic";
+  inputSchema = {
+    type: "object",
+    properties: {
+      epic_title: { type: "string", description: "Epic title" },
+      epic_repository_id: {
+        type: "string",
+        description: "Repository ID for the epic",
+      },
+      epic_body: { type: "string", description: "Epic description" },
+      issues: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            title: { type: "string", description: "Issue title" },
+            repository_id: {
+              type: "string",
+              description: "Repository ID for the issue",
+            },
+            body: { type: "string", description: "Issue body/description" },
+            labels: {
+              type: "array",
+              items: { type: "string" },
+              description: "Issue labels",
+            },
+            assignees: {
+              type: "array",
+              items: { type: "string" },
+              description: "GitHub usernames to assign",
+            },
+          },
+          required: ["title", "repository_id"],
+        },
+        description: "Array of issues to create and add to the epic",
+      },
+    },
+    required: ["epic_title", "epic_repository_id", "issues"],
+  };
+
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
+    const { epic_title, epic_repository_id, epic_body, issues } = args;
+
+    try {
+      const createEpicResult = await sdk.createEpic({
+        input: {
+          issue: {
+            title: epic_title,
+            repositoryId: epic_repository_id,
+            body: epic_body || "",
+          },
+        },
+      });
+
+      const epicId = createEpicResult?.createEpic?.epic?.id;
+      if (!epicId) {
+        throw new Error("Failed to create epic");
+      }
+      const createdIssues = [];
+
+      for (const issue of issues) {
+        const {
+          title,
+          repository_id,
+          body,
+          labels = [],
+          assignees = [],
+        } = issue;
+
+        const createIssueResult = await sdk.createIssue({
+          input: {
+            title,
+            repositoryId: repository_id,
+            body: body || "",
+            labels,
+            assignees,
+          },
+        });
+
+        createdIssues.push(createIssueResult?.createIssue?.issue);
+      }
+
+      const issueIds = createdIssues.map((issue) => issue?.id).filter(Boolean) as string[];
+
+      const addToEpicResult = await sdk.addIssuesToEpics({
+        input: {
+          issueIds,
+          epicIds: [epicId],
+        },
+      });
+
+      return {
+        content: [
+          {
+            type: "text" as const,
+            text: JSON.stringify(
+              {
+                createdEpic: createEpicResult?.createEpic?.epic,
+                createdIssues,
+                addedToEpic: addToEpicResult?.addIssuesToEpics?.epics,
+              },
+              null,
+              2
+            ),
+          },
+        ],
+      };
+    } catch (error) {
+      throw new Error(
+        `Error creating epic with new issues: ${
+          error instanceof Error ? error.message : String(error)
+        }`
+      );
+    }
   }
 }
 
@@ -56,7 +165,6 @@ class CreateZenhubEpicTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       title: { type: "string", description: "Epic title" },
       workspace_id: { type: "string", description: "Workspace ID" },
       description: { type: "string", description: "Epic description" },
@@ -64,29 +172,25 @@ class CreateZenhubEpicTool extends BaseTool {
     required: ["title", "workspace_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { title, workspace_id, description } = args;
 
-    const mutation = gql`
-      mutation createZenhubEpic($input: CreateZenhubEpicInput!) {
-        createZenhubEpic(input: $input) {
-          zenhubEpic {
-            id
-            title
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.createZenhubEpic({
       input: {
         title,
         workspaceId: workspace_id,
         ...(description && { description }),
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -96,7 +200,6 @@ class UpdateEpicTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       epic_id: { type: "string", description: "Epic ID" },
       title: { type: "string", description: "Epic title" },
       description: { type: "string", description: "Epic description" },
@@ -104,29 +207,25 @@ class UpdateEpicTool extends BaseTool {
     required: ["epic_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { epic_id, title, description } = args;
 
-    const mutation = gql`
-      mutation updateZenhubEpic($input: UpdateZenhubEpicInput!) {
-        updateZenhubEpic(input: $input) {
-          zenhubEpic {
-            id
-            title
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.updateZenhubEpic({
       input: {
-        id: epic_id,
+        zenhubEpicId: epic_id,
         ...(title && { title }),
         ...(description && { description }),
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -136,38 +235,32 @@ class UpdateEpicDatesTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       epic_id: { type: "string", description: "Epic ID" },
-      start_date: { type: "string", description: "Start date (ISO format)" },
-      end_date: { type: "string", description: "End date (ISO format)" },
+      start_date: { type: "string", description: "Start date (YYYY-MM-DD)" },
+      end_date: { type: "string", description: "End date (YYYY-MM-DD)" },
     },
     required: ["epic_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { epic_id, start_date, end_date } = args;
 
-    const mutation = gql`
-      mutation updateZenhubEpicDates($input: UpdateZenhubEpicDatesInput!) {
-        updateZenhubEpicDates(input: $input) {
-          zenhubEpic {
-            id
-            startOn
-            endOn
-          }
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.updateZenhubEpicDates({
       input: {
-        id: epic_id,
-        ...(start_date && { startOn: start_date }),
-        ...(end_date && { endOn: end_date }),
+        zenhubEpicId: epic_id,
+        startOn: start_date,
+        endOn: end_date,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
@@ -177,40 +270,39 @@ class DeleteEpicTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       epic_id: { type: "string", description: "Epic ID" },
     },
     required: ["epic_id"],
   };
 
-  async handle(args: ToolArgs, client: GraphQLClient) {
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
     const { epic_id } = args;
 
-    const mutation = gql`
-      mutation deleteZenhubEpic($input: DeleteZenhubEpicInput!) {
-        deleteZenhubEpic(input: $input) {
-          zenhubEpicId
-        }
-      }
-    `;
-
-    const variables = {
+    const result = await sdk.deleteZenhubEpic({
       input: {
-        id: epic_id,
+        zenhubEpicId: epic_id,
       },
-    };
+    });
 
-    return this.executeGraphQL(client, mutation, variables);
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
   }
 }
 
 export const epicTools: ZenHubTool[] = [
   new CreateEpicTool(),
+  new CreateEpicWithNewIssuesTool(),
   new CreateZenhubEpicTool(),
   new UpdateEpicTool(),
   new UpdateEpicDatesTool(),
   new DeleteEpicTool(),
-].map(tool => ({
+].map((tool) => ({
   name: tool.name,
   description: tool.description,
   inputSchema: tool.inputSchema,

@@ -1,4 +1,5 @@
 import { GraphQLClient } from "graphql-request";
+import { gql } from "graphql-request";
 import { BaseTool } from "./base.js";
 import { ToolArgs, ZenHubTool } from "../types.js";
 
@@ -19,7 +20,7 @@ class CreatePipelineTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { name, workspace_id, description = "" } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation createPipeline($input: CreatePipelineInput!) {
         createPipeline(input: $input) {
           pipeline {
@@ -60,7 +61,7 @@ class UpdatePipelineTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { pipeline_id, name, description } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation updatePipeline($input: UpdatePipelineInput!) {
         updatePipeline(input: $input) {
           pipeline {
@@ -99,10 +100,10 @@ class DeletePipelineTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { pipeline_id } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation deletePipeline($input: DeletePipelineInput!) {
         deletePipeline(input: $input) {
-          success
+          clientMutationId
         }
       }
     `;
@@ -132,8 +133,8 @@ class GetWorkspacePipelinesTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { workspace_id } = args;
 
-    const query = `
-      query workspace($workspaceId: ID!) {
+    const query = gql`
+      query getWorkspacePipelines($workspaceId: ID!) {
         workspace(id: $workspaceId) {
           id
           name

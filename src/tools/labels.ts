@@ -1,4 +1,5 @@
 import { GraphQLClient } from "graphql-request";
+import { gql } from "graphql-request";
 import { BaseTool } from "./base.js";
 import { ToolArgs, ZenHubTool } from "../types.js";
 
@@ -20,7 +21,7 @@ class CreateGithubLabelTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { repository_id, name, color, description } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation createGithubLabel($input: CreateGithubLabelInput!) {
         createGithubLabel(input: $input) {
           label {
@@ -64,10 +65,10 @@ class CreateZenhubLabelTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { workspace_id, name, color, description } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation createZenhubLabel($input: CreateZenhubLabelInput!) {
         createZenhubLabel(input: $input) {
-          label {
+          zenhubLabel {
             id
             name
             color
@@ -105,10 +106,12 @@ class DeleteZenhubLabelsTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { label_ids } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation deleteZenhubLabels($input: DeleteZenhubLabelsInput!) {
         deleteZenhubLabels(input: $input) {
-          successCount
+          zenhubLabels {
+            id
+          }
         }
       }
     `;
@@ -130,7 +133,7 @@ class GetRepositoryLabelsTool extends BaseTool {
     type: "object",
     properties: {
       
-      repository_id: { type: "string", description: "Repository ID" },
+      repository_id: { type: "string", description: "GitHub Repository ID" },
     },
     required: ["repository_id"],
   };
@@ -138,9 +141,9 @@ class GetRepositoryLabelsTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { repository_id } = args;
 
-    const query = `
-      query repository($repositoryId: ID!) {
-        repository(id: $repositoryId) {
+    const query = gql`
+      query getRepositoryLabels($repositoryGhId: Int!) {
+        repositoriesByGhId(ghIds: [$repositoryGhId]) {
           id
           name
           labels {
@@ -156,7 +159,7 @@ class GetRepositoryLabelsTool extends BaseTool {
     `;
 
     const variables = {
-      repositoryId: repository_id,
+      repositoryGhId: parseInt(repository_id),
     };
 
     return this.executeGraphQL(client, query, variables);
@@ -178,8 +181,8 @@ class GetWorkspaceLabelsTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { workspace_id } = args;
 
-    const query = `
-      query workspace($workspaceId: ID!) {
+    const query = gql`
+      query getWorkspaceLabels($workspaceId: ID!) {
         workspace(id: $workspaceId) {
           id
           name

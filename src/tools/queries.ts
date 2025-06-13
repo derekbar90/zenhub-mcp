@@ -1,4 +1,5 @@
 import { GraphQLClient } from "graphql-request";
+import { gql } from "graphql-request";
 import { BaseTool } from "./base.js";
 import { ToolArgs, ZenHubTool } from "../types.js";
 
@@ -44,8 +45,8 @@ class SearchIssuesByPipelineTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { pipeline_id, query = "", filters = {} } = args;
 
-    const searchQuery = `
-      query searchIssuesByPipeline($pipelineId: ID!, $query: String, $filters: IssueFilters) {
+    const searchQuery = gql`
+      query searchIssuesByPipeline($pipelineId: ID!, $query: String, $filters: IssueSearchFiltersInput!) {
         searchIssuesByPipeline(pipelineId: $pipelineId, query: $query, filters: $filters) {
           nodes {
             id
@@ -68,39 +69,66 @@ class SearchIssuesByPipelineTool extends BaseTool {
 
 class SearchIssuesTool extends BaseTool {
   name = "zenhub_search_issues_in_repository";
-  description = "Search and filter issues within a specific repository by title, state, or labels";
+  description = "Search and filter issues in a workspace by user, repository, and pipeline";
   inputSchema = {
     type: "object",
     properties: {
-      
-      repository_id: { type: "string", description: "Repository ID to search in" },
-      query: { type: "string", description: "Search query" },
-      filters: { type: "object", description: "Filter options" },
+      workspace_id: { type: "string", description: "Workspace ID to search in" },
+      user: { type: "string", description: "User to search for (query)" },
+      repo_ids: { type: "array", items: { type: "string" }, description: "Array of repository IDs to filter" },
+      pipeline_ids: { type: "array", items: { type: "string" }, description: "Array of pipeline IDs to filter" },
     },
-    required: ["repository_id"],
+    required: ["workspace_id", "user", "repo_ids", "pipeline_ids"],
   };
 
   async handle(args: ToolArgs, client: GraphQLClient) {
-    const { repository_id, query = "", filters = {} } = args;
+    const { workspace_id, user, repo_ids, pipeline_ids } = args;
 
-    const searchQuery = `
-      query searchIssues($repositoryId: ID!, $query: String, $filters: IssueFilters) {
-        searchIssues(repositoryId: $repositoryId, query: $query, filters: $filters) {
+    const searchQuery = gql`
+      query searchIssues($workspaceId: ID!, $user: String!, $repoIds: [ID!]!, $pipelineIds: [ID!]!) {
+        searchIssues(workspaceId: $workspaceId, query: $user, filters: {
+          pipelineIds: $pipelineIds
+          repositoryIds: $repoIds
+        }){
           nodes {
-            id
-            title
-            number
-            state
-            labels
-          }
+              id
+              state
+              body
+              state
+              labels {
+                nodes {
+                  id
+                  name
+                }
+              }
+              closedAt
+              creator {
+                id
+                githubUser {
+                  login
+                }
+                name
+              }
+              estimate {
+                value
+              }
+              htmlUrl
+              assignees {
+                nodes {
+                  id
+                  login
+                }
+              }
+            }
         }
       }
     `;
 
     const variables = {
-      repositoryId: repository_id,
-      query,
-      filters,
+      workspaceId: workspace_id,
+      user,
+      repoIds: repo_ids,
+      pipelineIds: pipeline_ids,
     };
 
     return this.executeGraphQL(client, searchQuery, variables);
@@ -123,7 +151,7 @@ class GetWorkspaceIssuesTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { workspace_id, after } = args;
 
-    const query = `
+    const query = gql`
       query workspaceIssues($workspaceId: ID!, $after: String) {
         workspace(id: $workspaceId) {
           issues(after: $after) {
@@ -134,6 +162,14 @@ class GetWorkspaceIssuesTool extends BaseTool {
               title
               number
               state
+              assignees {
+                nodes {
+                  name
+                  id
+                  ghId
+                  login
+                }
+              }
               parentZenhubEpics {
                 totalCount
               }
@@ -172,7 +208,7 @@ class GetViewerTool extends BaseTool {
   };
 
   async handle(args: ToolArgs, client: GraphQLClient) {
-    const query = `
+    const query = gql`
       query viewer {
         viewer {
           id
@@ -207,7 +243,7 @@ class GetIssueByInfoTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { repository_gh_id, issue_number } = args;
 
-    const query = `
+    const query = gql`
       query issueByInfo($repositoryGhId: Int!, $issueNumber: Int!) {
         issueByInfo(repositoryGhId: $repositoryGhId, issueNumber: $issueNumber) {
           id
@@ -215,9 +251,15 @@ class GetIssueByInfoTool extends BaseTool {
           number
           state
           htmlUrl
-          labels
+          labels {
+            nodes {
+              name
+            }
+          }
           assignees {
-            login
+            nodes {
+              login
+            }
           }
           milestone {
             title
@@ -250,7 +292,7 @@ class GetRepositoriesByGhIdTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { repository_gh_ids } = args;
 
-    const query = `
+    const query = gql`
       query repositoriesByGhId($ghIds: [Int!]!) {
         repositoriesByGhId(ghIds: $ghIds) {
           id

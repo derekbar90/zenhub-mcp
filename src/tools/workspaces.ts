@@ -1,4 +1,5 @@
 import { GraphQLClient } from "graphql-request";
+import { gql } from "graphql-request";
 import { BaseTool } from "./base.js";
 import { ToolArgs, ZenHubTool } from "../types.js";
 
@@ -21,7 +22,7 @@ class CreateWorkspaceTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { name, description = "", organization_id, repository_ids, default_repository_id } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation createWorkspace($input: CreateWorkspaceInput!) {
         createWorkspace(input: $input) {
           workspace {
@@ -65,8 +66,8 @@ class GetUserWorkspacesTool extends BaseTool {
 
     // If no query provided, use the organization-based approach
     if (!query) {
-      const orgQuery = `
-        query getUserWorkspaces($first: Int) {
+      const orgQuery = gql`
+        query getUserWorkspacesFromOrgs($first: Int) {
           viewer {
             zenhubOrganizations(first: 10) {
               nodes {
@@ -98,8 +99,8 @@ class GetUserWorkspacesTool extends BaseTool {
     }
 
     // Use search when query is provided - but searchWorkspaces requires non-empty query
-    const searchQuery = `
-      query getUserWorkspaces($query: String!, $first: Int) {
+    const searchQuery = gql`
+      query searchUserWorkspaces($query: String!, $first: Int) {
         viewer {
           searchWorkspaces(query: $query, first: $first) {
             nodes {
@@ -144,7 +145,7 @@ class GetUserOrganizationsTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { query = "", first = 10 } = args;
 
-    const searchQuery = `
+    const searchQuery = gql`
       query getUserOrganizations($query: String, $first: Int) {
         viewer {
           zenhubOrganizations(query: $query, first: $first) {
@@ -192,14 +193,14 @@ class GetOrganizationWorkspacesTool extends BaseTool {
 
     // Based on logs, zenhubOrganization field doesn't exist on Query type
     // Use the working pattern from getUserWorkspaces
-    const searchQuery = `
-      query getOrganizationWorkspaces($orgId: ID!, $query: String, $first: Int) {
+    const searchQuery = gql`
+      query getOrganizationWorkspaces($query: String, $first: Int) {
         viewer {
-          zenhubOrganizations(first: 1, ids: [$orgId]) {
+          zenhubOrganizations(query: $query, first: $first) {
             nodes {
               id
               name
-              workspaces(query: $query, first: $first) {
+              workspaces(first: $first) {
                 nodes {
                   id
                   name
@@ -223,7 +224,6 @@ class GetOrganizationWorkspacesTool extends BaseTool {
     `;
 
     const variables = {
-      orgId: organization_id,
       ...(query && { query }),
       first,
     };

@@ -6,7 +6,8 @@
       "Bash(grep:*)",
       "Bash(jq:*)",
       "Bash(rg:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(npx graphql-codegen:*)"
     ],
     "deny": []
   }

@@ -1,4 +1,5 @@
 import { GraphQLClient } from "graphql-request";
+import { gql } from "graphql-request";
 import { BaseTool } from "./base.js";
 import { ToolArgs, ZenHubTool } from "../types.js";
 
@@ -18,7 +19,7 @@ class CreateIssueDependencyTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { blocking_issue_id, blocked_issue_id } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation createIssueDependency($input: CreateIssueDependencyInput!) {
         createIssueDependency(input: $input) {
           issueDependency {
@@ -62,10 +63,12 @@ class DeleteIssueDependencyTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { dependency_id } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation deleteIssueDependency($input: DeleteIssueDependencyInput!) {
         deleteIssueDependency(input: $input) {
-          success
+          issueDependency {
+            id
+          }
         }
       }
     `;

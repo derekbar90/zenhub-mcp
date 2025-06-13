@@ -1,4 +1,5 @@
 import { GraphQLClient } from "graphql-request";
+import { gql } from "graphql-request";
 import { BaseTool } from "./base.js";
 import { ToolArgs, ZenHubTool } from "../types.js";
 
@@ -29,7 +30,7 @@ class CreateSprintTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { name, start_date, end_date, timezone = "UTC", workspace_id, settings = {} } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation createSprintConfig($input: CreateSprintConfigInput!) {
         createSprintConfig(input: $input) {
           sprintConfig {
@@ -88,14 +89,14 @@ class UpdateSprintTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { sprint_id, name, start_date, end_date, state } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation updateSprint($input: UpdateSprintInput!) {
         updateSprint(input: $input) {
           sprint {
             id
             name
-            startOn
-            endOn
+            startAt
+            endAt
             state
           }
         }
@@ -106,8 +107,8 @@ class UpdateSprintTool extends BaseTool {
       input: {
         id: sprint_id,
         ...(name && { name }),
-        ...(start_date && { startOn: start_date }),
-        ...(end_date && { endOn: end_date }),
+        ...(start_date && { startAt: start_date }),
+        ...(end_date && { endAt: end_date }),
         ...(state && { state }),
       },
     };
@@ -132,7 +133,7 @@ class AddIssuesToSprintsTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { issue_ids, sprint_ids } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation addIssuesToSprints($input: AddIssuesToSprintsInput!) {
         addIssuesToSprints(input: $input) {
           sprintIssues {
@@ -169,10 +170,12 @@ class RemoveIssuesFromSprintsTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { issue_ids, sprint_ids } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation removeIssuesFromSprints($input: RemoveIssuesFromSprintsInput!) {
         removeIssuesFromSprints(input: $input) {
-          successCount
+          sprints {
+            id
+          }
         }
       }
     `;
@@ -203,10 +206,12 @@ class DeleteSprintTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { workspace_id } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation deleteSprintConfigAndOpenSprints($input: DeleteSprintConfigAndOpenSprintsInput!) {
         deleteSprintConfigAndOpenSprints(input: $input) {
-          success
+          workspace {
+            id
+          }
         }
       }
     `;
@@ -236,8 +241,8 @@ class GetWorkspaceSprintsTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { workspace_id } = args;
 
-    const query = `
-      query workspace($workspaceId: ID!) {
+    const query = gql`
+      query getWorkspaceSprints($workspaceId: ID!) {
         workspace(id: $workspaceId) {
           id
           name
@@ -245,8 +250,8 @@ class GetWorkspaceSprintsTool extends BaseTool {
             nodes {
               id
               name
-              startOn
-              endOn
+              startAt
+              endAt
               state
               issues {
                 totalCount

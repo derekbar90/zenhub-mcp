@@ -1,0 +1,32 @@
+schema: ./zenhub_introspection.json
+documents: 
+  - "src/**/*.ts"
+  - "!src/generated/**"
+generates:
+  ./src/generated/graphql.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typed-document-node
+    config:
+      strictScalars: true
+      scalars:
+        ID: string
+        String: string
+        Boolean: boolean
+        Int: number
+        Float: number
+        BigInt: number
+        ISO8601Date: string
+        ISO8601DateTime: string
+        JSON: any
+      enumsAsTypes: true
+      constAssertions: true
+      immutableTypes: true
+      documentMode: documentNodeMap
+  ./src/generated/fragments.ts:
+    plugins:
+      - typescript
+      - fragment-matcher
+    config:
+      exportFragmentSpreadSubTypes: true

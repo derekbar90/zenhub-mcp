@@ -1,4 +1,5 @@
 import { GraphQLClient } from "graphql-request";
+import { gql } from "graphql-request";
 import { BaseTool } from "./base.js";
 import { ToolArgs, ZenHubTool } from "../types.js";
 
@@ -19,7 +20,7 @@ class CreateEpicTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { title, repository_id, body } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation createEpic($input: CreateEpicInput!) {
         createEpic(input: $input) {
           epic {
@@ -66,13 +67,12 @@ class CreateZenhubEpicTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { title, workspace_id, description } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation createZenhubEpic($input: CreateZenhubEpicInput!) {
         createZenhubEpic(input: $input) {
-          epic {
+          zenhubEpic {
             id
             title
-            description
           }
         }
       }
@@ -107,13 +107,12 @@ class UpdateEpicTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { epic_id, title, description } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation updateZenhubEpic($input: UpdateZenhubEpicInput!) {
         updateZenhubEpic(input: $input) {
-          epic {
+          zenhubEpic {
             id
             title
-            description
           }
         }
       }
@@ -148,10 +147,10 @@ class UpdateEpicDatesTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { epic_id, start_date, end_date } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation updateZenhubEpicDates($input: UpdateZenhubEpicDatesInput!) {
         updateZenhubEpicDates(input: $input) {
-          epic {
+          zenhubEpic {
             id
             startOn
             endOn
@@ -187,10 +186,10 @@ class DeleteEpicTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { epic_id } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation deleteZenhubEpic($input: DeleteZenhubEpicInput!) {
         deleteZenhubEpic(input: $input) {
-          success
+          zenhubEpicId
         }
       }
     `;

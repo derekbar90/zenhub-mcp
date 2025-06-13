@@ -1,4 +1,5 @@
 import { GraphQLClient } from "graphql-request";
+import { gql } from "graphql-request";
 import { BaseTool } from "./base.js";
 import { ToolArgs, ZenHubTool } from "../types.js";
 
@@ -21,7 +22,7 @@ class CreateMilestoneTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { title, repository_id, description, due_date, start_date } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation createMilestone($input: CreateMilestoneInput!) {
         createMilestone(input: $input) {
           milestone {
@@ -66,7 +67,7 @@ class UpdateMilestoneTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { milestone_id, title, description, due_date, start_date } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation updateMilestone($input: UpdateMilestoneInput!) {
         updateMilestone(input: $input) {
           milestone {
@@ -108,8 +109,8 @@ class AddMilestoneToIssuesTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { issue_ids, milestone_id } = args;
 
-    const mutation = `
-      mutation addMilestoneToIssues($input: AddMilestoneToIssuesInput!) {
+    const mutation = gql`
+      mutation addMilestoneToIssues($input: AddMilestoneForIssuesInput!) {
         addMilestoneToIssues(input: $input) {
           successCount
         }
@@ -142,8 +143,8 @@ class RemoveMilestoneFromIssuesTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { issue_ids } = args;
 
-    const mutation = `
-      mutation removeMilestoneToIssues($input: RemoveMilestoneToIssuesInput!) {
+    const mutation = gql`
+      mutation removeMilestoneToIssues($input: RemoveMilestoneForIssuesInput!) {
         removeMilestoneToIssues(input: $input) {
           successCount
         }
@@ -175,10 +176,12 @@ class DeleteMilestoneTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { milestone_id } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation deleteMilestone($input: DeleteMilestoneInput!) {
         deleteMilestone(input: $input) {
-          success
+          milestone {
+            id
+          }
         }
       }
     `;

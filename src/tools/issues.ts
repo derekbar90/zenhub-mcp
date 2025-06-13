@@ -1,4 +1,5 @@
 import { GraphQLClient } from "graphql-request";
+import { gql } from "graphql-request";
 import { BaseTool } from "./base.js";
 import { ToolArgs, ZenHubTool } from "../types.js";
 
@@ -21,7 +22,7 @@ class CreateIssueTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { title, repository_id, body, labels = [], assignees = [] } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation createIssue($input: CreateIssueInput!) {
         createIssue(input: $input) {
           issue {
@@ -64,7 +65,7 @@ class CloseIssuesTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { issue_ids } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation closeIssues($input: CloseIssuesInput!) {
         closeIssues(input: $input) {
           successCount
@@ -99,7 +100,7 @@ class ReopenIssuesTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { issue_ids, pipeline_id, position = "START" } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation reopenIssues($input: ReopenIssuesInput!) {
         reopenIssues(input: $input) {
           successCount
@@ -136,10 +137,10 @@ class MoveIssueTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { issue_ids, pipeline_id, position } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation moveIssue($input: MoveIssueInput!) {
         moveIssue(input: $input) {
-          successCount
+          issue { id }
         }
       }
     `;
@@ -172,7 +173,7 @@ class AddAssigneesToIssuesTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { issue_ids, assignees } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation addAssigneesToIssues($input: AddAssigneesToIssuesInput!) {
         addAssigneesToIssues(input: $input) {
           successCount
@@ -207,7 +208,7 @@ class AddLabelsToIssuesTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { issue_ids, labels } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation addLabelsToIssues($input: AddLabelsToIssuesInput!) {
         addLabelsToIssues(input: $input) {
           successCount
@@ -242,7 +243,7 @@ class SetEstimateTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { issue_id, value } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation setEstimate($input: SetEstimateInput!) {
         setEstimate(input: $input) {
           clientMutationId
@@ -287,10 +288,10 @@ class SetMultipleEstimatesTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { estimates } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation setMultipleEstimates($input: SetMultipleEstimatesInput!) {
         setMultipleEstimates(input: $input) {
-          successCount
+          issues { id }
         }
       }
     `;
@@ -325,7 +326,7 @@ class UpdateIssueTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { issue_id, title, body } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation updateIssue($input: UpdateIssueInput!) {
         updateIssue(input: $input) {
           issue {
@@ -365,7 +366,7 @@ class RemoveAssigneesFromIssuesTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { issue_ids, assignees } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation removeAssigneesFromIssues($input: RemoveAssigneesFromIssuesInput!) {
         removeAssigneesFromIssues(input: $input) {
           successCount
@@ -400,7 +401,7 @@ class RemoveLabelsFromIssuesTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { issue_ids, labels } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation removeLabelsFromIssues($input: RemoveLabelsFromIssuesInput!) {
         removeLabelsFromIssues(input: $input) {
           successCount
@@ -435,10 +436,10 @@ class AddIssuesToEpicsTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { issue_ids, epic_ids } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation addIssuesToEpics($input: AddIssuesToEpicsInput!) {
         addIssuesToEpics(input: $input) {
-          successCount
+          epics { id }
         }
       }
     `;
@@ -470,10 +471,10 @@ class RemoveIssuesFromEpicsTool extends BaseTool {
   async handle(args: ToolArgs, client: GraphQLClient) {
     const { issue_ids, epic_ids } = args;
 
-    const mutation = `
+    const mutation = gql`
       mutation removeIssuesFromEpics($input: RemoveIssuesFromEpicsInput!) {
         removeIssuesFromEpics(input: $input) {
-          successCount
+          epics { id }
         }
       }
     `;

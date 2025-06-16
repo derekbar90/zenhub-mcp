@@ -1,9 +1,12 @@
 {
   "name": "zenhub-mcp-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP server for ZenHub GraphQL API",
   "main": "dist/index.js",
   "type": "module",
+  "bin": {
+    "zenhub-mcp-server": "./dist/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/derekbar90/zenhub-mcp.git"
@@ -12,7 +15,7 @@
     "url": "https://github.com/derekbar90/zenhub-mcp/issues"
   },
   "homepage": "https://github.com/derekbar90/zenhub-mcp#readme",
-  "author": "Derek Barrera <email@domain.com>",
+  "author": "Derek Barrera <derekbarrera@gmail.com>",
   "license": "UNLICENSED",
   "publishConfig": {
     "access": "public"

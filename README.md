@@ -46,8 +46,8 @@ npm run build
 {
   "mcpServers": {
     "zenhub": {
-      "command": "node",
-      "args": ["/path/to/zenhub-mcp/dist/index.js"],
+      "command": "npx",
+      "args": ["zenhub-mcp-server"],
       "env": {
         "ZENHUB_API_KEY": "your_api_key_here"
       }
@@ -71,7 +71,8 @@ npm run build
   "command": "node",
   "args": ["/path/to/zenhub-mcp/dist/index.js"],
   "env": {
-    "ZENHUB_API_KEY": "your_api_key_here"
+    "ZENHUB_API_KEY": "zh_",
+    "GITHUB_PAT": "github_pat_"
   }
 }
 ```

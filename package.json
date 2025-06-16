@@ -1,6 +1,6 @@
 {
   "name": "zenhub-mcp-server",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "MCP server for ZenHub GraphQL API",
   "main": "dist/index.js",
   "type": "module",
@@ -20,8 +20,16 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["zenhub", "graphql", "mcp", "server"],
-  "files": ["dist", "README.md"],
+  "keywords": [
+    "zenhub",
+    "graphql",
+    "mcp",
+    "server"
+  ],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "graphql-codegen && tsc",
@@ -34,6 +42,7 @@
     "@modelcontextprotocol/sdk": "^1.12.3",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
+    "graphql-tag": "^2.12.6",
     "node-abort-controller": "^3.1.1"
   },
   "devDependencies": {

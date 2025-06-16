@@ -94,11 +94,11 @@ class SearchIssuesTool extends BaseTool {
     type: "object",
     properties: {
       workspace_id: { type: "string", description: "Workspace ID to search in" },
-      user: { type: "string", description: "User to search for (query)" },
-      repo_ids: { type: "array", items: { type: "string" }, description: "Array of repository IDs to filter" },
-      pipeline_ids: { type: "array", items: { type: "string" }, description: "Array of pipeline IDs to filter" },
+      query: { type: "string", description: "Query to search for user, content, title" },
+      repo_ids: { type: "array", items: { type: "string" }, description: "Array of repository IDs to filter. Use zenhub_get_workspace_overview to get repository IDs.", optional: true },
+      pipeline_ids: { type: "array", items: { type: "string" }, description: "Array of pipeline IDs to filter. Use zenhub_get_workspace_pipelines to get pipeline IDs.", optional: true },
     },
-    required: ["workspace_id", "user", "repo_ids", "pipeline_ids"],
+    required: ["workspace_id", "query", "repo_ids", "pipeline_ids"],
   };
 
   async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
@@ -107,8 +107,8 @@ class SearchIssuesTool extends BaseTool {
     const result = await sdk.searchIssues({
       workspaceId: workspace_id,
       user: user,
-      repoIds: repo_ids,
-      pipelineIds: pipeline_ids,
+      repoIds: repo_ids || [],
+      pipelineIds: pipeline_ids || [],
     });
 
     return {

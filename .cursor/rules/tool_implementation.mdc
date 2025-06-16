@@ -1,0 +1,57 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Tool Implementation Pattern
+
+This rule explains the standard steps for adding a new *tool* (GraphQL-backed action) anywhere in the codebase.  Follow this whenever you need to support a new ZenHub mutation/query.
+
+---
+
+## 1. Place the GraphQL operation
+
+1. Identify the functional area (e.g. `issues`, `epics`, `workspaces`).
+2. Add the *.graphql* file inside the appropriate folder:
+   * For mutations → `src/tools/<area>/mutations/`
+   * For queries   → `src/tools/<area>/queries/`
+3. Name the operation using *lowerCamelCase* (e.g. `createEpicFromIssue`).
+
+## 2. Regenerate the SDK
+
+Running `npm run codegen` (or the full build) regenerates `src/generated/graphql.ts` so the new operation becomes available on the typed SDK.
+
+## 3. Implement the Tool class
+
+Create (or edit) `<area>/index.ts` and:
+
+1. Extend `BaseTool`.
+2. Fill out the required class members:
+   * `name`   – kebab-case string starting with `zenhub_` (e.g. `zenhub_create_epic_from_issue`).
+   * `description` – short human description.
+   * `inputSchema` – JSON-Schema describing accepted arguments.
+   * `async handle(args, sdk)` – business logic calling the SDK.
+     * If the new operation is not yet typed in the SDK, cast: `(sdk as any).myOperation()`.
+3. Example implementation: see [src/tools/epics/index.ts](mdc:src/tools/epics/index.ts) – class `CreateEpicFromIssueTool`.
+
+## 4. Export the tool
+
+Add **one** new instance to the area's export array.  For epics this is the `epicTools` array in the same file.
+
+```ts
+export const epicTools: ZenHubTool[] = [
+  // existing tools…
+  new CreateEpicFromIssueTool(),
+].map(/* keep existing mapping */);
+```
+
+## 5. Aggregation
+
+Do **not** modify any other files.  The higher-level aggregator [`src/tools/index.ts`](mdc:src/tools/index.ts) automatically includes the new tool through its `allTools` helper, making it available to the server.
+
+## 6. Build & test
+
+1. Run `npm run build` to ensure codegen + TypeScript compile succeed.
+2. Start the server and verify `zenhub_list_tools` (ListTools) includes your new entry.
+
+Following this pattern keeps all tool implementations consistent and discoverable across the project.

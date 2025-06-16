@@ -1,0 +1,13 @@
+mutation createEpicFromIssue($input: CreateEpicFromIssueInput!) {
+  createEpicFromIssue(input: $input) {
+    epic {
+      id
+      issue {
+        id
+        title
+        number
+        htmlUrl
+      }
+    }
+  }
+} 

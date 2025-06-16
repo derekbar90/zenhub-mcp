@@ -8635,6 +8635,13 @@ export type CreateEpicMutationVariables = Exact<{
 
 export type CreateEpicMutation = { readonly __typename?: 'Mutation', readonly createEpic?: { readonly __typename?: 'CreateEpicPayload', readonly epic: { readonly __typename?: 'Epic', readonly id: string, readonly issue: { readonly __typename?: 'Issue', readonly id: string, readonly title: string, readonly number: number, readonly htmlUrl: string } } } | null };
 
+export type CreateEpicFromIssueMutationVariables = Exact<{
+  input: CreateEpicFromIssueInput;
+}>;
+
+
+export type CreateEpicFromIssueMutation = { readonly __typename?: 'Mutation', readonly createEpicFromIssue?: { readonly __typename?: 'CreateEpicFromIssuePayload', readonly epic: { readonly __typename?: 'Epic', readonly id: string, readonly issue: { readonly __typename?: 'Issue', readonly id: string, readonly title: string, readonly number: number, readonly htmlUrl: string } } } | null };
+
 export type CreateZenhubEpicMutationVariables = Exact<{
   input: CreateZenhubEpicInput;
 }>;
@@ -9082,6 +9089,21 @@ export const AddIssuesToEpicsDocument = gql`
 export const CreateEpicDocument = gql`
     mutation createEpic($input: CreateEpicInput!) {
   createEpic(input: $input) {
+    epic {
+      id
+      issue {
+        id
+        title
+        number
+        htmlUrl
+      }
+    }
+  }
+}
+    `;
+export const CreateEpicFromIssueDocument = gql`
+    mutation createEpicFromIssue($input: CreateEpicFromIssueInput!) {
+  createEpicFromIssue(input: $input) {
     epic {
       id
       issue {
@@ -9983,6 +10005,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     createEpic(variables: CreateEpicMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateEpicMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateEpicMutation>({ document: CreateEpicDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'createEpic', 'mutation', variables);
+    },
+    createEpicFromIssue(variables: CreateEpicFromIssueMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateEpicFromIssueMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateEpicFromIssueMutation>({ document: CreateEpicFromIssueDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'createEpicFromIssue', 'mutation', variables);
     },
     createZenhubEpic(variables: CreateZenhubEpicMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateZenhubEpicMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateZenhubEpicMutation>({ document: CreateZenhubEpicDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'createZenhubEpic', 'mutation', variables);

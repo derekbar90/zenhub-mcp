@@ -4,6 +4,22 @@
   "description": "MCP server for ZenHub GraphQL API",
   "main": "dist/index.js",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/derekbar90/zenhub-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/derekbar90/zenhub-mcp/issues"
+  },
+  "homepage": "https://github.com/derekbar90/zenhub-mcp#readme",
+  "author": "Derek Barrera <email@domain.com>",
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": ["zenhub", "graphql", "mcp", "server"],
+  "files": ["dist", "README.md"],
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "graphql-codegen && tsc",
     "dev": "tsx src/index.ts",
@@ -15,8 +31,7 @@
     "@modelcontextprotocol/sdk": "^1.12.3",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
-    "node-abort-controller": "^3.1.1",
-    "octokit": "^5.0.3"
+    "node-abort-controller": "^3.1.1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.7",

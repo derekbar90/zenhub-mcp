@@ -136,7 +136,7 @@ class GetUserOrganizationsTool extends BaseTool {
 class GetWorkspaceOverviewTool extends BaseTool {
   name = "zenhub_get_workspace_overview";
   description =
-    "Get comprehensive workspace overview including pipelines, active epics, team members, and issue counts";
+    "Get workspace overview including basic metadata, pipelines with issue counts, repositories with issue counts, default repository and its issue types, epic summaries, and workspace users";
   inputSchema = {
     type: "object",
     properties: {

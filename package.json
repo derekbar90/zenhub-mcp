@@ -12,10 +12,11 @@
     "codegen": "graphql-codegen"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@modelcontextprotocol/sdk": "^1.12.3",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
-    "node-abort-controller": "^3.1.1"
+    "node-abort-controller": "^3.1.1",
+    "octokit": "^5.0.3"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.7",

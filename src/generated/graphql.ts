@@ -9040,7 +9040,7 @@ export type GetWorkspaceOverviewQueryVariables = Exact<{
 }>;
 
 
-export type GetWorkspaceOverviewQuery = { readonly __typename?: 'Query', readonly workspace?: { readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly description?: string | null, readonly pipelinesConnection: { readonly __typename?: 'PipelineConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'Pipeline', readonly id: string, readonly name: string, readonly description?: string | null, readonly issues: { readonly __typename?: 'IssueConnection', readonly totalCount: number } }> }, readonly repositoriesConnection?: { readonly __typename?: 'RepositoryConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'Repository', readonly id: string, readonly name: string, readonly ownerName: string, readonly issues: { readonly __typename?: 'IssueConnection', readonly totalCount: number } }> } | null, readonly zenhubEpics?: { readonly __typename?: 'ZenhubEpicConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'ZenhubEpic', readonly id: string, readonly title: string, readonly startOn?: string | null, readonly endOn?: string | null, readonly childIssues: { readonly __typename?: 'IssueConnection', readonly totalCount: number } }> } | null, readonly zenhubUsers: { readonly __typename?: 'ZenhubUserConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'ZenhubUser', readonly name?: string | null, readonly email?: string | null, readonly githubUser?: { readonly __typename?: 'User', readonly login: string, readonly avatarUrl: string, readonly name?: string | null } | null }> } } | null };
+export type GetWorkspaceOverviewQuery = { readonly __typename?: 'Query', readonly workspace?: { readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly description?: string | null, readonly pipelinesConnection: { readonly __typename?: 'PipelineConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'Pipeline', readonly id: string, readonly name: string, readonly description?: string | null, readonly issues: { readonly __typename?: 'IssueConnection', readonly totalCount: number } }> }, readonly repositoriesConnection?: { readonly __typename?: 'RepositoryConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'Repository', readonly id: string, readonly name: string, readonly ownerName: string, readonly ghId: number, readonly issues: { readonly __typename?: 'IssueConnection', readonly totalCount: number } }> } | null, readonly defaultRepository?: { readonly __typename?: 'Repository', readonly id: string, readonly ghId: number, readonly name: string, readonly githubIssueTypes: { readonly __typename?: 'GithubIssueTypeConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'GithubIssueType', readonly id: string, readonly name: string, readonly description?: string | null, readonly level?: number | null }> } } | null, readonly zenhubEpics?: { readonly __typename?: 'ZenhubEpicConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'ZenhubEpic', readonly id: string, readonly title: string, readonly startOn?: string | null, readonly endOn?: string | null, readonly childIssues: { readonly __typename?: 'IssueConnection', readonly totalCount: number } }> } | null, readonly zenhubUsers: { readonly __typename?: 'ZenhubUserConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'ZenhubUser', readonly name?: string | null, readonly email?: string | null, readonly githubUser?: { readonly __typename?: 'User', readonly login: string, readonly avatarUrl: string, readonly name?: string | null } | null }> } } | null };
 
 export type SearchUserWorkspacesQueryVariables = Exact<{
   query: Scalars['String']['input'];
@@ -9933,6 +9933,20 @@ export const GetWorkspaceOverviewDocument = gql`
         ownerName
         issues {
           totalCount
+        }
+        ghId
+      }
+    }
+    defaultRepository {
+      id
+      ghId
+      name
+      githubIssueTypes {
+        nodes {
+          id
+          name
+          description
+          level
         }
       }
     }

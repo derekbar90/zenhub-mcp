@@ -23,6 +23,20 @@ query getWorkspaceOverview($workspaceId: ID!) {
         issues {
           totalCount
         }
+        ghId
+      }
+    }
+    defaultRepository {
+      id
+      ghId
+      name
+      githubIssueTypes {
+        nodes {
+          id
+          name
+          description
+          level
+        }
       }
     }
     zenhubEpics(first: 20) {

@@ -4,29 +4,53 @@ import { ToolArgs, ZenHubTool } from "../../types.js";
 
 class CreateIssueDependencyTool extends BaseTool {
   name = "zenhub_create_issue_dependency";
-  description = "Create a dependency between two issues";
+  description = "Create a dependency between two issues (blocking → blocked)";
   inputSchema = {
     type: "object",
     properties: {
-      blocking_issue_id: {
-        type: "string",
-        description: "ID of the blocking issue",
+      blocking_repository_gh_id: {
+        type: "number",
+        description: "GitHub repository numeric ID for the blocking issue",
       },
-      blocked_issue_id: {
-        type: "string",
-        description: "ID of the blocked issue",
+      blocking_issue_number: {
+        type: "number",
+        description: "Issue number of the blocking issue within the repository",
+      },
+      blocked_repository_gh_id: {
+        type: "number",
+        description: "GitHub repository numeric ID for the blocked issue",
+      },
+      blocked_issue_number: {
+        type: "number",
+        description: "Issue number of the blocked issue within the repository",
       },
     },
-    required: ["blocking_issue_id", "blocked_issue_id"],
+    required: [
+      "blocking_repository_gh_id",
+      "blocking_issue_number",
+      "blocked_repository_gh_id",
+      "blocked_issue_number",
+    ],
   };
 
   async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
-    const { blocking_issue_id, blocked_issue_id } = args;
+    const {
+      blocking_repository_gh_id,
+      blocking_issue_number,
+      blocked_repository_gh_id,
+      blocked_issue_number,
+    } = args;
 
     const result = await sdk.createIssueDependency({
       input: {
-        blockingIssue: blocking_issue_id,
-        blockedIssue: blocked_issue_id,
+        blockingIssue: {
+          repositoryGhId: blocking_repository_gh_id,
+          issueNumber: blocking_issue_number,
+        },
+        blockedIssue: {
+          repositoryGhId: blocked_repository_gh_id,
+          issueNumber: blocked_issue_number,
+        },
       },
     });
 
@@ -34,7 +58,7 @@ class CreateIssueDependencyTool extends BaseTool {
       content: [
         {
           type: "text" as const,
-          text: JSON.stringify(result, null, 2),
+          text: JSON.stringify(result.createIssueDependency?.issueDependency, null, 2),
         },
       ],
     };
@@ -43,25 +67,52 @@ class CreateIssueDependencyTool extends BaseTool {
 
 class DeleteIssueDependencyTool extends BaseTool {
   name = "zenhub_delete_issue_dependency";
-  description = "Delete a dependency between two issues";
+  description = "Delete a dependency between two issues (blocking → blocked)";
   inputSchema = {
     type: "object",
     properties: {
-      dependency_id: { type: "string", description: "Issue dependency ID" },
+      blocking_repository_gh_id: {
+        type: "number",
+        description: "GitHub repository numeric ID for the blocking issue",
+      },
+      blocking_issue_number: {
+        type: "number",
+        description: "Issue number of the blocking issue within the repository",
+      },
+      blocked_repository_gh_id: {
+        type: "number",
+        description: "GitHub repository numeric ID for the blocked issue",
+      },
+      blocked_issue_number: {
+        type: "number",
+        description: "Issue number of the blocked issue within the repository",
+      },
     },
-    required: ["dependency_id"],
+    required: [
+      "blocking_repository_gh_id",
+      "blocking_issue_number",
+      "blocked_repository_gh_id",
+      "blocked_issue_number",
+    ],
   };
 
   async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
-    const { dependency_id } = args;
+    const {
+      blocking_repository_gh_id,
+      blocking_issue_number,
+      blocked_repository_gh_id,
+      blocked_issue_number,
+    } = args;
 
     const result = await sdk.deleteIssueDependency({
       input: {
         blockingIssue: {
-          issueNumber: dependency_id,
+          repositoryGhId: blocking_repository_gh_id,
+          issueNumber: blocking_issue_number,
         },
         blockedIssue: {
-          issueNumber: dependency_id,
+          repositoryGhId: blocked_repository_gh_id,
+          issueNumber: blocked_issue_number,
         },
       },
     });
@@ -70,7 +121,7 @@ class DeleteIssueDependencyTool extends BaseTool {
       content: [
         {
           type: "text" as const,
-          text: JSON.stringify(result, null, 2),
+          text: JSON.stringify(result.deleteIssueDependency?.issueDependency, null, 2),
         },
       ],
     };

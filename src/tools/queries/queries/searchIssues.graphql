@@ -15,6 +15,18 @@ query searchIssues($workspaceId: ID!, $user: String!, $repoIds: [ID!]!, $pipelin
           name
         }
       }
+      parentIssue {
+        __typename
+        type
+        id
+        title
+        number
+        parentIssue {
+          id
+          number
+          title
+        }
+      }
       closedAt
       creator {
         id

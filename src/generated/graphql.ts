@@ -8858,7 +8858,7 @@ export type IssueByInfoQueryVariables = Exact<{
 }>;
 
 
-export type IssueByInfoQuery = { readonly __typename?: 'Query', readonly issueByInfo: { readonly __typename?: 'Issue', readonly id: string, readonly title: string, readonly number: number, readonly state: IssueState, readonly htmlUrl: string, readonly labels: { readonly __typename?: 'LabelConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Label', readonly name: string }> }, readonly assignees: { readonly __typename?: 'UserConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'User', readonly login: string }> }, readonly milestone?: { readonly __typename?: 'Milestone', readonly title: string } | null } };
+export type IssueByInfoQuery = { readonly __typename?: 'Query', readonly issueByInfo: { readonly __typename?: 'Issue', readonly id: string, readonly title: string, readonly number: number, readonly state: IssueState, readonly htmlUrl: string, readonly labels: { readonly __typename?: 'LabelConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Label', readonly name: string }> }, readonly parentIssue?: { readonly __typename: 'Issue', readonly type: IssueType, readonly id: string, readonly title: string, readonly number: number, readonly parentIssue?: { readonly __typename?: 'Issue', readonly id: string, readonly number: number, readonly title: string } | null } | null, readonly assignees: { readonly __typename?: 'UserConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'User', readonly login: string }> }, readonly milestone?: { readonly __typename?: 'Milestone', readonly title: string } | null } };
 
 export type SearchIssuesQueryVariables = Exact<{
   workspaceId: Scalars['ID']['input'];
@@ -8868,7 +8868,7 @@ export type SearchIssuesQueryVariables = Exact<{
 }>;
 
 
-export type SearchIssuesQuery = { readonly __typename?: 'Query', readonly searchIssues?: { readonly __typename?: 'IssueConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Issue', readonly id: string, readonly state: IssueState, readonly body?: string | null, readonly closedAt?: string | null, readonly htmlUrl: string, readonly labels: { readonly __typename?: 'LabelConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Label', readonly id: string, readonly name: string }> }, readonly creator?: { readonly __typename?: 'ZenhubUser', readonly id: string, readonly name?: string | null, readonly githubUser?: { readonly __typename?: 'User', readonly login: string } | null } | null, readonly estimate?: { readonly __typename?: 'Estimate', readonly value: number } | null, readonly assignees: { readonly __typename?: 'UserConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'User', readonly id: string, readonly login: string }> } }> } | null };
+export type SearchIssuesQuery = { readonly __typename?: 'Query', readonly searchIssues?: { readonly __typename?: 'IssueConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Issue', readonly id: string, readonly state: IssueState, readonly body?: string | null, readonly closedAt?: string | null, readonly htmlUrl: string, readonly labels: { readonly __typename?: 'LabelConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Label', readonly id: string, readonly name: string }> }, readonly parentIssue?: { readonly __typename: 'Issue', readonly type: IssueType, readonly id: string, readonly title: string, readonly number: number, readonly parentIssue?: { readonly __typename?: 'Issue', readonly id: string, readonly number: number, readonly title: string } | null } | null, readonly creator?: { readonly __typename?: 'ZenhubUser', readonly id: string, readonly name?: string | null, readonly githubUser?: { readonly __typename?: 'User', readonly login: string } | null } | null, readonly estimate?: { readonly __typename?: 'Estimate', readonly value: number } | null, readonly assignees: { readonly __typename?: 'UserConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'User', readonly id: string, readonly login: string }> } }> } | null };
 
 export type SearchIssuesByPipelineQueryVariables = Exact<{
   pipelineId: Scalars['ID']['input'];
@@ -9040,7 +9040,7 @@ export type GetWorkspaceOverviewQueryVariables = Exact<{
 }>;
 
 
-export type GetWorkspaceOverviewQuery = { readonly __typename?: 'Query', readonly workspace?: { readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly description?: string | null, readonly pipelinesConnection: { readonly __typename?: 'PipelineConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'Pipeline', readonly id: string, readonly name: string, readonly description?: string | null, readonly issues: { readonly __typename?: 'IssueConnection', readonly totalCount: number } }> }, readonly repositoriesConnection?: { readonly __typename?: 'RepositoryConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'Repository', readonly id: string, readonly name: string, readonly ownerName: string, readonly ghId: number, readonly issues: { readonly __typename?: 'IssueConnection', readonly totalCount: number } }> } | null, readonly defaultRepository?: { readonly __typename?: 'Repository', readonly id: string, readonly ghId: number, readonly name: string, readonly githubIssueTypes: { readonly __typename?: 'GithubIssueTypeConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'GithubIssueType', readonly id: string, readonly name: string, readonly description?: string | null, readonly level?: number | null }> } } | null, readonly zenhubEpics?: { readonly __typename?: 'ZenhubEpicConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'ZenhubEpic', readonly id: string, readonly title: string, readonly startOn?: string | null, readonly endOn?: string | null, readonly childIssues: { readonly __typename?: 'IssueConnection', readonly totalCount: number } }> } | null, readonly zenhubUsers: { readonly __typename?: 'ZenhubUserConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'ZenhubUser', readonly name?: string | null, readonly email?: string | null, readonly githubUser?: { readonly __typename?: 'User', readonly login: string, readonly avatarUrl: string, readonly name?: string | null } | null }> } } | null };
+export type GetWorkspaceOverviewQuery = { readonly __typename?: 'Query', readonly workspace?: { readonly __typename?: 'Workspace', readonly id: string, readonly name?: string | null, readonly description?: string | null, readonly issueLabelOptions?: { readonly __typename?: 'IssueLabelOptionConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'IssueLabelOption', readonly name: string }> } | null, readonly pipelinesConnection: { readonly __typename?: 'PipelineConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'Pipeline', readonly id: string, readonly name: string, readonly description?: string | null, readonly issues: { readonly __typename?: 'IssueConnection', readonly totalCount: number, readonly pipelineCounts: { readonly __typename?: 'PipelineCounts', readonly issuesCount: number, readonly sumEstimates: number } } }> }, readonly repositoriesConnection?: { readonly __typename?: 'RepositoryConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'Repository', readonly id: string, readonly name: string, readonly description?: string | null, readonly ownerName: string, readonly ghId: number, readonly issues: { readonly __typename?: 'IssueConnection', readonly totalCount: number, readonly pipelineCounts: { readonly __typename?: 'PipelineCounts', readonly issuesCount: number, readonly sumEstimates: number } } }> } | null, readonly defaultRepository?: { readonly __typename?: 'Repository', readonly id: string, readonly ghId: number, readonly name: string, readonly githubIssueTypes: { readonly __typename?: 'GithubIssueTypeConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'GithubIssueType', readonly id: string, readonly name: string, readonly description?: string | null, readonly level?: number | null }> } } | null, readonly zenhubEpics?: { readonly __typename?: 'ZenhubEpicConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'ZenhubEpic', readonly id: string, readonly title: string, readonly startOn?: string | null, readonly endOn?: string | null }> } | null, readonly zenhubUsers: { readonly __typename?: 'ZenhubUserConnection', readonly totalCount: number, readonly nodes: ReadonlyArray<{ readonly __typename?: 'ZenhubUser', readonly name?: string | null, readonly email?: string | null, readonly githubUser?: { readonly __typename?: 'User', readonly login: string, readonly avatarUrl: string, readonly name?: string | null } | null }> } } | null };
 
 export type SearchUserWorkspacesQueryVariables = Exact<{
   query: Scalars['String']['input'];
@@ -9436,6 +9436,18 @@ export const IssueByInfoDocument = gql`
         name
       }
     }
+    parentIssue {
+      __typename
+      type
+      id
+      title
+      number
+      parentIssue {
+        id
+        number
+        title
+      }
+    }
     assignees {
       nodes {
         login
@@ -9463,6 +9475,18 @@ export const SearchIssuesDocument = gql`
         nodes {
           id
           name
+        }
+      }
+      parentIssue {
+        __typename
+        type
+        id
+        title
+        number
+        parentIssue {
+          id
+          number
+          title
         }
       }
       closedAt
@@ -9914,6 +9938,11 @@ export const GetWorkspaceOverviewDocument = gql`
     id
     name
     description
+    issueLabelOptions {
+      nodes {
+        name
+      }
+    }
     pipelinesConnection {
       totalCount
       nodes {
@@ -9922,6 +9951,10 @@ export const GetWorkspaceOverviewDocument = gql`
         description
         issues {
           totalCount
+          pipelineCounts {
+            issuesCount
+            sumEstimates
+          }
         }
       }
     }
@@ -9930,9 +9963,14 @@ export const GetWorkspaceOverviewDocument = gql`
       nodes {
         id
         name
+        description
         ownerName
         issues {
           totalCount
+          pipelineCounts {
+            issuesCount
+            sumEstimates
+          }
         }
         ghId
       }
@@ -9955,9 +9993,6 @@ export const GetWorkspaceOverviewDocument = gql`
       nodes {
         id
         title
-        childIssues(workspaceId: $workspaceId) {
-          totalCount
-        }
         startOn
         endOn
       }

@@ -187,8 +187,8 @@ export const milestoneTools: ZenHubTool[] = [
   new CreateMilestoneTool(),
   new UpdateMilestoneTool(),
   new AddMilestoneToIssuesTool(),
-  new RemoveMilestoneFromIssuesTool(),
-  new DeleteMilestoneTool(),
+  // new RemoveMilestoneFromIssuesTool(),
+  // new DeleteMilestoneTool(),
 ].map((tool) => ({
   name: tool.name,
   description: tool.description,

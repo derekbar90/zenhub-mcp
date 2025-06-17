@@ -3,6 +3,11 @@ query getWorkspaceOverview($workspaceId: ID!) {
     id
     name
     description
+    issueLabelOptions {
+      nodes {
+        name
+      }
+    }
     pipelinesConnection {
       totalCount
       nodes {
@@ -11,6 +16,10 @@ query getWorkspaceOverview($workspaceId: ID!) {
         description
         issues {
           totalCount
+          pipelineCounts {
+            issuesCount
+            sumEstimates
+          }
         }
       }
     }
@@ -19,9 +28,14 @@ query getWorkspaceOverview($workspaceId: ID!) {
       nodes {
         id
         name
+        description
         ownerName
         issues {
           totalCount
+          pipelineCounts {
+            issuesCount
+            sumEstimates
+          }
         }
         ghId
       }
@@ -44,9 +58,6 @@ query getWorkspaceOverview($workspaceId: ID!) {
       nodes {
         id
         title
-        childIssues(workspaceId: $workspaceId) {
-          totalCount
-        }
         startOn
         endOn
       }

@@ -174,7 +174,7 @@ class GetWorkspaceLabelsTool extends BaseTool {
 export const labelTools: ZenHubTool[] = [
   new CreateGithubLabelTool(),
   new CreateZenhubLabelTool(),
-  new DeleteZenhubLabelsTool(),
+  // new DeleteZenhubLabelsTool(),
   new GetRepositoryLabelsTool(),
   new GetWorkspaceLabelsTool(),
 ].map((tool) => ({

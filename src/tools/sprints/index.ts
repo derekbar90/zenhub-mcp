@@ -260,8 +260,8 @@ export const sprintTools: ZenHubTool[] = [
   new CreateSprintTool(),
   new UpdateSprintTool(),
   new AddIssuesToSprintsTool(),
-  new RemoveIssuesFromSprintsTool(),
-  new DeleteSprintTool(),
+  // new RemoveIssuesFromSprintsTool(),
+  // new DeleteSprintTool(),
   new GetWorkspaceSprintsTool(),
 ].map((tool) => ({
   name: tool.name,

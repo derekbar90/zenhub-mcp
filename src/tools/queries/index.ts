@@ -4,14 +4,17 @@ import { BaseTool } from "../base.js";
 import { ToolArgs, ZenHubTool } from "../../types.js";
 
 class GenericQueryTool extends BaseTool {
-  name = "zenhub_query";
-  description = "FALLBACK: Execute custom GraphQL queries when specific tools don't meet your needs";
+  name = "zenhub_query_potentially_dangerous";
+  description =
+    "FALLBACK: Execute custom GraphQL queries when specific tools don't meet your needs. **IMPORTANT: Mutations but have EXPLICT appoval from the user by repeating back a super minimal confirmation message.**";
   inputSchema = {
     type: "object",
     properties: {
-      
       query: { type: "string", description: "GraphQL query to execute" },
-      variables: { type: "object", description: "Variables for the GraphQL query" },
+      variables: {
+        type: "object",
+        description: "Variables for the GraphQL query",
+      },
     },
     required: ["query"],
   };
@@ -49,18 +52,34 @@ class GenericQueryTool extends BaseTool {
 
 class SearchIssuesByPipelineTool extends BaseTool {
   name = "zenhub_search_issues";
-  description = "Search and filter issues within a specific pipeline by title, labels, or assignees";
+  description =
+    "Search and filter issues within a specific pipeline by title, labels, or assignees";
   inputSchema = {
     type: "object",
     properties: {
-      
-      pipeline_id: { type: "string", description: "Pipeline ID to search in" },
-      query: { type: "string", description: "Search query for title" },
+      pipeline_id: {
+        type: "string",
+        description:
+          "Pipeline ID to search in. Use zenhub_get_workspace_overview to get pipeline IDs.",
+      },
+      query: {
+        type: "string",
+        description:
+          "Search query for title, user (github login name), content",
+      },
       filters: {
         type: "object",
         properties: {
-          labels: { type: "object", properties: { in: { type: "array", items: { type: "string" } } } },
-          assignees: { type: "object", properties: { in: { type: "array", items: { type: "string" } } } },
+          labels: {
+            description: "Filter by labels. Use zenhub_get_workspace_labels to get label IDs.",
+            type: "object",
+            properties: { in: { type: "array", items: { type: "string" } } },
+          },
+          assignees: {
+            description: "Filter by assignees github handles. Use zenhub_get_workspace_users.",
+            type: "object",
+            properties: { in: { type: "array", items: { type: "string" } } },
+          },
         },
       },
     },
@@ -89,14 +108,32 @@ class SearchIssuesByPipelineTool extends BaseTool {
 
 class SearchIssuesTool extends BaseTool {
   name = "zenhub_search_issues_in_repository";
-  description = "Search and filter issues in a workspace by user, repository, and pipeline";
+  description =
+    "Search and filter issues in a workspace by user, repository, and pipeline. Use zenhub_get_workspace_overview to get repository IDs and pipeline IDs before using this tool.";
   inputSchema = {
     type: "object",
     properties: {
-      workspace_id: { type: "string", description: "Workspace ID to search in" },
-      query: { type: "string", description: "Query to search for user, content, title" },
-      repo_ids: { type: "array", items: { type: "string" }, description: "Array of repository IDs to filter. Use zenhub_get_workspace_overview to get repository IDs.", optional: true },
-      pipeline_ids: { type: "array", items: { type: "string" }, description: "Array of pipeline IDs to filter. Use zenhub_get_workspace_pipelines to get pipeline IDs.", optional: true },
+      workspace_id: {
+        type: "string",
+        description: "Workspace ID to search in",
+      },
+      query: {
+        type: "string",
+        description:
+          "Query to search for user (github login name), content, title",
+      },
+      repo_ids: {
+        type: "array",
+        items: { type: "string" },
+        description: "Array of repository IDs to filter.",
+        optional: false,
+      },
+      pipeline_ids: {
+        type: "array",
+        items: { type: "string" },
+        description: "Array of pipeline IDs to filter.",
+        optional: false,
+      },
     },
     required: ["workspace_id", "query", "repo_ids", "pipeline_ids"],
   };
@@ -128,7 +165,6 @@ class GetWorkspaceIssuesTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       workspace_id: { type: "string", description: "Workspace ID" },
       after: { type: "string", description: "Cursor for pagination" },
     },
@@ -156,12 +192,11 @@ class GetWorkspaceIssuesTool extends BaseTool {
 
 class GetViewerTool extends BaseTool {
   name = "zenhub_get_viewer";
-  description = "Get current authenticated user's ZenHub and GitHub profile information";
+  description =
+    "Get current authenticated user's ZenHub and GitHub profile information";
   inputSchema = {
     type: "object",
-    properties: {
-      
-    },
+    properties: {},
     required: [],
   };
 
@@ -185,7 +220,6 @@ class GetIssueByInfoTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       repository_gh_id: { type: "number", description: "GitHub repository ID" },
       issue_number: { type: "number", description: "Issue number" },
     },
@@ -217,8 +251,11 @@ class GetRepositoriesByGhIdTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
-      repository_gh_ids: { type: "array", items: { type: "number" }, description: "Array of GitHub repository IDs" },
+      repository_gh_ids: {
+        type: "array",
+        items: { type: "number" },
+        description: "Array of GitHub repository IDs",
+      },
     },
     required: ["repository_gh_ids"],
   };

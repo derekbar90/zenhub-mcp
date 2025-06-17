@@ -10,6 +10,18 @@ query issueByInfo($repositoryGhId: Int!, $issueNumber: Int!) {
         name
       }
     }
+    parentIssue {
+      __typename
+      type
+      id
+      title
+      number
+      parentIssue {
+        id
+        number
+        title
+      }
+    }
     assignees {
       nodes {
         login

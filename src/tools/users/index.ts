@@ -130,81 +130,81 @@ class GetOwnerByGhIdTool extends BaseTool {
   }
 }
 
-class SearchUsersTool extends BaseTool {
-  name = "zenhub_search_users";
-  description = "Search for users who can be assigned to issues";
-  inputSchema = {
-    type: "object",
-    properties: {
-      query: {
-        type: "string",
-        description: "Search query (username, name, or email)",
-      },
-      workspace_id: {
-        type: "string",
-        description: "Workspace ID to limit search to workspace users",
-      },
-    },
-    required: ["query"],
-  };
+// class SearchUsersTool extends BaseTool {
+//   name = "zenhub_search_users";
+//   description = "Search for users who can be assigned to issues";
+//   inputSchema = {
+//     type: "object",
+//     properties: {
+//       query: {
+//         type: "string",
+//         description: "Search query (username, name, or email)",
+//       },
+//       workspace_id: {
+//         type: "string",
+//         description: "Workspace ID to limit search to workspace users",
+//       },
+//     },
+//     required: ["query"],
+//   };
 
-  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>): Promise<ToolResponse> {
-    const { query: searchQuery, workspace_id } = args;
+//   async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>): Promise<ToolResponse> {
+//     const { query: searchQuery, workspace_id } = args;
 
-    if (workspace_id) {
-      // Search within workspace users
-      const result = await sdk.searchWorkspaceUsers({
-        workspaceId: workspace_id,
-      });
+//     if (workspace_id) {
+//       // Search within workspace users
+//       const result = await sdk.searchWorkspaceUsers({
+//         workspaceId: workspace_id,
+//       });
 
-      // Filter results client-side based on search query
-      if (result.workspace?.zenhubUsers.nodes) {
-        const users = result.workspace.zenhubUsers.nodes;
-        const filteredUsers = users.filter(
-          (user: any) =>
-            user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            user.email?.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+//       // Filter results client-side based on search query
+//       if (result.workspace?.zenhubUsers.nodes) {
+//         const users = result.workspace.zenhubUsers.nodes;
+//         const filteredUsers = users.filter(
+//           (user: any) =>
+//             user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+//             user.email?.toLowerCase().includes(searchQuery.toLowerCase())
+//         );
 
-        return {
-          content: [
-            {
-              type: "text" as const,
-              text: JSON.stringify({ users: filteredUsers }, null, 2),
-            },
-          ],
-        };
-      }
+//         return {
+//           content: [
+//             {
+//               type: "text" as const,
+//               text: JSON.stringify({ users: filteredUsers }, null, 2),
+//             },
+//           ],
+//         };
+//       }
 
-      return {
-        content: [
-          {
-            type: "text" as const,
-            text: JSON.stringify(result, null, 2),
-          },
-        ],
-      };
-    } else {
-      // Search by login globally
-      const result = await sdk.searchOwnerByLogin({ login: searchQuery });
-      return {
-        content: [
-          {
-            type: "text" as const,
-            text: JSON.stringify(result, null, 2),
-          },
-        ],
-      };
-    }
-  }
-}
+//       return {
+//         content: [
+//           {
+//             type: "text" as const,
+//             text: JSON.stringify(result, null, 2),
+//           },
+//         ],
+//       };
+//     } else {
+//       // Search by login globally
+//       const result = await sdk.searchOwnerByLogin({ login: searchQuery });
+//       return {
+//         content: [
+//           {
+//             type: "text" as const,
+//             text: JSON.stringify(result, null, 2),
+//           },
+//         ],
+//       };
+//     }
+//   }
+// }
 
 export const userTools: ZenHubTool[] = [
   new GetWorkspaceUsersTool(),
   new GetRepositoryCollaboratorsTool(),
   new GetOwnerByLoginTool(),
   new GetOwnerByGhIdTool(),
-  new SearchUsersTool(),
+  // new SearchUsersTool(),
 ].map((tool) => ({
   name: tool.name,
   description: tool.description,

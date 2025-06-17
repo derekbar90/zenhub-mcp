@@ -1,6 +1,7 @@
 import { getSdk } from "../../generated/graphql.js";
 import { BaseTool } from "../base.js";
 import { ToolArgs, ZenHubTool } from "../../types.js";
+import fetch from 'cross-fetch';
 
 class CreateIssueTool extends BaseTool {
   name = "zenhub_create_issue";
@@ -8,7 +9,6 @@ class CreateIssueTool extends BaseTool {
   inputSchema = {
     type: "object",
     properties: {
-      
       title: { type: "string", description: "Issue title" },
       repository_id: { type: "string", description: "Repository ID" },
       body: { type: "string", description: "Issue body/description" },
@@ -31,11 +31,54 @@ class CreateIssueTool extends BaseTool {
       },
     });
 
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // Determine the GitHub issue URL from the mutation response so we can patch the new issue's `type` field
+    const createdIssue = result?.createIssue?.issue;
+    const issueUrl = createdIssue?.htmlUrl ?? "";
+    const match = issueUrl.match(/github\.com\/([^/]+)\/([^/]+)\/issues\/(\d+)/);
+
+    if (!match) {
+      throw new Error(`Unable to parse issue URL returned from createIssue: ${issueUrl}`);
+    }
+
+    const [_, owner, repo, issueNumber] = match;
+
+    if (!process.env.GITHUB_PAT) {
+      throw new Error("Error: User needs to set GITHUB_PAT in their MCP config.");
+    }
+
+    // Heuristic: if the provided labels include "bug" we mark the issue as a Bug, otherwise default to Task
+    const desiredType = (labels || []).some((l: string) => l.toLowerCase() === "bug") ? "Bug" : "Task";
+
+    const patchUrl = `https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}`;
+
+    const response = await fetch(patchUrl, {
+      method: 'PATCH',
+      headers: {
+        'Accept': 'application/vnd.github+json',
+        'Authorization': `Bearer ${process.env.GITHUB_PAT}`,
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+      body: JSON.stringify({
+        type: desiredType,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to update issue: ${response.statusText}: Details: ${await response.text()}`);
+    }
+
+    const patchedIssue = await response.json();
+
     return {
       content: [
         {
           type: "text" as const,
-          text: JSON.stringify(result, null, 2),
+          text: JSON.stringify({
+            createdIssue: createdIssue,
+            updatedIssue: patchedIssue,
+          }, null, 2),
         },
       ],
     };
@@ -529,7 +572,7 @@ class RemoveIssuesFromEpicsTool extends BaseTool {
 
 export const issueTools: ZenHubTool[] = [
   new CreateIssueTool(),
-  new CreateIssueWithEpicTool(),
+  // new CreateIssueWithEpicTool(),
   new UpdateIssueTool(),
   new CloseIssuesTool(),
   new ReopenIssuesTool(),

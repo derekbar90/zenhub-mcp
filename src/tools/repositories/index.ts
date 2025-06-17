@@ -195,7 +195,7 @@ export const repositoryTools: ZenHubTool[] = [
   new GetWorkspaceRepositoriesTool(),
   new GetRepositoriesByGitHubIdsTool(),
   new AddRepositoryToWorkspaceTool(),
-  new RemoveRepositoryFromWorkspaceTool(),
+  // new RemoveRepositoryFromWorkspaceTool(),
   new GetRepositoryDetailsTool(),
   new GetRepositoryAssignableUsersTool(),
 ].map((tool) => ({

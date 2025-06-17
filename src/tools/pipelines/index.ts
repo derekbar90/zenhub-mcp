@@ -138,9 +138,9 @@ class GetWorkspacePipelinesTool extends BaseTool {
 }
 
 export const pipelineTools: ZenHubTool[] = [
-  new CreatePipelineTool(),
-  new UpdatePipelineTool(),
-  new DeletePipelineTool(),
+  // new CreatePipelineTool(),
+  // new UpdatePipelineTool(),
+  // new DeletePipelineTool(),
   new GetWorkspacePipelinesTool(),
 ].map((tool) => ({
   name: tool.name,

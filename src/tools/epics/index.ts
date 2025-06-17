@@ -192,13 +192,54 @@ class DeleteEpicTool extends BaseTool {
   }
 }
 
+class AddSubIssuesToEpicTool extends BaseTool {
+  name = "zenhub_add_subissues_to_epic";
+  description = "Add existing issues as sub-issues to an epic. IMPORTANT: `parent_issue_id` must be the ZenHub Epic's global ID, _not_ the underlying GitHub Issue ID.";
+  inputSchema = {
+    type: "object",
+    properties: {
+      parent_issue_id: {
+        type: "string",
+        description: "ZenHub Epic ID of the parent epic that will receive the sub-issues (must be an *Epic* global ID, e.g. `Z2lk...zNDU=`)",
+      },
+      child_issue_ids: {
+        type: "array",
+        items: { type: "string" },
+        description: "Array of issue IDs to add as sub-issues to the epic",
+      },
+    },
+    required: ["parent_issue_id", "child_issue_ids"],
+  };
+
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
+    const { parent_issue_id, child_issue_ids } = args;
+
+    const result = await sdk.addIssuesToEpics({
+      input: {
+        epicIds: [parent_issue_id],
+        issueIds: child_issue_ids,
+      },
+    });
+
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result.addIssuesToEpics?.epics ?? result, null, 2),
+        },
+      ],
+    };
+  }
+}
+
 export const epicTools: ZenHubTool[] = [
   new CreateEpicTool(),
   // new CreateEpicWithNewIssuesTool(),
   // new CreateZenhubEpicTool(),
   new UpdateEpicTool(),
   new UpdateEpicDatesTool(),
-  new DeleteEpicTool(),
+  // new DeleteEpicTool(),
+  new AddSubIssuesToEpicTool(),
 ].map((tool) => ({
   name: tool.name,
   description: tool.description,

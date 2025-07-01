@@ -296,6 +296,7 @@ npm run dev
 ## Environment Variables
 
 - `ZENHUB_API_KEY` (required): Your ZenHub API key from [ZenHub Settings](https://app.zenhub.com/settings/tokens)
+- `ZENHUB_MCP_CUSTOM_INSTRUCTIONS` (optional): Provide additional instructions for the MCP server. If set, this value will be appended to the default instructions that the server sends to the model. Use regular newlines or `\n` escape sequences to format multi-line prompts.
 
 ## GraphQL Endpoint
 

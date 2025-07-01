@@ -583,8 +583,8 @@ export const issueTools: ZenHubTool[] = [
   new RemoveLabelsFromIssuesTool(),
   new SetEstimateTool(),
   new SetMultipleEstimatesTool(),
-  new AddIssuesToEpicsTool(),
-  new RemoveIssuesFromEpicsTool(),
+  // new AddIssuesToEpicsTool(),
+  // new RemoveIssuesFromEpicsTool(),
 ].map(tool => ({
   name: tool.name,
   description: tool.description,

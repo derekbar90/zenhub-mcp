@@ -1,6 +1,6 @@
 {
   "name": "zenhub-mcp-server",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "MCP server for ZenHub GraphQL API",
   "main": "dist/index.js",
   "type": "module",

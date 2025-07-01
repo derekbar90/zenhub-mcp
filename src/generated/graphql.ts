@@ -8628,6 +8628,13 @@ export type AddIssuesToEpicsMutationVariables = Exact<{
 
 export type AddIssuesToEpicsMutation = { readonly __typename?: 'Mutation', readonly addIssuesToEpics?: { readonly __typename?: 'AddIssuesToEpicsPayload', readonly epics: ReadonlyArray<{ readonly __typename?: 'Epic', readonly id: string }> } | null };
 
+export type AddSubIssuesMutationVariables = Exact<{
+  input: AddSubIssuesInput;
+}>;
+
+
+export type AddSubIssuesMutation = { readonly __typename?: 'Mutation', readonly addSubIssues?: { readonly __typename?: 'AddSubIssuesPayload', readonly successCount: number, readonly failedIssues: ReadonlyArray<{ readonly __typename?: 'Issue', readonly id: string }> } | null };
+
 export type CreateEpicMutationVariables = Exact<{
   input: CreateEpicInput;
 }>;
@@ -8676,6 +8683,13 @@ export type UpdateZenhubEpicDatesMutationVariables = Exact<{
 
 
 export type UpdateZenhubEpicDatesMutation = { readonly __typename?: 'Mutation', readonly updateZenhubEpicDates?: { readonly __typename?: 'UpdateZenhubEpicDatesPayload', readonly zenhubEpic: { readonly __typename?: 'ZenhubEpic', readonly id: string, readonly startOn?: string | null, readonly endOn?: string | null } } | null };
+
+export type GetEpicQueryVariables = Exact<{
+  epicId: Scalars['ID']['input'];
+}>;
+
+
+export type GetEpicQuery = { readonly __typename?: 'Query', readonly node?: { readonly __typename?: 'Blockage' } | { readonly __typename?: 'Comment' } | { readonly __typename?: 'Epic', readonly id: string, readonly issue: { readonly __typename?: 'Issue', readonly id: string, readonly title: string, readonly body?: string | null, readonly assignees: { readonly __typename?: 'UserConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'User', readonly id: string, readonly login: string }> }, readonly githubChildIssues: { readonly __typename?: 'IssueConnection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Issue', readonly id: string, readonly number: number, readonly title: string, readonly htmlUrl: string, readonly body?: string | null }> } } } | { readonly __typename?: 'Issue' } | { readonly __typename?: 'IssueDependency' } | { readonly __typename?: 'KeyDate' } | { readonly __typename?: 'Milestone' } | { readonly __typename?: 'Pipeline' } | { readonly __typename?: 'PipelineToPipelineAutomation' } | { readonly __typename?: 'Project' } | { readonly __typename?: 'Release' } | { readonly __typename?: 'Repository' } | { readonly __typename?: 'Roadmap' } | { readonly __typename?: 'SavedView' } | { readonly __typename?: 'Sprint' } | { readonly __typename?: 'SprintConfig' } | { readonly __typename?: 'SprintIssue' } | { readonly __typename?: 'SprintReview' } | { readonly __typename?: 'SprintReviewFeature' } | { readonly __typename?: 'SprintReviewSchedule' } | { readonly __typename?: 'ZenhubEpic' } | { readonly __typename?: 'ZenhubLabel' } | { readonly __typename?: 'ZenhubOrganization' } | { readonly __typename?: 'ZenhubOrganizationLimited' } | { readonly __typename?: 'ZenhubUser' } | { readonly __typename?: 'ZenhubUserAtOrganization' } | null };
 
 export type AddAssigneesToIssuesMutationVariables = Exact<{
   input: AddAssigneesToIssuesInput;
@@ -9086,6 +9100,16 @@ export const AddIssuesToEpicsDocument = gql`
   }
 }
     `;
+export const AddSubIssuesDocument = gql`
+    mutation addSubIssues($input: AddSubIssuesInput!) {
+  addSubIssues(input: $input) {
+    failedIssues {
+      id
+    }
+    successCount
+  }
+}
+    `;
 export const CreateEpicDocument = gql`
     mutation createEpic($input: CreateEpicInput!) {
   createEpic(input: $input) {
@@ -9159,6 +9183,35 @@ export const UpdateZenhubEpicDatesDocument = gql`
       id
       startOn
       endOn
+    }
+  }
+}
+    `;
+export const GetEpicDocument = gql`
+    query getEpic($epicId: ID!) {
+  node(id: $epicId) {
+    ... on Epic {
+      id
+      issue {
+        id
+        title
+        body
+        assignees {
+          nodes {
+            id
+            login
+          }
+        }
+        githubChildIssues {
+          nodes {
+            id
+            number
+            title
+            htmlUrl
+            body
+          }
+        }
+      }
     }
   }
 }
@@ -10052,6 +10105,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     addIssuesToEpics(variables: AddIssuesToEpicsMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<AddIssuesToEpicsMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddIssuesToEpicsMutation>({ document: AddIssuesToEpicsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'addIssuesToEpics', 'mutation', variables);
     },
+    addSubIssues(variables: AddSubIssuesMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<AddSubIssuesMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AddSubIssuesMutation>({ document: AddSubIssuesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'addSubIssues', 'mutation', variables);
+    },
     createEpic(variables: CreateEpicMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateEpicMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateEpicMutation>({ document: CreateEpicDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'createEpic', 'mutation', variables);
     },
@@ -10072,6 +10128,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     updateZenhubEpicDates(variables: UpdateZenhubEpicDatesMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateZenhubEpicDatesMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateZenhubEpicDatesMutation>({ document: UpdateZenhubEpicDatesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'updateZenhubEpicDates', 'mutation', variables);
+    },
+    getEpic(variables: GetEpicQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetEpicQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetEpicQuery>({ document: GetEpicDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'getEpic', 'query', variables);
     },
     addAssigneesToIssues(variables: AddAssigneesToIssuesMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<AddAssigneesToIssuesMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddAssigneesToIssuesMutation>({ document: AddAssigneesToIssuesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'addAssigneesToIssues', 'mutation', variables);

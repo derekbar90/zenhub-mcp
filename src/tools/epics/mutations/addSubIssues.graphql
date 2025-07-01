@@ -1,0 +1,8 @@
+mutation addSubIssues($input: AddSubIssuesInput!) {
+  addSubIssues(input: $input) {
+    failedIssues {
+      id
+    }
+    successCount
+  }
+} 

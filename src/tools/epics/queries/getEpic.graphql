@@ -1,0 +1,27 @@
+query getEpic($epicId: ID!) {
+  node(id: $epicId) {
+    ... on Epic {
+      id
+      issue {
+        id
+        title
+        body
+        assignees {
+          nodes {
+            id
+            login
+          }
+        }
+        githubChildIssues {
+          nodes {
+            id
+            number
+            title
+            htmlUrl
+            body
+          }
+        }
+      }
+    }
+  }
+}

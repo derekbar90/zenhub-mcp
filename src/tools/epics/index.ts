@@ -194,30 +194,50 @@ class DeleteEpicTool extends BaseTool {
 
 class AddSubIssuesToEpicTool extends BaseTool {
   name = "zenhub_add_subissues_to_epic";
-  description = "Add existing issues as sub-issues to an epic. IMPORTANT: `parent_issue_id` must be the ZenHub Epic's global ID, _not_ the underlying GitHub Issue ID.";
+  description = "Add existing issues as sub-issues to an epic.";
   inputSchema = {
     type: "object",
     properties: {
-      parent_issue_id: {
+      parent_epic_id: {
         type: "string",
-        description: "ZenHub Epic ID of the parent epic that will receive the sub-issues (must be an *Epic* global ID, e.g. `Z2lk...zNDU=`)",
+        description: "Parent epic id",
       },
       child_issue_ids: {
         type: "array",
         items: { type: "string" },
-        description: "Array of issue IDs to add as sub-issues to the epic",
+        description: "Array of issue IDs",
       },
     },
     required: ["parent_issue_id", "child_issue_ids"],
   };
 
   async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
-    const { parent_issue_id, child_issue_ids } = args;
+    const { parent_epic_id, child_issue_ids } = args;
 
-    const result = await sdk.addIssuesToEpics({
+    const epicDetails = await sdk.getEpic({ epicId: parent_epic_id });
+    const parentIssueId = epicDetails?.node?.__typename === "Epic" ? epicDetails?.node?.issue?.id : null;
+
+    if (!parentIssueId) {
+      throw new Error(`Could not find the underlying Issue ID for Epic ID: ${parent_epic_id}`);
+    }
+
+    // First, ensure the issues are associated with the epic from a ZenHub perspective
+    const addIssuesResult = await sdk.addIssuesToEpics({
       input: {
-        epicIds: [parent_issue_id],
+        epicIds: [parent_epic_id],
         issueIds: child_issue_ids,
+      },
+    });
+
+    // NOTE: From empirical testing, a slight delay helps ZenHub pick up the relationship before
+    // we designate them as _sub-issues_.
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    // Second, explicitly mark the issues as sub-issues of the parent epic
+    const addSubIssuesResult = await sdk.addSubIssues({
+      input: {
+        parentId: parentIssueId,
+        childIssueIds: child_issue_ids,
       },
     });
 
@@ -225,7 +245,40 @@ class AddSubIssuesToEpicTool extends BaseTool {
       content: [
         {
           type: "text" as const,
-          text: JSON.stringify(result.addIssuesToEpics?.epics ?? result, null, 2),
+          text: JSON.stringify(
+            {
+              addIssuesToEpics: addIssuesResult?.addIssuesToEpics,
+              addSubIssues: (addSubIssuesResult as any)?.addSubIssues,
+            },
+            null,
+            2
+          ),
+        },
+      ],
+    };
+  }
+}
+
+class GetEpicTool extends BaseTool {
+  name = "zenhub_get_epic";
+  description = "Get an epic";
+  inputSchema = {
+    type: "object",
+    properties: {
+      epic_id: { type: "string", description: "Epic ID" },
+    },
+    required: ["epic_id"],
+  };
+
+  async handle(args: ToolArgs, sdk: ReturnType<typeof getSdk>) {
+    const { epic_id } = args;
+    const result = await sdk.getEpic({ epicId: epic_id });
+
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(result, null, 2),
         },
       ],
     };
@@ -240,6 +293,7 @@ export const epicTools: ZenHubTool[] = [
   new UpdateEpicDatesTool(),
   // new DeleteEpicTool(),
   new AddSubIssuesToEpicTool(),
+  new GetEpicTool(),
 ].map((tool) => ({
   name: tool.name,
   description: tool.description,
